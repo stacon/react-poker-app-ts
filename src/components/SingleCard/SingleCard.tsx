@@ -21,7 +21,7 @@ export default class SingleCard extends React.Component<Props, State> {
     //TODO:couldn't find other way to show html entity, be my guest to try
     suitFormat() : string {
         
-        switch(this.props.card.suit) {
+        switch(this.state.card.suit) {
             case 'spades':            
                 return String.fromCharCode(9824);
             case 'diams':
@@ -35,12 +35,23 @@ export default class SingleCard extends React.Component<Props, State> {
         }
         return '';              
     }
+    
+    renderCard(): any {
+        
+    }
 
     render() {    
+        if(this.state.card.flipped) {
+            return (
+            <div className="playingCards simpleCards">
+                <div className="card back">*</div>
+            </div>
+            );
+        }        
         return (
             <div className="playingCards simpleCards">
-                <div className={`card rank-${this.props.card.rank} ${this.props.card.suit}`}>
-                    <span className="rank">{this.props.card.rank.toUpperCase()}</span>
+                <div className={`card rank-${this.state.card.rank} ${this.state.card.suit}`}>
+                    <span className="rank">{this.state.card.rank.toUpperCase()}</span>
                     <span className="suit">{this.suitFormat()}</span>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import CardProperties from '../classes/CardProperties'
 
 class App extends React.Component {
   
-  newCard = new CardProperties('diams', 'k');
+  newCard = new CardProperties('diams', 'k', true);
     
   renderSingleCard(card: CardProperties) {
     return <SingleCard card={card} />;
