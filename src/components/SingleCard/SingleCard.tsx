@@ -1,60 +1,34 @@
 import React from 'react';
-import CardProperties from '../../classes/CardProperties'
+import CardProperties from '../../classes/CardProperties';
+import './stylesheet.css';
 
 interface Props {
     card: CardProperties;
+    flipped: boolean;
+    onFlippingCard: () => void
 }
 
-interface State {
-    card: CardProperties;
-}
 
-export default class SingleCard extends React.Component<Props, State> {
-    
+const SingleCard = (props: Props) => {
 
-    constructor(props:Props) {
-        super(props);
-        this.state = {
-          card: this.props.card,
-        };
-      }
-    //TODO:couldn't find other way to show html entity, be my guest to try
-    suitFormat() : string {
-        
-        switch(this.state.card.suit) {
-            case 'spades':            
-                return String.fromCharCode(9824);
-            case 'diams':
-                return String.fromCharCode(9830);
-            case 'hearts':
-                return String.fromCharCode(9829);
-            case 'clubs':
-                return String.fromCharCode(9827);
-            default:
-                return '';
-        }
-        return '';              
-    }
-    
-    renderCard(): any {
-        
-    }
+    return (
 
-    render() {    
-        if(this.state.card.flipped) {
-            return (
-            <div className="playingCards simpleCards">
-                <div className="card back">*</div>
-            </div>
-            );
-        }        
-        return (
-            <div className="playingCards simpleCards">
-                <div className={`card rank-${this.state.card.rank} ${this.state.card.suit}`}>
-                    <span className="rank">{this.state.card.rank.toUpperCase()}</span>
-                    <span className="suit">{this.suitFormat()}</span>
-                </div>
-            </div>
-        );
-      }
-}
+        <div
+            className={`card ${props.flipped? props.card.suit : '' } ${props.flipped? props.card.rank : ''}`}
+            onClick={ props.onFlippingCard }
+            >
+            { props.flipped
+                    ?
+                (
+                    <div className="face"></div>
+                )
+                    :
+                (
+                    <div className="back"></div>
+                )
+            }
+        </div>
+    )
+};
+
+export default SingleCard;
