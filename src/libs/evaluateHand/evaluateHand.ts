@@ -4,6 +4,12 @@ import _ from 'lodash';
 
 const getCardGroupsBySuit = (hand: Card[]) => _.groupBy(hand, 'suit');
 const getCardGroupsByRank = (hand: Card[]) => _.groupBy(hand, 'rank');
+const hasStraight = (hand: Card[]) => _.sortBy(hand, 'rank').reduce((isStraight: boolean, currentCard: Card, i: number, arr: Card[])=>{
+  if (i === 0) return isStraight && true;
+  if (arr[i-1].rank + 1 === arr[i].rank) return isStraight && true;
+  return isStraight && false;
+}, true);
+
 const everyCardIsSameSuit = (hand: Card[]) => Object.keys(getCardGroupsBySuit(hand)).length === 1;
 
 
@@ -17,22 +23,17 @@ const isRoyal = (sortedHand: Card[]) => {
   }, true);
 }
 
-const isStraight = (sortedHand: Card[]) => sortedHand.reduce((isStraight: boolean, currentCard: Card, i: number, arr: Card[])=>{
-  if (i === 0) return isStraight && true;
-  if (arr[i-1].rank + 1 === arr[i].rank) return isStraight && true;
-  return isStraight && false;
-}, true);
 
-const isRoyalFlush = (sortedHand: Card[]): boolean => everyCardIsSameSuit(sortedHand) && isRoyal(sortedHand);
-const isStraightFlush = (sortedHand: Card[]): boolean => everyCardIsSameSuit(sortedHand) && isStraight(sortedHand);
+const isRoyalFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
+const isStraightFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
 const isFourOfAKind = (hand: Card[]) => {
-  const rankGroups = Object.keys(getCardGroupsByRank(hand));
-  // console.log(rankGroups.map((key:string) => rankGroups[key]));
-  return rankGroups.map((key:string) => rankGroups[key])
+  const rankGroups = getCardGroupsByRank(hand);
+  return Object.keys(rankGroups).map((key:string) => rankGroups[key])
                     .filter((cardGroup: Card[]) => cardGroup.length)
                     .filter((cardGroup: Card[]) => cardGroup.length === 4)
                     .length === 1;
 }
+const isStraight = (hand: Card[]) => hasStraight(hand)
 // const isFullHouse = (sortedHand: Card[]) => isThreeOfAkind(sortedHand) && isPair(sortedHand);
 const isFlush = (sortedHand: Card[]) => everyCardIsSameSuit(sortedHand);
 
