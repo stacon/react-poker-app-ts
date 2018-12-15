@@ -1,4 +1,4 @@
-import Suit from '../references/suit.reference';
+import {Suit} from '../references/';
 import Card from './card.model';
 import shuffle from 'shuffle-array';
 
