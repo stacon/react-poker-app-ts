@@ -1,5 +1,5 @@
 import Suit from '../references/suit.reference';
-import {RankName} from '../references/';
+import {RankName} from '../references';
 
 const getCardValueByOrderNumber = (order: number): number => (order !== 1) ? order : 14;
 
