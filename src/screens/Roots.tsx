@@ -1,15 +1,34 @@
-// import React from 'react';
-// import { Router } from 'react-router';
-// import { Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { Router, Route, Switch } from 'react-router';
+import { createBrowserHistory } from 'history';
 
-// import Board from '../components/Board';
+import Board from '../components/Board';
+import { IState } from 'src/containers/App';
 
-// const ScreensRoot = () => (
-//   <Router>
-//     <Switch>
-//       <Route path="/game" component={Board} />
-//     </Switch>
-//   </Router>
-// );
+export interface AppProps {
+  routerProps: {
+    state: IState
+  }
+}
 
-// export default ScreensRoot;
+const history = createBrowserHistory();
+
+const ScreensRoot = (props: AppProps) => (
+  <Router history={history}>
+    <Switch>
+      <Route
+        path="/"
+        exact
+        render={
+          () =>(
+            <Board
+              state={props.routerProps.state}
+            ></Board>
+          )
+        }
+      />
+    </Switch>
+  </Router>
+);
+
+export default ScreensRoot;
