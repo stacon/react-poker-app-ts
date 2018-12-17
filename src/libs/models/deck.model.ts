@@ -1,6 +1,6 @@
-import Suit from '../references/suit.reference';
+import {Suit} from '../references';
 import Card from './card.model';
-import shuffle from '';
+import shuffle from 'shuffle-array';
 
 // const dealCards = (deck: Card[], number: number) => deck.splice(0, number);
 // const dealFiveCards = (deck: Card[]) => dealCards(deck, 5);
@@ -16,7 +16,7 @@ const generateSuitDeck = (suit: Suit): Card[] => {
 }
 
 const generateDeck = (shuffled: boolean = false) => {
-  const generatedDeck = Object.keys(Suit).map(i => Suit[i]).reduce((deck: Card[], suitName: string) => [...deck, ...generateSuitDeck(suitName)], []);
+  const generatedDeck = Object.keys(Suit).map(i => Suit[i]).reduce((deck: Card[], suitName: Suit) => [...deck, ...generateSuitDeck(suitName)], []);
   return (shuffled) ? shuffle(generatedDeck, { 'copy': true }) : generatedDeck;
 }
 
