@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import SingleCard from '../../components/SingleCard/SingleCard';
 import CardProperties from '../../classes/CardProperties';
 
@@ -28,4 +30,4 @@ const Board = (props: appState) => {
   );
 };
 
-export default Board;
+export default connect(null, null)(Board); // needs clarifying
