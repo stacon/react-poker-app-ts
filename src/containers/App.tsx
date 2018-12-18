@@ -24,7 +24,7 @@ class App extends React.Component {
     return (
       <div className="App">
           <div id="container">
-            <div className="playingCards fourColours rotateHand ui-tabs ui-widget ui-widget-content ui-corner-all" id="cards">
+            <div className="playingCards fourColours faceImages" id="cards">
               <Hand cards={this.fiveCards}/>
             </div>
           </div>

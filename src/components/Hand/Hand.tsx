@@ -18,7 +18,7 @@ const renderCardSet = (cards:CardProperties[]) => (
 )))
 
 const Hand = (props: HandProps) => (
-  <ul className="hand">
+  <ul className="table">
     {renderCardSet(props.cards)}
   </ul>
 )

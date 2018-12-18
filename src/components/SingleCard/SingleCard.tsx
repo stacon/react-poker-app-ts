@@ -9,25 +9,21 @@ interface Props {
 
 
 const SingleCard = (props: Props) => {
-  console.log(props)
-
-    return (
-
-        <a
-            className={`card ${props.flipped? props.card.suit.toLowerCase() : '' } ${props.flipped? 'rank'+props.card.rank.toString() : ''}`}
-            onClick={ props.onFlippingCard }
+    const symbol: string = `&${props.card.suit.toString().toLowerCase()};`;
+    return (props.flipped ?
+        (
+            <div
+                className={`card ${props.flipped ? 'rank-' + props.card.rank.toString() : ''} ${props.flipped ? props.card.suit.toLowerCase() : ''}`}
+                onClick={props.onFlippingCard}
             >
-            { props.flipped
-                    ?
-                (
-                    <div className="face"></div>
-                )
-                    :
-                (
-                    <div className="back"></div>
-                )
-            }
-        </a>
+                <span className="rank">{props.card.rank.toString()}</span>
+                <span className="suit">{symbol}</span>
+            </div>
+        )
+        :
+        (
+            <div className="card back"></div>
+        )
     )
 };
 
