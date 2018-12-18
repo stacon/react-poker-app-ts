@@ -15,16 +15,16 @@ class App extends React.Component {
   public fiveCards: CardProperties[] = [
     new CardProperties(Suit.spades, 1),
     new CardProperties(Suit.hearts, 2),
-    new CardProperties(Suit.clubs, 3),
-    new CardProperties(Suit.diamonds, 4),
-    new CardProperties(Suit.spades, 5),
+    new CardProperties(Suit.clubs, 11),
+    new CardProperties(Suit.diamonds, 12),
+    new CardProperties(Suit.spades, 13),
   ]; // temporary
 
   public render() {
     return (
       <div className="App">
           <div id="container">
-            <div className="playingCards fourColours faceImages" id="cards">
+            <div className="playingCards fourColours faceImages rotateHand" id="cards">
               <Hand cards={this.fiveCards}/>
             </div>
           </div>
