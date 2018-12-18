@@ -1,8 +1,9 @@
 import * as React from 'react';
 import './App.css';
 
-import SingleCard from '../components/SingleCard/SingleCard'
 import CardProperties from '../classes/CardProperties'
+import { Suit } from 'src/libs/references';
+import Hand from 'src/components/Hand/Hand';
 
 
 class App extends React.Component {
@@ -11,25 +12,21 @@ class App extends React.Component {
     isFlipped: false // temporary
   }
 
-  newCard = new CardProperties('spades ', 'rank1'); // temporary
-
-
-  renderSingleCard(card: CardProperties) { // temporary
-
-    return <SingleCard
-              card={card}
-              flipped={this.state.isFlipped}
-              onFlippingCard={ () => {
-                this.setState({ isFlipped: !this.state.isFlipped });
-              }}
-            />;
-  }
+  public fiveCards: CardProperties[] = [
+    new CardProperties(Suit.spades, 1),
+    new CardProperties(Suit.hearts, 2),
+    new CardProperties(Suit.clubs, 3),
+    new CardProperties(Suit.diamonds, 4),
+    new CardProperties(Suit.spades, 5),
+  ]; // temporary
 
   public render() {
     return (
       <div className="App">
           <div id="container">
-            {this.renderSingleCard(this.newCard)} {/* // temporary */}
+            <div className="playingCards fourColours rotateHand ui-tabs ui-widget ui-widget-content ui-corner-all" id="cards">
+              <Hand cards={this.fiveCards}/>
+            </div>
           </div>
       </div>
     );

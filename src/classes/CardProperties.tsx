@@ -1,6 +1,8 @@
+import { Suit } from 'src/libs/references';
+
 export default class CardProperties {
     constructor(
-        public suit: string,
-        public rank: string
+        public suit: Suit,
+        public rank: number
     ) {}
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import CardProperties from '../../classes/CardProperties';
-import './stylesheet.css';
 
 interface Props {
     card: CardProperties;
@@ -10,11 +9,12 @@ interface Props {
 
 
 const SingleCard = (props: Props) => {
+  console.log(props)
 
     return (
 
-        <div
-            className={`card ${props.flipped? props.card.suit : '' } ${props.flipped? props.card.rank : ''}`}
+        <a
+            className={`card ${props.flipped? props.card.suit.toLowerCase() : '' } ${props.flipped? 'rank'+props.card.rank.toString() : ''}`}
             onClick={ props.onFlippingCard }
             >
             { props.flipped
@@ -27,7 +27,7 @@ const SingleCard = (props: Props) => {
                     <div className="back"></div>
                 )
             }
-        </div>
+        </a>
     )
 };
 
