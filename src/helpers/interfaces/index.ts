@@ -11,6 +11,6 @@ export interface IPlayer {
 export interface ICard {
   id: number,
   suit: string,
-  rank: number,
+  rank: string,
   isFlipped: boolean
 };

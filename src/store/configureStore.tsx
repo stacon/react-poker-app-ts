@@ -8,13 +8,13 @@ const initialState: IState = {
       {
         id: 1,
         suit: Suit.spades,
-        rank: 1,
+        rank: '1',
         isFlipped: false
       },
       {
         id: 2,
         suit: Suit.hearts,
-        rank: 10,
+        rank: 'A',
         isFlipped: false
       }
     ]
