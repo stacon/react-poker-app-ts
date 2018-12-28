@@ -1,33 +1,38 @@
+// core
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+// components
 import SingleCard from '../../components/SingleCard/SingleCard';
+
+// actions
+import { selectedCard } from '../../actions/index';
+
+// helpers
 import CardProperties from '../../classes/CardProperties';
 
-import { IState } from 'src/containers/App';
-
-interface appState {
-  state: IState
-}
-
-const newCard = new CardProperties('spades ', 'rank1'); // temporary
-const renderSingleCard = (card: CardProperties, obj: IState) => { // temporary
-
-  return <SingleCard
-            card={card}
-            flipped={obj.isFlipped}
-            onFlippingCard={ () => {
-              //this.setState({ isFlipped: !this.state.isFlipped }); // must dispatch flip action
-            }}
-          />;
-}
-
-const Board = (props: appState) => {
-  return (
-    <div>
-      { renderSingleCard(newCard, props.state ) }
-    </div>
-  );
+const mapStateToProps = (state: any) => {
+  return { card: state.hand[0] }; // temp
 };
 
-export default connect(null, null)(Board); // needs clarifying
+const mapDispatchToProps =  (dispatch: any)  => {
+  return bindActionCreators({ selectedCard }, dispatch);
+};
+
+const Board = (props: any): JSX.Element => {
+
+      console.log('card props: ', props);
+
+      return <SingleCard
+                card = { new CardProperties(props.suit, props.rank) }
+                flipped = { props.isFlipped }
+                onFlippingCard = { () => {
+                                          console.log('card is clicked', props.card.id);
+                                          props.selectedCard(props.card.id, !props.isFlipped);
+                                    }
+                                  }
+              />;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

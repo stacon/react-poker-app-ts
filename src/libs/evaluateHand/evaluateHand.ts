@@ -1,5 +1,5 @@
 import Card from '../models/card.model';
-import EvaluationResult from '../../classes/evaluationResult.class';
+//import EvaluationResult from '../../classes/evaluationResult.class';
 import _ from 'lodash';
 
 const getCardGroupsBySuit = (hand: Card[]) => _.groupBy(hand, 'suit');
@@ -55,6 +55,10 @@ const isFlush = (sortedHand: Card[]) => everyCardIsSameSuit(sortedHand);
 //     highCard = 1
 // }
 
-const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult => new EvaluationResult(); //TODO: Implement
+//const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult => new EvaluationResult(); //TODO: Implement
+
+console.info({  isRoyalFlush, isStraightFlush , isStraight, isFlush });
 
 export { isFourOfAKind };
+
+//  NEVER COMMIT THIS FILE

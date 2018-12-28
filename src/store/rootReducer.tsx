@@ -1,5 +1,8 @@
-const initialState = {};
+import { combineReducers } from 'redux';
+import allReducers from 'src/reducers';
 
-const rootReducer = (state = initialState, action = { type: ''}) => state;
+console.log('>>>> All_Reducers', allReducers)
+
+const rootReducer = combineReducers(allReducers);
 
 export default rootReducer;

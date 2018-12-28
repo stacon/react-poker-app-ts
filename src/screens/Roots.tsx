@@ -3,29 +3,16 @@ import { Router, Route, Switch } from 'react-router';
 import { createBrowserHistory } from 'history';
 
 import Board from '../components/Board';
-import { IState } from 'src/containers/App';
-
-export interface AppProps {
-  routerProps: {
-    state: IState
-  }
-}
 
 const history = createBrowserHistory();
 
-const ScreensRoot = (props: AppProps) => (
+const ScreensRoot = () => (
   <Router history={history}>
     <Switch>
       <Route
         path="/"
         exact
-        render={
-          () =>(
-            <Board
-              state={props.routerProps.state}
-            ></Board>
-          )
-        }
+        render={ () =><Board></Board> }
       />
     </Switch>
   </Router>
