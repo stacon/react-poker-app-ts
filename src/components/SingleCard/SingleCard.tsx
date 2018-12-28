@@ -25,7 +25,7 @@ const SingleCard = (props: any): JSX.Element => {
     return (
         <li
             style={{ 'cursor': 'pointer'} }
-            className={`card ${ _card.isFlipped ? 'rank-'+_card.rank +' '+ _card.suit : 'back' }`}
+            className={`card ${ _card.isFlipped ? 'rank-'+_card.rank.toString().toLowerCase() +' '+ _card.suit : 'back' }`}
             onClick={ () => props.selectedCard( _card.id, !_card.isFlipped ) }
             >
             { _card.isFlipped
