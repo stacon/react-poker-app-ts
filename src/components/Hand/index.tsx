@@ -12,13 +12,12 @@ import CardProperties from '../../classes/CardProperties';
 import { IState, ICard } from '../../helpers/interfaces';
 
 const mapStateToProps = (state: IState): { [key: string]: ICard[] } => {
-  return { hand: state.hand }; // temp
+  return { hand: state.hand };
 };
 
-const Hand = (props: any): JSX.Element => { // temp
+const Hand = (props: any): JSX.Element => {
 
-
-      const handArr: ICard[] = props.hand.length ? props.hand : [];
+      const handArr: ICard[] = props.hand;
       console.log('Hand props: ', handArr);
 
       return (

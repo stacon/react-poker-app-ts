@@ -12,12 +12,9 @@ export default function ( state: ICard[] = [], action: any ):ICard[] {
       const card = state.find( item => item.id === action.payload.id );
       card ? card.isFlipped = action.payload.isFlipped : card;
 
-      console.log('>>>> card', card)
-      console.log('>>>> state', state)
-
-      return {
+      return [
         ...state
-      };
+      ];
     default:
       return state;
   };
