@@ -1,23 +1,31 @@
 import React from 'react';
-import CardProperties from '../../classes/CardProperties';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+// actions
+import { selectedCard } from '../../actions';
+
 import './stylesheet.css';
 
-interface Props {
-    card: CardProperties;
-    flipped: boolean;
-    onFlippingCard: () => void
-}
+// Interfaces
+import { ICard } from '../../helpers/interfaces';
+
+const mapDispatchToProps =  (dispatch: any)  => {
+return bindActionCreators({ selectedCard }, dispatch);
+};
 
 
-const SingleCard = (props: Props) => {
+const SingleCard = (props: any) => {
+
+    const _card: ICard  = props.card;
 
     return (
 
-        <div
-            className={`card ${props.flipped? props.card.suit : '' } ${props.flipped? props.card.rank : ''}`}
-            onClick={ props.onFlippingCard }
+        <li
+            className={`card ${ _card.isFlipped ? _card.suit : '' } ${ _card.isFlipped? _card.rank : '' }`}
+            onClick={ () => props.selectedCard( _card.id, !_card.isFlipped ) }
             >
-            { props.flipped
+            { _card.isFlipped
                     ?
                 (
                     <div className="face"></div>
@@ -27,8 +35,8 @@ const SingleCard = (props: Props) => {
                     <div className="back"></div>
                 )
             }
-        </div>
+        </li>
     )
 };
 
-export default SingleCard;
+export default connect(undefined, mapDispatchToProps)(SingleCard);
