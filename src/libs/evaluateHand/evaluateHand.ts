@@ -9,7 +9,13 @@ const isStraight = (hand: Card[]) => hasStraight(hand);
 const isFullHouse = (sortedHand: Card[]) => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
 const isFlush = (sortedHand: Card[]) => everyCardIsSameSuit(sortedHand);
 
-const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult => {
+/**
+ * From an array of 5 card you can get an evaluation result
+ * @param {Array<Card>} hand
+ * @returns {EvaluationResult}
+ */
+const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult | null => {
+  if (hand.length !== 5) { console.error(`Number of cards expected is 5. Got ${hand.length}`); return null;}
   const evalResult: EvaluationResult = new EvaluationResult();
   evalResult.highCardValue = getHighCard(hand).value
 
