@@ -1,13 +1,14 @@
 import * as React from 'react';
 import './App.css';
+
 import ScreensRoot from 'src/screens/Roots';
 
 class App extends React.Component {
 
   public render() {
     return (
-      <div className="App">
-          <div id="container">
+      <div className="App" id="container">
+          <div className="playingCards">
             <ScreensRoot
             ></ScreensRoot>
           </div>

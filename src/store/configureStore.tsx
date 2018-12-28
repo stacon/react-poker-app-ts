@@ -1,19 +1,20 @@
 import { createStore } from "redux";
 import rootReducer from "./rootReducer";
-import { IState } from 'src/helpers/interfaces';
+import { IState } from '../helpers/interfaces';
+import { Suit } from '../libs/references';
 
 const initialState: IState = {
     hand: [
       {
         id: 1,
-        suit: 'spades',
-        rank: 'rank1',
+        suit: Suit.spades,
+        rank: 1,
         isFlipped: false
       },
       {
         id: 2,
-        suit: 'spades',
-        rank: 'rank10',
+        suit: Suit.hearts,
+        rank: 10,
         isFlipped: false
       }
     ]

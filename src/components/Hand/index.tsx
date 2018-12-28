@@ -21,7 +21,7 @@ const Hand = (props: any): JSX.Element => {
       console.log('Hand props: ', handArr);
 
       return (
-        <ul>
+        <ul className="table">
           {
             handArr.map( ( item: ICard, i: number) => {
               return <SingleCard key={i} card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped)} />;
