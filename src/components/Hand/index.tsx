@@ -17,18 +17,20 @@ const mapStateToProps = (state: IState): { [key: string]: ICard[] } => {
 
 const Hand = (props: any): JSX.Element => { // temp
 
-      console.log('card props: ', props);
+
+      const handArr: ICard[] = props.hand.length ? props.hand : [];
+      console.log('Hand props: ', handArr);
 
       return (
         <ul>
           {
-            props.hand.map( ( item: ICard, i: number) => {
+            handArr.map( ( item: ICard, i: number) => {
               return <SingleCard key={i} card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped)} />;
             })
           }
         </ul>
       )
 
-}
+};
 
 export default connect(mapStateToProps)(Hand);

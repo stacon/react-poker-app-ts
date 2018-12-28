@@ -15,7 +15,9 @@ export default function ( state: ICard[] = [], action: any ):ICard[] {
       console.log('>>>> card', card)
       console.log('>>>> state', state)
 
-      return state;
+      return {
+        ...state
+      };
     default:
       return state;
   };

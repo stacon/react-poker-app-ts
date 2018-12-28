@@ -9,7 +9,7 @@ import Hand from '../Hand';
 
 const Board = (): JSX.Element => { // temp
 
-      return <Hand/>
+  return <Hand/>
 
 }
 
