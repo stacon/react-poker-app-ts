@@ -1,102 +1,48 @@
 import React from 'react';
-import CardProperties from '../../classes/CardProperties';
-import { Suit } from 'src/libs/references';
 
-interface Props {
-    card: CardProperties;
-    flipped: boolean;
-    onFlippingCard: () => void
-}
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const getSymbol = (suit: Suit) => {
-    switch(suit){
-        case(Suit.spades): {
-            return '♠';
-        }
-        case(Suit.clubs): {
-            return '♣';
-        }
-        case(Suit.hearts): {
-            return '♥';
-        }
-        case(Suit.diamonds): {
-            return '♦';
-        }
-    }
-}
+// actions
+import { selectedCard } from '../../actions';
 
-const getSuitCSSClass = (suit: Suit) => {
-    switch(suit){
-        case(Suit.spades): {
-            return 'spades';
-        }
-        case(Suit.clubs): {
-            return 'clubs';
-        }
-        case(Suit.hearts): {
-            return 'hearts';
-        }
-        case(Suit.diamonds): {
-            return 'diams';
-        }
-    }
-}
+// import './stylesheet.css';
 
-const getCardRank = (rank: number) => {
-    const rankPrefix = 'rank-'
-    switch(rank){
-        case(13): {
-            return rankPrefix+'k'
-        }
-        case(12): {
-            return rankPrefix+'q'
-        }
-        case(11): {
-            return rankPrefix+'j'
-        }
-        case(1): {
-            return rankPrefix+'a'
-        }
-        default: {
-            return rankPrefix+rank
-        }
-    }
-}
 
-const getRankName = (rank: number) => {
-    switch(rank){
-        case(13): {
-            return 'K'
-        }
-        case(12): {
-            return 'Q'
-        }
-        case(11): {
-            return 'J'
-        }
-        case(1): {
-            return 'A'
-        }
-        default: {
-            return rank.toString()
-        }
-    }
-}
+// Interfaces
+import { ICard } from '../../helpers/interfaces';
 
-const SingleCard = (props: Props) => {
-    return (props.flipped ?
-        (
-            <div
-                className={`card ${getCardRank(props.card.rank)} ${getSuitCSSClass(props.card.suit)}`}
-                onClick={props.onFlippingCard}
+const mapDispatchToProps =  (dispatch: any)  => {
+return bindActionCreators({ selectedCard }, dispatch);
+};
+
+
+
+const SingleCard = (props: any): JSX.Element => {
+
+    const _card: ICard  = props.card;
+
+    return (
+        <li
+            style={{ 'cursor': 'pointer'} }
+            className={`card ${ _card.isFlipped ? 'rank-'+_card.rank.toString().toLowerCase() +' '+ _card.suit.toString().toLowerCase() : 'back' }`}
+            onClick={ () => props.selectedCard( _card.id, !_card.isFlipped ) }
             >
-                <span className="rank">{getRankName(props.card.rank)}</span>
-                <span className="suit">{getSymbol(props.card.suit)}</span>
-            </div>
-        ):(
-            <div className="card back"></div>
-        )
+            { _card.isFlipped
+                    ?
+                (
+                    <div className="inner-wrapper">
+                        <span className="rank">{ `${_card.rank}` }</span>
+                        <span className="suit" dangerouslySetInnerHTML={{__html: `&${_card.suit.toLowerCase()};`}}></span>
+                    </div>
+                )
+                    :
+                (
+                    ''
+                )
+            }
+        </li>
     )
 };
 
-export default SingleCard;
+export default connect(undefined, mapDispatchToProps)(SingleCard);

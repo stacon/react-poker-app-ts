@@ -1,6 +1,8 @@
 import Card from '../models/card.model';
+
 import { EvaluationResult } from '../../classes/evaluationResult.class';
 import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs } from './helpers';
+
 
 
 const isRoyalFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
@@ -8,6 +10,7 @@ const isStraightFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && 
 const isStraight = (hand: Card[]) => hasStraight(hand);
 const isFullHouse = (sortedHand: Card[]) => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
 const isFlush = (sortedHand: Card[]) => everyCardIsSameSuit(sortedHand);
+
 
 /**
  * From an array of 5 card you can get an evaluation result
@@ -54,3 +57,4 @@ const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult | null => {
 }
 
 export { getEvaluationResultFromHand };
+

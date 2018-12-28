@@ -1,8 +1,10 @@
-import { Suit } from 'src/libs/references';
+//import { Suit } from 'src/libs/references';
 
 export default class CardProperties {
     constructor(
-        public suit: Suit,
-        public rank: number
+        public id: number,
+        public suit: string,
+        public rank: string,
+        public isFlipped: boolean
     ) {}
 }
