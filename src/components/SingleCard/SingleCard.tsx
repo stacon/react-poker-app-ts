@@ -1,34 +1,48 @@
 import React from 'react';
-import CardProperties from '../../classes/CardProperties';
-import './stylesheet.css';
 
-interface Props {
-    card: CardProperties;
-    flipped: boolean;
-    onFlippingCard: () => void
-}
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+// actions
+import { selectedCard } from '../../actions';
+
+// import './stylesheet.css';
 
 
-const SingleCard = (props: Props) => {
+// Interfaces
+import { ICard } from '../../helpers/interfaces';
+
+const mapDispatchToProps =  (dispatch: any)  => {
+return bindActionCreators({ selectedCard }, dispatch);
+};
+
+
+
+const SingleCard = (props: any): JSX.Element => {
+
+    const _card: ICard  = props.card;
 
     return (
-
-        <div
-            className={`card ${props.flipped? props.card.suit : '' } ${props.flipped? props.card.rank : ''}`}
-            onClick={ props.onFlippingCard }
+        <li
+            style={{ 'cursor': 'pointer'} }
+            className={`card ${ _card.isFlipped ? 'rank-'+_card.rank.toString().toLowerCase() +' '+ _card.suit.toString().toLowerCase() : 'back' }`}
+            onClick={ () => props.selectedCard( _card.id, !_card.isFlipped ) }
             >
-            { props.flipped
+            { _card.isFlipped
                     ?
                 (
-                    <div className="face"></div>
+                    <div className="inner-wrapper">
+                        <span className="rank">{ `${_card.rank}` }</span>
+                        <span className="suit" dangerouslySetInnerHTML={{__html: `&${_card.suit.toLowerCase()};`}}></span>
+                    </div>
                 )
                     :
                 (
-                    <div className="back"></div>
+                    ''
                 )
             }
-        </div>
+        </li>
     )
 };
 
-export default SingleCard;
+export default connect(undefined, mapDispatchToProps)(SingleCard);

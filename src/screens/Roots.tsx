@@ -1,15 +1,21 @@
-// import React from 'react';
-// import { Router } from 'react-router';
-// import { Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { Router, Route, Switch } from 'react-router';
+import { createBrowserHistory } from 'history';
 
-// import Board from '../components/Board';
+import Board from '../components/Board';
 
-// const ScreensRoot = () => (
-//   <Router>
-//     <Switch>
-//       <Route path="/game" component={Board} />
-//     </Switch>
-//   </Router>
-// );
+const history = createBrowserHistory();
 
-// export default ScreensRoot;
+const ScreensRoot = () => (
+  <Router history={history}>
+    <Switch>
+      <Route
+        path="/"
+        exact
+        render={ () =><Board></Board> }
+      />
+    </Switch>
+  </Router>
+);
+
+export default ScreensRoot;
