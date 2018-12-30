@@ -10,7 +10,7 @@ const getCardGroupsByRank = (hand: Card[]) => _.groupBy(hand, 'rank');
  * @param {number} kindNumber Number of cards expected (e.g. For a four cards of a kind it's 4)
  * @param {number} sets Number of sets expected (e.g. for 2 pairs set it to 2)
  */
-const hasNumberOfCardOfAKind = (hand:Card[], kindNumber: number, sets: number): boolean => {
+const hasNumberOfCardsOfAKind = (hand:Card[], kindNumber: number, sets: number): boolean => {
   const rankGroups = getCardGroupsByRank(hand);
   return Object.keys(rankGroups).map((key:string) => rankGroups[key])
   .filter((cardGroup: Card[]) => cardGroup.length)
@@ -28,21 +28,30 @@ const hasStraight = (hand: Card[]): boolean => _.sortBy(hand, 'rank').reduce((is
 
 const everyCardIsSameSuit = (hand: Card[]): boolean => Object.keys(getCardGroupsBySuit(hand)).length === 1;
 
-const isRoyal = (sortedHand: Card[]): boolean => {
-  if (sortedHand[0].value !==14) return false;
-  const sortedHandByValue = sortedHand.slice().sort((cardA: Card,cardB: Card) => cardA.value - cardB.value);
+const isRoyal = (hand: Card[]): boolean => {
+  const sortedHandByValue = _.sortBy(hand, 'rank');
+  if (sortedHandByValue[0].value !==14) return false;
   return sortedHandByValue.reduce((isRoyal: boolean, currentCard: Card, i: number)=>{
       if (i === 0) return isRoyal && true;
-      if (sortedHandByValue[i-1].value + 1 === currentCard.value) return isRoyal && true;
+      if (sortedHandByValue[i-1].rank + 1 === currentCard.rank) return isRoyal && true;
       return isRoyal && false;
   }, true);
 }
 
-const hasFourOfAKind = (hand: Card[]): Function => _.partial(hasNumberOfCardOfAKind, hand, 4, 1);
+const hasFourOfAKind = (hand: Card[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 4, 1)(hand);
 
-const hasThreeOfAKind = (hand: Card[]): Function => _.partial(hasNumberOfCardOfAKind, hand, 3, 1);
-const hasTwoPairs = (hand: Card[]): Function => _.partial(hasNumberOfCardOfAKind, hand, 2, 2);
-const hasOnePair = (hand: Card[]): Function => _.partial(hasNumberOfCardOfAKind, hand, 2, 1);
-const getHighCard = (hand: Card[]): Card => hand.slice().sort((cardA: Card,cardB: Card) => cardA.value - cardB.value)[0];
+const hasThreeOfAKind = (hand: Card[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 3, 1)(hand);
+const hasTwoPairs = (hand: Card[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 2, 2)(hand);
+const hasOnePair = (hand: Card[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 2, 1)(hand);
+const getHighCard = (hand: Card[]): Card => _.sortBy(hand, 'value').reverse()[0];
 
-export { everyCardIsSameSuit, isRoyal, hasStraight, hasFourOfAKind,  hasThreeOfAKind, hasTwoPairs, hasOnePair, getHighCard}
+export {
+  everyCardIsSameSuit,
+  isRoyal,
+  hasStraight,
+  hasFourOfAKind,
+  hasThreeOfAKind,
+  hasTwoPairs,
+  hasOnePair,
+  getHighCard,
+}
