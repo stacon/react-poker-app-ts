@@ -16,13 +16,16 @@ const mapDispatchToProps =  (dispatch: any)  => {
 const SingleCard = (props: any): JSX.Element => {
 
     const _card: ICard  = props.card;
-    console.log(props.card.isFlipped)
+    
 
     return (
         <li
             style={{ 'cursor': 'pointer'} }
             className={`card ${ _card.isFlipped ? 'rank-'+_card.rank.toString().toLowerCase() +' '+ _card.suit.toString().toLowerCase() : 'back' }`}
-            onClick={ () => props.selectedCard( _card.playerId ,_card.id, !_card.isFlipped, _card.cardIndex ) }
+            onClick={ () => {
+                console.log(_card)
+                props.selectedCard( _card.playerId ,_card.id, !_card.isFlipped, _card.cardIndex )
+            } }
             >
             { _card.isFlipped
                     ?

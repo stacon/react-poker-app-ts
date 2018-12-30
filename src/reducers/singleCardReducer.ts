@@ -16,7 +16,7 @@ export default function ( state: IPlayer[] = [], action: any ):IPlayer[] {
         [playerIndex] : {
           hand: {
             [cardIndex]: {
-              isFlipped: { $set: action.payload.cardId }
+              isFlipped: { $set: action.payload.isFlipped }
              }
            }
         }
