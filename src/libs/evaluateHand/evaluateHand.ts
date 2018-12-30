@@ -1,6 +1,6 @@
 import Card from '../models/card.model';
 import { EvaluationResult } from '../../classes/evaluationResult.class';
-import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs } from './helpers';
+import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './helpers';
 
 
 const isRoyalFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
@@ -27,9 +27,12 @@ const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult | null => {
   }
   else if(hasFourOfAKind(hand)) {
     evalResult.power = 8
+    evalResult.fourOfAKindValue = getFourOfAKindGroupValue(hand)
   }
   else if(isFullHouse(hand)) {
     evalResult.power = 7
+    evalResult.ThreeOfAKindValue = getThreeOfAKindGroupValue(hand);
+    evalResult.highPairValue = getPairGroupValue(hand)
   }
   else if(isFlush(hand)) {
     evalResult.power = 6
@@ -39,12 +42,18 @@ const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult | null => {
   }
   else if(hasThreeOfAKind(hand)) {
     evalResult.power = 4
+    evalResult.ThreeOfAKindValue = getThreeOfAKindGroupValue(hand);
   }
   else if(hasTwoPairs(hand)) {
+    const pairValues: PairValues = getPairsGroupValues(hand);
+
     evalResult.power = 3
+    evalResult.highPairValue = pairValues.highPairValue;
+    evalResult.lowPairValue = pairValues.lowPairValue;
   }
   else if(hasOnePair(hand)) {
     evalResult.power = 2
+    evalResult.highPairValue = getPairGroupValue(hand)
   }
   else {
     evalResult.power = 1
