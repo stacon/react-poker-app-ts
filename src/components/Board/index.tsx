@@ -3,14 +3,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // component
-import Hand from '../Hand';
+import Player from '../Player';
 
+// interfaces
+import { IState, IPlayer } from '../../helpers/interfaces';
 
+const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
+  return { players: state.players };
+};
 
-const Board = (): JSX.Element => { // temp
+const Board = (props: any): JSX.Element => {
 
-  return <Hand/>
+  const { players } = props;
+
+  return (
+    <section>
+      {
+        players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
+      }
+    </section>
+  )
 
 }
 
-export default connect(undefined)(Board);
+export default connect(mapStateToProps)(Board);

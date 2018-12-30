@@ -6,27 +6,23 @@ import { bindActionCreators } from 'redux';
 // actions
 import { selectedCard } from '../../actions';
 
-// import './stylesheet.css';
-
-
 // Interfaces
 import { ICard } from '../../helpers/interfaces';
 
 const mapDispatchToProps =  (dispatch: any)  => {
-return bindActionCreators({ selectedCard }, dispatch);
+    return bindActionCreators({ selectedCard }, dispatch);
 };
-
-
 
 const SingleCard = (props: any): JSX.Element => {
 
     const _card: ICard  = props.card;
+    console.log(props.card.isFlipped)
 
     return (
         <li
             style={{ 'cursor': 'pointer'} }
             className={`card ${ _card.isFlipped ? 'rank-'+_card.rank.toString().toLowerCase() +' '+ _card.suit.toString().toLowerCase() : 'back' }`}
-            onClick={ () => props.selectedCard( _card.id, !_card.isFlipped ) }
+            onClick={ () => props.selectedCard( _card.playerId ,_card.id, !_card.isFlipped, _card.cardIndex ) }
             >
             { _card.isFlipped
                     ?
@@ -38,11 +34,11 @@ const SingleCard = (props: any): JSX.Element => {
                 )
                     :
                 (
-                    ''
+                    <div className="inner-wrapper"/>
                 )
             }
         </li>
-    )
+    );
 };
 
 export default connect(undefined, mapDispatchToProps)(SingleCard);
