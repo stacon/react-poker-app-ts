@@ -60,7 +60,6 @@ my-app/
     screens/
         Roots.tsx
     store/
-        actions.tsx
         configureStore.tsx
         rootReducer.tsx
     index.css
