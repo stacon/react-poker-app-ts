@@ -1,20 +1,27 @@
 //
-//import update from 'immutability-helper';
+import update from 'immutability-helper';
 
 // interfaces
-import { ICard } from 'src/helpers/interfaces';
+import { IPlayer } from 'src/helpers/interfaces';
 
-export default function ( state: ICard[] = [], action: any ):ICard[] {
+export default function ( state: IPlayer[] = [], action: any ):IPlayer[] {
 
   switch(action.type) {
     case "CARD_FLIPPED":
 
-      const card = state.find( item => item.id === action.payload.id );
-      card ? card.isFlipped = action.payload.isFlipped : card;
+      const playerIndex = action.payload.playerId;
+      const cardIndex = action.payload.cardIndex;
 
-      return [
-        ...state
-      ];
+      return update(state, {
+        [playerIndex] : {
+          hand: {
+            [cardIndex]: {
+              isFlipped: { $set: action.payload.isFlipped }
+             }
+           }
+        }
+      });
+
     default:
       return state;
   };

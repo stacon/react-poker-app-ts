@@ -1,7 +1,7 @@
-import hand from './singleCardReducer';
+import players from './singleCardReducer';
 
 const allReducers  = {
-  hand
+  players
 };
 
 export default allReducers;

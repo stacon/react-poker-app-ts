@@ -8,7 +8,7 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App" id="container">
-          <div className="playingCards">
+          <div className="playingCards faceImages">
             <ScreensRoot
             ></ScreensRoot>
           </div>
