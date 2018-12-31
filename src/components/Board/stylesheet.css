@@ -10,3 +10,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.players-ordering {
+  display: flex;
+  flex-direction: column-reverse;
+}

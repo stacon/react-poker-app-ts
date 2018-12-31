@@ -21,7 +21,7 @@ const Board = (props: any): JSX.Element => {
 
   return (
     <section className="board_wrapper">
-      <div className="inner-wrapper">
+      <div className="inner-wrapper players-ordering">
         {
           players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
         }
