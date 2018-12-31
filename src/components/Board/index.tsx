@@ -8,6 +8,9 @@ import Player from '../Player';
 // interfaces
 import { IState, IPlayer } from '../../helpers/interfaces';
 
+//
+import './stylesheet.css';
+
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
   return { players: state.players };
 };
@@ -18,9 +21,11 @@ const Board = (props: any): JSX.Element => {
 
   return (
     <section className="board_wrapper">
-      {
-        players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
-      }
+      <div className="inner-wrapper">
+        {
+          players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
+        }
+      </div>
     </section>
   )
 

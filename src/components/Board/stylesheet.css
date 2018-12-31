@@ -1,0 +1,12 @@
+.board_wrapper {
+  width: 100vw;
+  height: 100vw;
+  position: relative;
+}
+
+.board_wrapper > .inner-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

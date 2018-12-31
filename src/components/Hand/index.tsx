@@ -18,7 +18,7 @@ const Hand = (props: any): JSX.Element => {
     const handArr: ICard[] = props.hand;
 
     return (
-      <ul className="table tbl_clear">
+      <ul className="table tbl_clear m-b-0">
         {
           handArr.map( ( item: ICard, i: number) => {
             return <SingleCard

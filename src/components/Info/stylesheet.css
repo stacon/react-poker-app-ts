@@ -1,0 +1,7 @@
+.player_info {
+  position: absolute;
+  bottom: 0;
+  right:-50%;
+  color: white;
+  background: #000;
+}
