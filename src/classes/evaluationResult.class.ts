@@ -1,5 +1,3 @@
-import { Card } from '../libs/models'
-
 const winningHandNames = {
   10: 'Royal Flush',
   9: 'Straight Flush',
@@ -16,12 +14,14 @@ const winningHandNames = {
 const getWinningHandName = (power: number) => winningHandNames[power];
 
 class EvaluationResult {
-  power: number;
-  highCardValue: number;
-  fourOfAKindValue?: number;
-  ThreeOfAKindValue?: number;
-  highPair?: Card[];
-  lowPair?: Card[];
+  constructor(
+    public power: number = 0,
+    public highCardValue: number = 0,
+    public fourOfAKindValue : number = 0,
+    public ThreeOfAKindValue : number = 0,
+    public highPairValue : number = 0,
+    public lowPairValue : number = 0,
+  ){}
 }
 
-export {EvaluationResult, getWinningHandName}
+export { EvaluationResult, getWinningHandName }
