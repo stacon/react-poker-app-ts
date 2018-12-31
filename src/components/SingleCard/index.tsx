@@ -9,6 +9,9 @@ import { selectedCard } from '../../actions';
 // Interfaces
 import { ICard } from '../../helpers/interfaces';
 
+//css
+import './stylesheet.css';
+
 const mapDispatchToProps =  (dispatch: any)  => {
     return bindActionCreators({ selectedCard }, dispatch);
 };

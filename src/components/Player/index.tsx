@@ -10,7 +10,7 @@ const Player = (props: any): JSX.Element => { // temp
   const { hand, index } = props.playerObj;
 
   return (
-            <article>
+            <article className="player">
               <Hand
                 hand={ hand }
                 cardOwner={ index }

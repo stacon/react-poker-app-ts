@@ -17,7 +17,7 @@ const Board = (props: any): JSX.Element => {
   const { players } = props;
 
   return (
-    <section>
+    <section className="board_wrapper">
       {
         players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
       }

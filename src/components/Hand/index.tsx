@@ -10,12 +10,15 @@ import CardProperties from '../../classes/CardProperties';
 // interfaces
 import { ICard } from '../../helpers/interfaces';
 
+// css
+import './stylesheet.css';
+
 const Hand = (props: any): JSX.Element => {
 
     const handArr: ICard[] = props.hand;
 
     return (
-      <ul className="table">
+      <ul className="table tbl_clear">
         {
           handArr.map( ( item: ICard, i: number) => {
             return <SingleCard
