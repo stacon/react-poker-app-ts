@@ -19,7 +19,12 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 const Board = (props: any): JSX.Element => {
 
   const { players } = props;
+  let playersOrdering = "inner-wrapper";
 
+  if (players.length % 2 !== 0) {
+    playersOrdering += " players-ordering-3"
+  }
+  
   return (
     <section className="board_wrapper">
       <div className="top_buttons_wrapper">
@@ -29,7 +34,9 @@ const Board = (props: any): JSX.Element => {
           btnHandler={ null }
         />
       </div>
-      <div className="inner-wrapper players-ordering">
+      
+      <div className={playersOrdering}>
+     
         {
           players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
         }
