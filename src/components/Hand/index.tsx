@@ -13,23 +13,20 @@ import { ICard } from '../../helpers/interfaces';
 // css
 import './stylesheet.css';
 
-const Hand = (props: any): JSX.Element => {
+interface Props {
+  hand: ICard[],
+  cardOwner: number
+}
 
-    const handArr: ICard[] = props.hand;
-
-    return (
-      <ul className="table tbl_clear m-b-0">
-        {
-          handArr.map( ( item: ICard, i: number) => {
-            return <SingleCard
-                      key={i}
-                      card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped, item.playerId, i)}
-                    />;
-          })
-        }
-      </ul>
-    );
-
-};
+const Hand = ({ hand }: Props): JSX.Element => (
+    <ul className="table tbl_clear m-b-0">
+      {hand.map((item: ICard, i: number) => (
+        <SingleCard
+          key={i}
+          card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped, item.playerId, i)}
+        />
+      ))}
+    </ul>
+  );
 
 export default Hand;

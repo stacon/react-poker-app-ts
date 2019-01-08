@@ -9,22 +9,11 @@ import Info from '../Info';
 // css
 import './stylesheet.css';
 
-const Player = (props: any): JSX.Element => { // temp
-
-  const { hand, index, name } = props.playerObj;
-
-  return (
+const Player = ({ hand, index, name }: any): JSX.Element => (
             <article className="player">
-              <Hand
-                hand={ hand }
-                cardOwner={ index }
-              />
-              <Info
-                playerName = { name }
-              />
+              <Hand hand= { hand } cardOwner={ index } />
+              <Info playerName = { name } />
             </article>
   );
-
-}
 
 export default connect(undefined)(Player);
