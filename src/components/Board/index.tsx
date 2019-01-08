@@ -30,9 +30,9 @@ const Board = (props: any): JSX.Element => {
         />
       </div>
       <div className="inner-wrapper players-ordering">
-        {
-          players.map( (p: IPlayer, i: number) => <Player key={i} playerObj={p}/> )
-        }
+        {players.map( (p: IPlayer, i: number) => 
+          <Player key={i} {...p}/> 
+        )}
       </div>
       <div className="status-wrapper">
         <div className="inner-wrapper">
