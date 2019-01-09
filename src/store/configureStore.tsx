@@ -12,14 +12,14 @@ const initialState: IState = {
           {
             id: 1,
             suit: Suit.spades,
-            rank: '1',
+            rank: 'A',
             isFlipped: false,
             playerId: 0,
           },
           {
             id: 2,
             suit: Suit.hearts,
-            rank: 'A',
+            rank: '2',
             isFlipped: false,
             playerId: 0,
           }
@@ -32,14 +32,14 @@ const initialState: IState = {
           {
             id: 3,
             suit: Suit.spades,
-            rank: '5',
+            rank: 'K',
             isFlipped: false,
             playerId: 1,
           },
           {
             id: 4,
             suit: Suit.hearts,
-            rank: 'K',
+            rank: '5',
             isFlipped: false,
             playerId: 1,
           }
@@ -59,6 +59,26 @@ const initialState: IState = {
           {
             id: 6,
             suit: Suit.spades,
+            rank: '6',
+            isFlipped: false,
+            playerId: 2,
+          }
+        ]
+      },
+      {
+        index: 3,
+        name: 'Player_4',
+        hand: [
+          {
+            id: 7,
+            suit: Suit.diamonds,
+            rank: '6',
+            isFlipped: false,
+            playerId: 3,
+          },
+          {
+            id: 8,
+            suit: Suit.clubs,
             rank: '6',
             isFlipped: false,
             playerId: 3,
