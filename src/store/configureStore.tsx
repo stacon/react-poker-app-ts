@@ -65,26 +65,7 @@ const initialState: IState = {
           }
         ]
       },
-      {
-        index: 2,
-        name: 'Player_3',
-        hand: [
-          {
-            id: 5,
-            suit: Suit.hearts,
-            rank: '6',
-            isFlipped: false,
-            playerId: 2,
-          },
-          {
-            id: 6,
-            suit: Suit.spades,
-            rank: '6',
-            isFlipped: false,
-            playerId: 3,
-          }
-        ]
-      },
+
     ]
 };
 

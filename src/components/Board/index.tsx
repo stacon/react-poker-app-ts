@@ -24,7 +24,51 @@ const Board = (props: any): JSX.Element => {
   //   playersOrdering += " grid"
   //   // players = players.slice(0).reverse();
   // }
+
+  const gridItems: JSX.Element[] = Array(9).fill(undefined);
   
+  const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
+    
+    if(index === 1 && players.length === 4) {      
+    
+    return (
+      <div className={"grid-item"}>
+        <Player key={players[3].index} playerObj={players[3]} />
+      </div>
+    )
+    }
+    else if(index === 3 && players.length >= 3 ) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[1].index} playerObj={players[1]} />
+        </div>
+      )
+    }
+    else if(index === 5 && players.length >= 2 ) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[2].index} playerObj={players[2]} />
+        </div>
+      )
+    }
+    else if(index === 7 && players.length >= 1 ) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[0].index} playerObj={players[0]} />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className={"grid-item"}></div>
+      )
+    }
+  })
+
+
+  let playersLength = players.length-1;
+  console.log(playersLength);
+
 
   return (
     <section className="board_wrapper">
@@ -37,18 +81,21 @@ const Board = (props: any): JSX.Element => {
       </div>
 
       <div className="inner-wrapper grid">
-        <div className="grid-item"></div>
-        <div className="grid-item"><Player key={players[3].index} playerObj={players[3]} /></div>
-        <div className="grid-item"></div>
-        <div className="grid-item"><Player key={players[1].index} playerObj={players[1]} /></div>
-        <div className="grid-item"></div>
-        <div className="grid-item"><Player key={players[2].index} playerObj={players[2]} /></div>
-        <div className="grid-item"></div>
-        <div className="grid-item"><Player key={players[0].index} playerObj={players[0]} /></div>
-        <div className="grid-item"></div>
-          {/* {
+        {/* <div className="grid-item-1"></div>
+        <div className="grid-item-2"><Player key={players[3].index} playerObj={players[3]} /></div>
+        <div className="grid-item-3"></div>
+        <div className="grid-item-4"><Player key={players[1].index} playerObj={players[1]} /></div>
+        <div className="grid-item-5"></div>
+        <div className="grid-item-6"><Player key={players[2].index} playerObj={players[2]} /></div>
+        <div className="grid-item-7"></div>
+        <div className="grid-item-8"><Player key={players[0].index} playerObj={players[0]} /></div>
+        <div className="grid-item-9"></div> */}
+        {/* {
             players.map((p: IPlayer, i: number) => <Player key={i} playerObj={p} />)
           } */}
+          {
+            playersGrid            
+          }
       </div>
       <div className="status-wrapper">
         <div className="inner-wrapper">

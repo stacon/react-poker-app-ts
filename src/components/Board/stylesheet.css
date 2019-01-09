@@ -21,10 +21,13 @@
   grid-column-gap:5vw;
 }
 
-/* .grid-item {
-} */
+.grid-item {
+  display:block;
+}
 
-
+.hiddenItem {
+  visibility:hidden;
+}
 
 .status-wrapper {
   position: absolute;
