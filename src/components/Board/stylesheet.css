@@ -22,7 +22,7 @@
 }
 
 .grid-item {
-  display:block;
+  height: 25vh
 }
 
 .hiddenItem {
