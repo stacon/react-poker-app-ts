@@ -19,14 +19,16 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 const Board = (props: any): JSX.Element => {
 
   let { players } = props;
-  const gridItems: JSX.Element[] = Array(9).fill(null);
-  
+
+
+  const gridItems: JSX.Element[] = Array(9).fill(null);  
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
     if(index === 1 && players.length === 2 ) {
+      
       return (
         <div className={"grid-item"}>
-          <Player key={players[1].index} playerObj={players[1]} />
+          <Player key={players[1].index} {...players[1]} />
         </div>
       )
     }
@@ -34,7 +36,7 @@ const Board = (props: any): JSX.Element => {
     else if(index === 1 && players.length === 4 ) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[2].index} playerObj={players[2]} />
+          <Player key={players[2].index} {...players[2]} />
         </div>
       )
     }
@@ -42,7 +44,7 @@ const Board = (props: any): JSX.Element => {
     else if(index === 3 && players.length >= 3 ) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[1].index} playerObj={players[1]} />
+          <Player key={players[1].index} {...players[1]} />
         </div>
       )
     }
@@ -50,7 +52,7 @@ const Board = (props: any): JSX.Element => {
     else if(index === 5 && players.length === 4) {    
     return (
       <div className={"grid-item"}>
-        <Player key={players[3].index} playerObj={players[3]} />
+        <Player key={players[3].index} {...players[3]} />
       </div>
     )
     }
@@ -58,14 +60,14 @@ const Board = (props: any): JSX.Element => {
     else if(index === 5 && players.length === 3) {    
       return (
         <div className={"grid-item"}>
-          <Player key={players[2].index} playerObj={players[2]} />
+          <Player key={players[2].index} {...players[2]} />
         </div>
       )
       }
     else if(index === 7) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[0].index} playerObj={players[0]} />
+          <Player key={players[0].index} {...players[0]} />
         </div>
       )
     }
@@ -75,10 +77,6 @@ const Board = (props: any): JSX.Element => {
       )
     }
   })
-
-
-  let playersLength = players.length-1;
-  console.log(playersLength);
 
 
   return (
@@ -94,7 +92,7 @@ const Board = (props: any): JSX.Element => {
       <div className="inner-wrapper grid">
 
         {/* {
-            players.map((p: IPlayer, i: number) => <Player key={i} playerObj={p} />)
+            players.map((p: IPlayer, i: number) => <Player key={i} {p} />)
           } */}
           {
             playersGrid            
