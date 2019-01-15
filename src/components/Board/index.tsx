@@ -25,7 +25,9 @@ const Board = (props: any): JSX.Element => {
   //   // players = players.slice(0).reverse();
   // }
 
-  const gridItems: JSX.Element[] = Array(9).fill(undefined);
+  if (players.length % 2 !== 0) {
+    playersOrdering += " players-ordering-3"
+  }
   
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
