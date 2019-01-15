@@ -19,15 +19,7 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 const Board = (props: any): JSX.Element => {
 
   let { players } = props;
-  // let playersOrdering = "inner-wrapper";
-  // if (players.length % 2 !== 0) {
-  //   playersOrdering += " grid"
-  //   // players = players.slice(0).reverse();
-  // }
-
-  if (players.length % 2 !== 0) {
-    playersOrdering += " players-ordering-3"
-  }
+  const gridItems: JSX.Element[] = Array(9).fill(null);
   
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
