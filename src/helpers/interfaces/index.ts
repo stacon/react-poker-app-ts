@@ -1,3 +1,5 @@
+import { Card } from '../../libs/models';
+
 export interface IState {
   players: IPlayer[];
 };
@@ -5,7 +7,7 @@ export interface IState {
 export interface IPlayer {
   index: number;
   name: string;
-  hand: ICard[];
+  hand: Card[];
   reveal_Cards?: boolean;
 };
 
