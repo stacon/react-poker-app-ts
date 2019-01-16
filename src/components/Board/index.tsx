@@ -11,6 +11,7 @@ import { IState, IPlayer } from '../../helpers/interfaces';
 
 //
 import './stylesheet.css';
+import { mapICardToCard } from '../../libs/evaluateHand/helpers';
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
   return { players: state.players };
@@ -18,21 +19,87 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 
 const Board = (props: any): JSX.Element => {
 
-  const { players } = props;
+  let { players } = props;
+ 
+  mapICardToCard(players[0].hand);
+
+
+  const gridItems: JSX.Element[] = Array(9).fill(null);
+  const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
+
+    if (index === 1 && players.length === 2) {
+
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[1].index} {...players[1]} />
+        </div>
+      )
+    }
+
+    else if (index === 1 && players.length === 4) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[2].index} {...players[2]} />
+        </div>
+      )
+    }
+
+    else if (index === 3 && players.length >= 3) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[1].index} {...players[1]} />
+        </div>
+      )
+    }
+
+    else if (index === 5 && players.length === 4) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[3].index} {...players[3]} />
+        </div>
+      )
+    }
+
+    else if (index === 5 && players.length === 3) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[2].index} {...players[2]} />
+        </div>
+      )
+    }
+    else if (index === 7) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[0].index} {...players[0]} />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className={"grid-item"}></div>
+      )
+    }
+  })
+
 
   return (
     <section className="board_wrapper">
       <div className="top_buttons_wrapper">
         <Button
-          btnClasses={ 'btn btn-warning' }
-          btnText={ 'Leave Table' }
-          btnHandler={ null }
+          btnClasses={'btn btn-warning'}
+          btnText={'Leave Table'}
+          btnHandler={null}
         />
       </div>
-      <div className="inner-wrapper players-ordering">
-        {players.map( (p: IPlayer, i: number) => 
-          <Player key={i} {...p}/> 
-        )}
+
+      <div className="inner-wrapper grid">
+
+        {/* {
+            players.map((p: IPlayer, i: number) => <Player key={i} {p} />)
+          } */}
+        {
+          playersGrid
+        }
       </div>
       <div className="status-wrapper">
         <div className="inner-wrapper">

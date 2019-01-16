@@ -3,7 +3,7 @@ import { Suit } from "../references";
 import { getEvaluationResultFromHand } from './evaluateHand';
 import { EvaluationResult } from '../../classes/evaluationResult.class';
 
-it('should return a Royal Flush evaluationResult object', ()=>{
+it('should return a Royal Flush evalusationResult object', ()=>{
   const flushRoyal: Card[] = [
     new Card(1, Suit.hearts),
     new Card(2, Suit.hearts),

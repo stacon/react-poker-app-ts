@@ -1,3 +1,5 @@
+import { Suit } from '../../libs/references';
+
 export interface IState {
   players: IPlayer[];
 };
@@ -11,7 +13,7 @@ export interface IPlayer {
 
 export interface ICard {
   id: number;
-  suit: string;
+  suit: Suit;
   rank: string;
   isFlipped: boolean;
   playerId: number;
