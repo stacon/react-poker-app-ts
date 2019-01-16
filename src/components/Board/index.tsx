@@ -11,8 +11,6 @@ import { IState, IPlayer } from '../../helpers/interfaces';
 
 //
 import './stylesheet.css';
-import { getEvaluationResultFromHand } from '../../libs/evaluateHand/evaluateHand';
-import { EvaluationResult } from '../../classes/evaluationResult.class';
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
   return { players: state.players };
