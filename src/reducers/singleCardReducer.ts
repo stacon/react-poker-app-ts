@@ -15,45 +15,35 @@ const players: IPlayer[] = [
         suit: Suit.hearts,
         rank: 'A',
         isFlipped: true,
-        playerId: 0,
-        value: 0,
-        name: ''
+        playerId: 0
       },
       {
         id: 2,
         suit: Suit.hearts,
         rank: '2',
         isFlipped: true,
-        playerId: 0,
-        value: 0,
-        name: ''
+        playerId: 0
       },
       {
         id: 3,
         suit: Suit.hearts,
         rank: '10',
         isFlipped: true,
-        playerId: 0,
-        value: 0,
-        name: ''
+        playerId: 0
       },
       {
         id: 4,
         suit: Suit.hearts,
         rank: 'K',
         isFlipped: true,
-        playerId: 0,
-        value: 0,
-        name: ''
+        playerId: 0
       },
       {
         id: 5,
         suit: Suit.hearts,
         rank: '8',
         isFlipped: true,
-        playerId: 0,
-        value: 0,
-        name: ''
+        playerId: 0
       }
     ]
   },
@@ -66,45 +56,35 @@ const players: IPlayer[] = [
         suit: Suit.spades,
         rank: '5',
         isFlipped: true,
-        playerId: 1,
-        value: 0,
-        name: ''
+        playerId: 1
       },
       {
         id: 7,
         suit: Suit.hearts,
         rank: '6',
         isFlipped: true,
-        playerId: 1,
-        value: 0,
-        name: ''
+        playerId: 1
       },
       {
         id: 8,
         suit: Suit.diamonds,
         rank: '7',
         isFlipped: true,
-        playerId: 1,
-        value: 0,
-        name: ''
+        playerId: 1
       },
       {
         id: 9,
         suit: Suit.clubs,
         rank: '8',
         isFlipped: true,
-        playerId: 1,
-        value: 0,
-        name: ''
+        playerId: 1
       },
       {
         id: 10,
         suit: Suit.clubs,
         rank: '9',
         isFlipped: true,
-        playerId: 1,
-        value: 0,
-        name: ''
+        playerId: 1
       }
     ]
   },

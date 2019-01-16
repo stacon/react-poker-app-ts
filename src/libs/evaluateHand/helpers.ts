@@ -1,5 +1,6 @@
 import { Card } from "../models";
 import _ from 'lodash';
+import { ICard } from '../../helpers/interfaces';
 
 /**
  * Factory function for number of sets expected in 5 card array
@@ -62,6 +63,42 @@ class PairValues {
   highPairValue: number
 }
 
+const mapICardToCard = (iCards: ICard[]): Card[] => {
+  let cards: Card[] = [];
+  iCards.forEach((iCard, index) => {
+
+    const card = new Card(mapRankToNumber(iCard.rank), iCard.suit);
+    console.log(card);
+    cards.push(card);
+  })
+
+  return cards;
+}
+
+const mapRankToNumber = (rank: string): number => {
+  let rankNumber: number;
+
+  switch (rank) {
+    case 'A':
+      rankNumber = 1;
+      break;
+    case 'K':
+      rankNumber = 13;
+      break;
+    case 'Q':
+      rankNumber = 12;
+      break;
+    case 'J':
+      rankNumber = 11;
+      break;
+    default:
+      rankNumber = parseInt(rank);
+      break;
+  }
+  return rankNumber;
+
+}
+
 export {
   everyCardIsSameSuit,
   isRoyal,
@@ -76,4 +113,6 @@ export {
   getPairGroupValue,
   getPairsGroupValues,
   PairValues,
+  mapRankToNumber,
+  mapICardToCard
 }

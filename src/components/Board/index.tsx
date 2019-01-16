@@ -11,6 +11,7 @@ import { IState, IPlayer } from '../../helpers/interfaces';
 
 //
 import './stylesheet.css';
+import { mapICardToCard } from '../../libs/evaluateHand/helpers';
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
   return { players: state.players };
@@ -19,13 +20,15 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 const Board = (props: any): JSX.Element => {
 
   let { players } = props;
+ 
+  mapICardToCard(players[0].hand);
 
 
-  const gridItems: JSX.Element[] = Array(9).fill(null);  
+  const gridItems: JSX.Element[] = Array(9).fill(null);
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
-    if(index === 1 && players.length === 2 ) {
-      
+    if (index === 1 && players.length === 2) {
+
       return (
         <div className={"grid-item"}>
           <Player key={players[1].index} {...players[1]} />
@@ -33,7 +36,7 @@ const Board = (props: any): JSX.Element => {
       )
     }
 
-    else if(index === 1 && players.length === 4 ) {
+    else if (index === 1 && players.length === 4) {
       return (
         <div className={"grid-item"}>
           <Player key={players[2].index} {...players[2]} />
@@ -41,30 +44,30 @@ const Board = (props: any): JSX.Element => {
       )
     }
 
-    else if(index === 3 && players.length >= 3 ) {
+    else if (index === 3 && players.length >= 3) {
       return (
         <div className={"grid-item"}>
           <Player key={players[1].index} {...players[1]} />
         </div>
       )
     }
-    
-    else if(index === 5 && players.length === 4) {    
-    return (
-      <div className={"grid-item"}>
-        <Player key={players[3].index} {...players[3]} />
-      </div>
-    )
+
+    else if (index === 5 && players.length === 4) {
+      return (
+        <div className={"grid-item"}>
+          <Player key={players[3].index} {...players[3]} />
+        </div>
+      )
     }
 
-    else if(index === 5 && players.length === 3) {    
+    else if (index === 5 && players.length === 3) {
       return (
         <div className={"grid-item"}>
           <Player key={players[2].index} {...players[2]} />
         </div>
       )
-      }
-    else if(index === 7) {
+    }
+    else if (index === 7) {
       return (
         <div className={"grid-item"}>
           <Player key={players[0].index} {...players[0]} />
@@ -94,9 +97,9 @@ const Board = (props: any): JSX.Element => {
         {/* {
             players.map((p: IPlayer, i: number) => <Player key={i} {p} />)
           } */}
-          {
-            playersGrid            
-          }
+        {
+          playersGrid
+        }
       </div>
       <div className="status-wrapper">
         <div className="inner-wrapper">

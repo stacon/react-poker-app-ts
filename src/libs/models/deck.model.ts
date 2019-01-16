@@ -9,7 +9,7 @@ const generateSuitDeck = (suit: Suit): Card[] => {
   let suitDeck: Card[] = [];
   let i = 1
   while (i < 14) {
-    suitDeck = [...suitDeck, new Card(i.toString(), suit)];
+    suitDeck = [...suitDeck, new Card(i, suit)];
     i++
   }
   return suitDeck;
