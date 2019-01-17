@@ -11,7 +11,9 @@ import { IState, IPlayer } from '../../helpers/interfaces';
 
 //
 import './stylesheet.css';
-import { mapICardToCard } from '../../libs/evaluateHand/helpers';
+import { UIGetStringArrayFromFinalHands, getWinningHandFromPlayers } from '../../libs/evaluateHand/helpers';
+// import { EvaluationResult } from '../../classes/evaluationResult.class';
+
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
   return { players: state.players };
@@ -19,11 +21,11 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 
 const Board = (props: any): JSX.Element => {
 
-  let { players } = props;
- 
-  mapICardToCard(players[0].hand);
-
-
+  const { players } = props;
+  
+  const evaluationResults: string[] = UIGetStringArrayFromFinalHands(players);
+  getWinningHandFromPlayers(players);
+  
   const gridItems: JSX.Element[] = Array(9).fill(null);
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
@@ -104,8 +106,9 @@ const Board = (props: any): JSX.Element => {
       <div className="status-wrapper">
         <div className="inner-wrapper">
           <ul>
-            <li> wow</li>
+            {evaluationResults.map((result) => <li>{result}</li>)}
           </ul>
+          
         </div>
       </div>
     </section>
