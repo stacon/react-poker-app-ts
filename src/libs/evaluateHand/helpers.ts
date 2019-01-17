@@ -70,7 +70,6 @@ const mapICardToCard = (iCards: ICard[]): Card[] => {
   iCards.forEach((iCard, index) => {
 
     const card = new Card(mapRankToNumber(iCard.rank), iCard.suit);
-    console.log(card);
     cards.push(card);
   })
 
@@ -110,7 +109,6 @@ const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
     if (evaluationResult) {
       const winningHandName: string = getWinningHandName(evaluationResult.power)
       const highCardName: string = getHighCardName(evaluationResult.highCardValue)
-      console.log(evaluationResult);
       evaluationResults.push(`${player.name} has a ${winningHandName} with high card ${highCardName}`)
     }
     else {
@@ -131,15 +129,13 @@ const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
   });
   return evaluationResults;
 }
-// computes winning hand from players
-const getWinningHandFromPlayers = (players: IPlayer[]): void => {
 
-  let evaluationResults: EvaluationResult[] = [];
-  players.forEach((player: IPlayer, index: number) => {
-    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-    evaluationResults.push(evaluationResult? evaluationResult: <EvaluationResult>{});
-  });
-  
+
+// computes winning hand from players
+const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
+
+  const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+
   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
 
     if (prevValue.power && currValue.power) {
@@ -159,11 +155,50 @@ const getWinningHandFromPlayers = (players: IPlayer[]): void => {
         return prevValue;
       }
     }
-    return prevValue;
-
+    return <EvaluationResult>{};
   }
-  console.log(evaluationResults.reduce(reducer));
+  return evaluationResults.reduce(reducer)
 
+}
+const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
+
+  const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+
+  const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
+
+    if (prevValue.power && currValue.power) {
+      if (prevValue.power < currValue.power) {
+        return currValue;
+      }
+      else if (prevValue.power > currValue.power) {
+        return prevValue;
+      }
+      else if (prevValue.highPairValue > currValue.highPairValue) {
+        return prevValue;
+      }
+      else if (prevValue.highPairValue < currValue.highPairValue) {
+        return currValue;
+      }
+      else {
+        return prevValue;
+      }
+    }
+    return <EvaluationResult>{};
+  }
+  let winningHand: EvaluationResult = evaluationResults.reduce(reducer);
+  let winnerIndex: number = evaluationResults.findIndex((result) => result === winningHand);
+  const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])  
+  return `Winner is ${players[winnerIndex].name} with ${finalHand[0]}`;
+
+}
+
+const getEvaluationResultsFromPlayers = (players: IPlayer[]): EvaluationResult[] => {
+  let evaluationResults: EvaluationResult[] = [];
+  players.forEach((player: IPlayer, index: number) => {
+    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
+    evaluationResults.push(evaluationResult ? evaluationResult : <EvaluationResult>{});
+  });
+  return evaluationResults;
 }
 export {
   everyCardIsSameSuit,
@@ -183,5 +218,7 @@ export {
   mapICardToCard,
   UIGetStringArrayFromFinalHands,
   getFinalHandArrayFromPlayersArray,
-  getWinningHandFromPlayers
+  getWinningHandFromPlayers,
+  UIGetWinnerFromPlayers,
+  getEvaluationResultsFromPlayers
 }
