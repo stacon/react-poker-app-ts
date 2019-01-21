@@ -88,6 +88,88 @@ const players: IPlayer[] = [
       }
     ]
   },
+  {
+    index: 2,
+    name: 'Player_3',
+    hand: [
+      {
+        id: 11,
+        suit: Suit.diamonds,
+        rank: '2',
+        isFlipped: true,
+        playerId: 2
+      },
+      {
+        id: 12,
+        suit: Suit.hearts,
+        rank: 'J',
+        isFlipped: true,
+        playerId: 2
+      },
+      {
+        id: 13,
+        suit: Suit.spades,
+        rank: 'J',
+        isFlipped: true,
+        playerId: 2
+      },
+      {
+        id: 14,
+        suit: Suit.diamonds,
+        rank: '8',
+        isFlipped: true,
+        playerId: 2
+      },
+      {
+        id: 15,
+        suit: Suit.spades,
+        rank: '8',
+        isFlipped: true,
+        playerId: 2
+      }
+    ]
+  },
+  {
+    index: 3,
+    name: 'Player_4',
+    hand: [
+      {
+        id:16,
+        suit: Suit.spades,
+        rank: '10',
+        isFlipped: true,
+        playerId: 3
+      },
+      {
+        id:17,
+        suit: Suit.hearts,
+        rank: '10',
+        isFlipped: true,
+        playerId: 3
+      },
+      {
+        id:18,
+        suit: Suit.diamonds,
+        rank: 'Q',
+        isFlipped: true,
+        playerId: 3
+      },
+      {
+        id: 19,
+        suit: Suit.clubs,
+        rank: 'Q',
+        isFlipped: true,
+        playerId: 1
+      },
+      {
+        id: 20,
+        suit: Suit.clubs,
+        rank: 'K',
+        isFlipped: true,
+        playerId: 3
+      }
+    ]
+  },
   // {
   //   index: 2,
   //   name: 'Player_3',
