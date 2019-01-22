@@ -13,35 +13,35 @@ const players: IPlayer[] = [
       {
         id: 1,
         suit: Suit.diamonds,
-        rank: 'A',
+        rank: '10',
         isFlipped: true,
         playerId: 0
       },
       {
         id: 2,
         suit: Suit.hearts,
-        rank: '2',
+        rank: '10',
         isFlipped: true,
         playerId: 0
       },
       {
         id: 3,
-        suit: Suit.hearts,
-        rank: '10',
+        suit: Suit.spades,
+        rank: 'Q',
         isFlipped: true,
         playerId: 0
       },
       {
         id: 4,
         suit: Suit.hearts,
-        rank: 'K',
+        rank: '4',
         isFlipped: true,
         playerId: 0
       },
       {
         id: 5,
         suit: Suit.hearts,
-        rank: '8',
+        rank: 'K',
         isFlipped: true,
         playerId: 0
       }
@@ -61,7 +61,7 @@ const players: IPlayer[] = [
       {
         id: 7,
         suit: Suit.hearts,
-        rank: '6',
+        rank: '4',
         isFlipped: true,
         playerId: 1
       },
@@ -109,7 +109,7 @@ const players: IPlayer[] = [
       {
         id: 13,
         suit: Suit.spades,
-        rank: '9',
+        rank: '4',
         isFlipped: true,
         playerId: 2
       },
@@ -150,7 +150,7 @@ const players: IPlayer[] = [
       {
         id:18,
         suit: Suit.diamonds,
-        rank: 'Q',
+        rank: 'K',
         isFlipped: true,
         playerId: 3
       },
@@ -164,7 +164,7 @@ const players: IPlayer[] = [
       {
         id: 20,
         suit: Suit.clubs,
-        rank: 'K',
+        rank: 'A',
         isFlipped: true,
         playerId: 3
       }
