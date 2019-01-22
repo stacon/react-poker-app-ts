@@ -334,7 +334,7 @@
 .playingCards.faceImages .card.rank-j.clubs  { background-image: url(/assets/img/faces/JC.gif); }
 
 .playingCards.faceImages .card.rank-q.diams  { background-image: url(/assets/img/faces/QD.gif); }
-.playingCards.faceImages .card.rank-q.hearts { background-image: url(/assets/img/faces/QH.gif); background: black }
+.playingCards.faceImages .card.rank-q.hearts { background-image: url(/assets/img/faces/QH.gif); }
 .playingCards.faceImages .card.rank-q.spades { background-image: url(/assets/img/faces/QS.gif); }
 .playingCards.faceImages .card.rank-q.clubs  { background-image: url(/assets/img/faces/QC.gif); }
 

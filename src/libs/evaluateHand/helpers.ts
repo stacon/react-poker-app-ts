@@ -1,7 +1,7 @@
 import { Card } from "../models";
 import _ from 'lodash';
 import { ICard, IPlayer } from '../../helpers/interfaces';
-import { EvaluationResult, getWinningHandName, getHighCardName } from '../../classes/evaluationResult.class';
+import { EvaluationResult, getWinningHandName as getFinalHandName, getHighCardName } from '../../classes/evaluationResult.class';
 import { getEvaluationResultFromHand } from './evaluateHand';
 
 /**
@@ -67,18 +67,15 @@ class PairValues {
 
 const mapICardToCard = (iCards: ICard[]): Card[] => {
   let cards: Card[] = [];
-  iCards.forEach((iCard, index) => {
-
-    const card = new Card(mapRankToNumber(iCard.rank), iCard.suit);
+  iCards.forEach((iCard: ICard) => {
+    const card: Card = new Card(mapRankToNumber(iCard.rank), iCard.suit);
     cards.push(card);
   })
-
   return cards;
 }
 
 const mapRankToNumber = (rank: string): number => {
   let rankNumber: number;
-
   switch (rank) {
     case 'A':
       rankNumber = 1;
@@ -97,19 +94,17 @@ const mapRankToNumber = (rank: string): number => {
       break;
   }
   return rankNumber;
-
 }
 
 //creates string array with notifications for players and their final hands
 const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
   let evaluationResults: string[] = [];
-
-  players.forEach((player: IPlayer, index: number) => {
+  players.forEach((player: IPlayer) => {
     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
     if (evaluationResult) {
-      const winningHandName: string = getWinningHandName(evaluationResult.power)
+      const finalHandName: string = getFinalHandName(evaluationResult.power)
       const highCardName: string = getHighCardName(evaluationResult.highCardValue)
-      evaluationResults.push(`${player.name} has a ${winningHandName} with high card ${highCardName}`)
+      evaluationResults.push(`${player.name} has a ${finalHandName} with high card ${highCardName}`)
     }
     else {
       evaluationResults.push('');
@@ -118,78 +113,67 @@ const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
   return evaluationResults;
 }
 
-//extracts final hands from players
-const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
-  let evaluationResults: string[] = [];
-
-  players.forEach((player: IPlayer, index: number) => {
-    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-    const winningHandName: string = getWinningHandName(evaluationResult !== null ? evaluationResult.power : 0)
-    evaluationResults.push(winningHandName);
-  });
-  return evaluationResults;
-}
-
-
 // computes winning hand from players
 const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
-
+  let winningHand: EvaluationResult;
   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
-
-    if (prevValue.power && currValue.power) {
-      if (prevValue.power < currValue.power) {
-        return currValue;
+    Object.keys(prevValue).forEach((key) => {
+      if (!winningHand) {
+        if (prevValue[key] < currValue[key]) {
+          winningHand = currValue;
+        }
+        else if (prevValue[key] > currValue[key]) {
+          winningHand = prevValue;
+        }
       }
-      else if (prevValue.power > currValue.power) {
-        return prevValue;
-      }
-      else if (prevValue.highPairValue > currValue.highPairValue) {
-        return prevValue;
-      }
-      else if (prevValue.highPairValue < currValue.highPairValue) {
-        return currValue;
-      }
-      else {
-        return prevValue;
-      }
-    }
-    return <EvaluationResult>{};
+    })
+    return winningHand;
   }
   return evaluationResults.reduce(reducer)
 
 }
+
 const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+  console.log(evaluationResults)
 
   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
-
-    if (prevValue.power && currValue.power) {
-      if (prevValue.power < currValue.power) {
-        return currValue;
+    let winningHand: EvaluationResult = <EvaluationResult>{};
+    let winner: boolean = false;
+    Object.keys(prevValue).forEach((key) => {
+      if (!winner) {
+        if (prevValue[key] < currValue[key]) {
+          winningHand = currValue;
+          winner = true;
+        }
+        else if (prevValue[key] > currValue[key]) {
+          winningHand = prevValue;
+          winner = true;
+        }
       }
-      else if (prevValue.power > currValue.power) {
-        return prevValue;
-      }
-      else if (prevValue.highPairValue > currValue.highPairValue) {
-        return prevValue;
-      }
-      else if (prevValue.highPairValue < currValue.highPairValue) {
-        return currValue;
-      }
-      else {
-        return prevValue;
-      }
-    }
-    return <EvaluationResult>{};
+    })
+    return winningHand;
   }
-  let winningHand: EvaluationResult = evaluationResults.reduce(reducer);
+  const winningHand: EvaluationResult = evaluationResults.reduce(reducer);
   let winnerIndex: number = evaluationResults.findIndex((result) => result === winningHand);
-  const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])  
+  const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])
   return `Winner is ${players[winnerIndex].name} with ${finalHand[0]}`;
 
+}
+
+
+//extracts final hands from players
+const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
+  let handPowers: string[] = [];
+  players.forEach((player: IPlayer) => {
+    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
+    const finalHandName: string = getFinalHandName(evaluationResult !== null ? evaluationResult.power : 0)
+    handPowers.push(finalHandName);
+  });
+  return handPowers;
 }
 
 const getEvaluationResultsFromPlayers = (players: IPlayer[]): EvaluationResult[] => {
