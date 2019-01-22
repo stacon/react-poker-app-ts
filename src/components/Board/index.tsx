@@ -23,7 +23,7 @@ const Board = (props: any): JSX.Element => {
 
   const { players } = props;
   
-  const evaluationResults: string[] = UIGetStringArrayFromFinalHands(players);
+  const handPowers: string[] = UIGetStringArrayFromFinalHands(players);
   const gridItems: JSX.Element[] = Array(9).fill(null);
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
 
@@ -104,7 +104,7 @@ const Board = (props: any): JSX.Element => {
       <div className="status-wrapper">
         <div className="inner-wrapper">
           <ul>
-            {evaluationResults.map((result) => <li>{result}</li>)}
+            {handPowers.map((result) => <li>{result}</li>)}
             <li>{UIGetWinnerFromPlayers(players)}</li>
           </ul>
           
