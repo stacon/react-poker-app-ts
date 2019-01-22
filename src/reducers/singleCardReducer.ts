@@ -54,14 +54,14 @@ const players: IPlayer[] = [
       {
         id: 6,
         suit: Suit.spades,
-        rank: '5',
+        rank: 'J',
         isFlipped: true,
         playerId: 1
       },
       {
         id: 7,
         suit: Suit.hearts,
-        rank: '4',
+        rank: 'J',
         isFlipped: true,
         playerId: 1
       },
