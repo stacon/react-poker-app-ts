@@ -12,7 +12,7 @@ const players: IPlayer[] = [
     hand: [
       {
         id: 1,
-        suit: Suit.hearts,
+        suit: Suit.diamonds,
         rank: 'A',
         isFlipped: true,
         playerId: 0
@@ -95,35 +95,35 @@ const players: IPlayer[] = [
       {
         id: 11,
         suit: Suit.diamonds,
-        rank: '2',
+        rank: '7',
         isFlipped: true,
         playerId: 2
       },
       {
         id: 12,
         suit: Suit.hearts,
-        rank: 'J',
+        rank: '8',
         isFlipped: true,
         playerId: 2
       },
       {
         id: 13,
         suit: Suit.spades,
-        rank: 'J',
+        rank: '9',
         isFlipped: true,
         playerId: 2
       },
       {
         id: 14,
         suit: Suit.diamonds,
-        rank: '8',
+        rank: '10',
         isFlipped: true,
         playerId: 2
       },
       {
         id: 15,
         suit: Suit.spades,
-        rank: '8',
+        rank: 'J',
         isFlipped: true,
         playerId: 2
       }
