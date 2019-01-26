@@ -6,7 +6,6 @@ export default class CardProperties {
         public suit: string,
         public rank: string,
         public isFlipped: boolean,
-        public playerId: number,
         public cardIndex: number
     ) {}
 }

@@ -16,6 +16,5 @@ export interface ICard {
   suit: Suit;
   rank: string;
   isFlipped: boolean;
-  playerId: number;
   cardIndex?: number;
 };

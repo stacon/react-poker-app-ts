@@ -2,16 +2,16 @@
 import React from 'react';
 
 // components
-import SingleCard from '../SingleCard';
+import Card from '../Card/card';
 
 // helpers
-import CardProperties from '../../classes/CardProperties';
+import CardProperties from 'src/helpers/interfaces/CardProperties';
 
 // interfaces
 import { ICard } from '../../helpers/interfaces';
 
 // css
-import './stylesheet.css';
+import './hand.module.css';
 
 interface Props {
   hand: ICard[],
@@ -21,9 +21,9 @@ interface Props {
 const Hand = ({ hand }: Props): JSX.Element => (
     <ul className="table tbl_clear m-b-0">
       {hand.map((item: ICard, i: number) => (
-        <SingleCard
+        <Card
           key={i}
-          card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped, item.playerId, i)}
+          card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped, i)}
         />
       ))}
     </ul>
