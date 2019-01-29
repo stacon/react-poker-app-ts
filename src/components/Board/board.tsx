@@ -3,16 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // component
-import Player from '../Player';
-import Button from '../UI/Button';
+import { Player, Button } from '../';
 
 // interfaces
 import { IState, IPlayer } from '../../helpers/interfaces';
 
 //
-import './stylesheet.css';
+import './board.module.css';
 import { UIGetStringArrayFromFinalHands, UIGetWinnerFromPlayers } from '../../libs/evaluateHand/helpers';
-// import { EvaluationResult } from '../../classes/evaluationResult.class';
 
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
@@ -22,7 +20,7 @@ const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
 const Board = (props: any): JSX.Element => {
 
   const { players } = props;
-  
+
   const handPowers: string[] = UIGetStringArrayFromFinalHands(players);
   const gridItems: JSX.Element[] = Array(9).fill(null);
   const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
@@ -93,10 +91,6 @@ const Board = (props: any): JSX.Element => {
       </div>
 
       <div className="inner-wrapper grid">
-
-        {/* {
-            players.map((p: IPlayer, i: number) => <Player key={i} {p} />)
-          } */}
         {
           playersGrid
         }
@@ -107,7 +101,7 @@ const Board = (props: any): JSX.Element => {
             {handPowers.map((result) => <li>{result}</li>)}
             <li>{UIGetWinnerFromPlayers(players)}</li>
           </ul>
-          
+
         </div>
       </div>
     </section>

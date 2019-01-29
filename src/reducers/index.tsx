@@ -1,4 +1,4 @@
-import players from './singleCardReducer';
+import players from './gameReducer';
 
 const allReducers  = {
   players
