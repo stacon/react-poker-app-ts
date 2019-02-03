@@ -7,7 +7,7 @@ import Hand from '../Hand/hand';
 import Info from '../Info/info';
 
 // css
-import './player.module.css';
+import './Player.module.css';
 
 const Player = ({ hand, index, name }: any): JSX.Element => (
   <article className="player">

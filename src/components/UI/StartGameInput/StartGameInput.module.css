@@ -1,0 +1,32 @@
+.start-game-button {
+  color: #fff;
+  font-weight: 500;
+  border: #fff 2px solid;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.start-game-button:hover {
+  border-color: yellow;
+}
+
+.range-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.range-number {
+  min-width: 10%;
+  color: #fff;
+  font-weight: 800;
+}
+
+.button-players-number {
+  color: yellow;
+}
+
+.start-game-range {
+  width: 80%
+}

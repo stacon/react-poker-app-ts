@@ -24,7 +24,7 @@ const getHighCardName = (highCardValue: number) => {
   if (highCardValue > 10 || highCardValue === 1 )  {
     return cards[highCardValue];
   }
-  return highCardValue.toString();  
+  return highCardValue.toString();
 }
 
 class EvaluationResult {
@@ -38,4 +38,6 @@ class EvaluationResult {
   ){}
 }
 
-export { EvaluationResult, getWinningHandName, getHighCardName }
+export default EvaluationResult
+
+export { getWinningHandName, getHighCardName }

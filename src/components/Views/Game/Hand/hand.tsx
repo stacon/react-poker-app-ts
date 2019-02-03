@@ -2,13 +2,13 @@
 import React from 'react';
 
 // components
-import { Card } from '../';
+import Card from '../Card/Card';
 
 // helpers
 import CardProperties from 'src/helpers/interfaces/CardProperties';
 
 // interfaces
-import { ICard } from '../../helpers/interfaces';
+import { ICard } from '../../../../helpers/interfaces';
 
 // css
 import './hand.module.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Interfaces
-import { ICard } from '../../helpers/interfaces';
+import { ICard } from '../../../../helpers/interfaces';
 
 //css
 import './Card.module.css';

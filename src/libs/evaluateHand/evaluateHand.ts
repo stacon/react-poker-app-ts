@@ -1,6 +1,6 @@
 import Card from '../models/card.model';
 
-import { EvaluationResult } from '../../classes/evaluationResult.class';
+import { EvaluationResult } from '../models';
 import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './helpers';
 
 

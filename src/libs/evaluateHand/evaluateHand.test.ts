@@ -1,7 +1,7 @@
 import { Card } from "../models";
 import { Suit } from "../references";
 import { getEvaluationResultFromHand } from './evaluateHand';
-import { EvaluationResult } from '../../classes/evaluationResult.class';
+import { EvaluationResult } from '../models';
 
 it('should return a Royal Flush evalusationResult object', ()=>{
   const flushRoyal: Card[] = [

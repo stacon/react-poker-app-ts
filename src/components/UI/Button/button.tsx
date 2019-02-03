@@ -2,7 +2,7 @@
 import React from 'react';
 
 // css
-import './button.module.css';
+import './Button.module.css';
 
 const Button = (props: any): JSX.Element => {
 

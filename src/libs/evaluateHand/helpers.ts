@@ -1,7 +1,8 @@
 import { Card } from "../models";
 import _ from 'lodash';
 import { ICard, IPlayer } from '../../helpers/interfaces';
-import { EvaluationResult, getWinningHandName as getFinalHandName, getHighCardName } from '../../classes/evaluationResult.class';
+import { getWinningHandName as getFinalHandName, getHighCardName } from '../models/evaluationResult.model';
+import { EvaluationResult } from './../models';
 import { getEvaluationResultFromHand } from './evaluateHand';
 
 /**

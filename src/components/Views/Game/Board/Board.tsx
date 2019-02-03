@@ -2,15 +2,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// component
-import { Player, Button } from '../';
+// components
+import Player from '../Player/Player';
+import {Button} from '../../../UI';
 
 // interfaces
-import { IState, IPlayer } from '../../helpers/interfaces';
+import { IState, IPlayer } from '../../../../helpers/interfaces';
 
 //
-import './board.module.css';
-import { UIGetStringArrayFromFinalHands, UIGetWinnerFromPlayers } from '../../libs/evaluateHand/helpers';
+import './Board.module.css';
+import { UIGetStringArrayFromFinalHands, UIGetWinnerFromPlayers } from '../../../../libs/evaluateHand/helpers';
 
 
 const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
