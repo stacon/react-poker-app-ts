@@ -1,7 +1,5 @@
-import players from './gameReducer';
+// import players from './game.reducer';
+import indexReducer from './indexView.reducer';
+import gameReducer from '../reducers/game.reducer';
 
-const allReducers  = {
-  players
-};
-
-export default allReducers;
+export {indexReducer, gameReducer};

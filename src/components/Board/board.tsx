@@ -23,7 +23,7 @@ const Board = (props: any): JSX.Element => {
 
   const handPowers: string[] = UIGetStringArrayFromFinalHands(players);
   const gridItems: JSX.Element[] = Array(9).fill(null);
-  const playersGrid: JSX.Element[] = gridItems.map((gridItem, index) => {
+  const playersGrid: JSX.Element[] = gridItems.map((_, index) => {
 
     if (index === 1 && players.length === 2) {
 

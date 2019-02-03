@@ -2,7 +2,7 @@
 import React from 'react';
 
 // components
-import Card from '../Card/card';
+import { Card } from '../';
 
 // helpers
 import CardProperties from 'src/helpers/interfaces/CardProperties';

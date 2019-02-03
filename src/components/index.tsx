@@ -1,6 +1,6 @@
 // Major Components
 import Board from './Board/board';
-import Card from './Card/card';
+import Card from './Card/Card';
 import Deck from './Deck/deck';
 import Hand from './Hand/hand';
 import Info from './Info/info';

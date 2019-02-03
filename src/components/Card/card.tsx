@@ -4,7 +4,7 @@ import React from 'react';
 import { ICard } from '../../helpers/interfaces';
 
 //css
-import './card.module.css';
+import './Card.module.css';
 
 const Card = (props: any): JSX.Element => {
 
