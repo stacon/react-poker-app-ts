@@ -29,3 +29,16 @@
   font-weight: 600;
   color: yellow;
 }
+
+li {
+  border-radius: 50%;
+  margin-top: 8px;
+  list-style-type: none;
+  border: 2px yellow solid;
+  padding: 8px;
+}
+
+li:hover {
+  cursor: pointer;
+  background-color: yellow;
+}
