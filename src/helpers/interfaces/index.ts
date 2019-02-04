@@ -1,8 +1,5 @@
 import { Suit } from '../../libs/references';
 
-export interface IState {
-  players: IPlayer[];
-};
 
 export interface IPlayer {
   index: number;

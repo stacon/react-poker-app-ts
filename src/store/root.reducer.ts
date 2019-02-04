@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import {
   userReducer as user,
-  indexReducer as indexView,
-  gameReducer as game
+  homeViewReducer as homeView,
+  gameViewReducer as gameView
 } from 'src/reducers';
 
 const rootReducer = combineReducers({
   user,
-  indexView,
-  game,
+  homeView,
+  gameView,
 });
 
 export default rootReducer;

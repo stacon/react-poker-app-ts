@@ -1,6 +1,6 @@
 // import players from './game.reducer';
-import indexReducer from './indexView.reducer';
-import gameReducer from '../reducers/game.reducer';
+import homeViewReducer from './HomeView.reducer';
+import gameViewReducer from './GameView.reducer';
 import userReducer from './user.reducer';
 
-export {indexReducer, gameReducer, userReducer};
+export {homeViewReducer, gameViewReducer, userReducer};
