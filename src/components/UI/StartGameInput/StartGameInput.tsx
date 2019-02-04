@@ -5,9 +5,10 @@ import { changeNumberOfPlayers } from '../../../actions/app.action.creator'
 import { connect } from 'react-redux';
 
 import './StartGameInput.module.css'
+import { startNewGame } from 'src/actions/game.actions.creator';
 
-const onGameStartHandler = () => {
-
+const onGameStartHandler = (numberOfPlayers: number) => {
+  store.dispatch(startNewGame(numberOfPlayers));
 }
 
 const onPlayersNumberChangeHandler = (numberOfPlayers: number): void => {
@@ -15,9 +16,8 @@ const onPlayersNumberChangeHandler = (numberOfPlayers: number): void => {
 }
 
 const mapStateToProps = (state: AppState) => {
-  console.log(state)
   return {
-    numberOfPlayersSelected: state.indexView.numberOfPlayersSelected
+    numberOfPlayersSelected: state.homeView.numberOfPlayersSelected
   }
 };
 
@@ -48,7 +48,7 @@ const startGameInput = ({ numberOfPlayersSelected }: Props) => (
     <br />
     <div
       className="start-game-button"
-      onClick={onGameStartHandler}
+      onClick={() => onGameStartHandler(+numberOfPlayersSelected)}
     >
       Start Game with
       <span className="button-players-number"> {numberOfPlayersSelected} </span>

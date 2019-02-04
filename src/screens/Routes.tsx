@@ -6,7 +6,7 @@ import { Home, Game } from '../components/Views';
 
 const history = createBrowserHistory();
 
-const ScreensRoot = () => (
+const Routes = () => (
   <Router history={history}>
     <Switch>
       <Route
@@ -23,4 +23,4 @@ const ScreensRoot = () => (
   </Router>
 );
 
-export default ScreensRoot;
+export default Routes;

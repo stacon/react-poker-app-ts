@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Layout.module.css';
 
-import ScreensRoot from 'src/screens/Routes';
+import Routes from 'src/screens/Routes';
 import { Navbar } from '../UI';
 
 const layout = () => (
@@ -9,7 +9,7 @@ const layout = () => (
   <Navbar/>
   <div className="container">
     {/* <div className="playingCards faceImages"> */}
-      <ScreensRoot />
+      <Routes />
   </div>
   </>
 );
