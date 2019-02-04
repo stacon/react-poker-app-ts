@@ -1,36 +1,26 @@
 // core
 import React from 'react';
-import { connect } from 'react-redux';
 
 // components
 import Player from '../Player/Player';
-import {Button} from '../../../UI';
 
-// interfaces
-import { IState, IPlayer } from '../../../../helpers/interfaces';
-
-//
 import './Board.module.css';
-import { UIGetStringArrayFromFinalHands, UIGetWinnerFromPlayers } from '../../../../libs/evaluateHand/helpers';
+import { IPlayer } from 'src/reducers/GameView.reducer';
+// import { UIGetStringArrayFromFinalHands, UIGetWinnerFromPlayers } from '../../../../libs/evaluateHand/helpers';
 
 
-const mapStateToProps = (state: IState): { [key: string]: IPlayer[] } => {
-  return { players: state.players };
-};
-
-const Board = (props: any): JSX.Element => {
+const Board = (props: Props): JSX.Element => {
 
   const { players } = props;
 
-  const handPowers: string[] = UIGetStringArrayFromFinalHands(players);
+  // const handPowers: string[] = UIGetStringArrayFromFinalHands(players);
   const gridItems: JSX.Element[] = Array(9).fill(null);
-  const playersGrid: JSX.Element[] = gridItems.map((_, index) => {
-
+  const playersGrid: JSX.Element[] | JSX.Element = (!players) ? <div></div> : gridItems.map((_, index) => {
     if (index === 1 && players.length === 2) {
 
       return (
         <div className={"grid-item"}>
-          <Player key={players[1].index} {...players[1]} />
+          <Player key={players[1].name} {...players[1]} />
         </div>
       )
     }
@@ -38,7 +28,7 @@ const Board = (props: any): JSX.Element => {
     else if (index === 1 && players.length === 4) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[2].index} {...players[2]} />
+          <Player key={players[2].name} {...players[2]} />
         </div>
       )
     }
@@ -46,7 +36,7 @@ const Board = (props: any): JSX.Element => {
     else if (index === 3 && players.length >= 3) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[1].index} {...players[1]} />
+          <Player key={players[1].name} {...players[1]} />
         </div>
       )
     }
@@ -54,7 +44,7 @@ const Board = (props: any): JSX.Element => {
     else if (index === 5 && players.length === 4) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[3].index} {...players[3]} />
+          <Player key={players[3].name} {...players[3]} />
         </div>
       )
     }
@@ -62,14 +52,14 @@ const Board = (props: any): JSX.Element => {
     else if (index === 5 && players.length === 3) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[2].index} {...players[2]} />
+          <Player key={players[2].name} {...players[2]} />
         </div>
       )
     }
     else if (index === 7) {
       return (
         <div className={"grid-item"}>
-          <Player key={players[0].index} {...players[0]} />
+          <Player key={players[0].name} {...players[0]} />
         </div>
       )
     }
@@ -83,26 +73,15 @@ const Board = (props: any): JSX.Element => {
 
   return (
     <section className="board_wrapper">
-      <div className="top_buttons_wrapper">
-        <Button
-          btnClasses={'btn btn-warning'}
-          btnText={'Leave Table'}
-          btnHandler={null}
-        />
-      </div>
 
       <div className="inner-wrapper grid">
         {
-          playersGrid
+          players && players.length ? playersGrid : null
         }
       </div>
       <div className="status-wrapper">
         <div className="inner-wrapper">
-          <ul>
-            {handPowers.map((result) => <li>{result}</li>)}
-            <li>{UIGetWinnerFromPlayers(players)}</li>
-          </ul>
-
+          <ul></ul>
         </div>
       </div>
     </section>
@@ -110,4 +89,7 @@ const Board = (props: any): JSX.Element => {
 
 }
 
-export default connect(mapStateToProps)(Board);
+interface Props {
+  players: IPlayer[]
+}
+export default Board;

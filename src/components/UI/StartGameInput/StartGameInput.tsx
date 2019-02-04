@@ -1,27 +1,14 @@
 import React from 'react';
+import './StartGameInput.module.css';
 
-import store, { AppState } from '../../../store/app.store';
-import { changeNumberOfPlayers } from '../../../actions/app.action.creator'
-import { connect } from 'react-redux';
-
-import './StartGameInput.module.css'
-import { startNewGame } from 'src/actions/game.actions.creator';
-
-const onGameStartHandler = (numberOfPlayers: number) => {
-  store.dispatch(startNewGame(numberOfPlayers));
-}
-
-const onPlayersNumberChangeHandler = (numberOfPlayers: number): void => {
-  store.dispatch(changeNumberOfPlayers(numberOfPlayers));
-}
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    numberOfPlayersSelected: state.homeView.numberOfPlayersSelected
-  }
-};
-
-const startGameInput = ({ numberOfPlayersSelected }: Props) => (
+const startGameInput = (
+  { 
+    numberOfPlayersSelected,
+    name,
+    balance,
+    onGameStartHandler,
+    onChangeNumberOfPlayers
+   }: Props) => (
   <>
     <div className="range-control">
       <span className="range-number">
@@ -35,7 +22,7 @@ const startGameInput = ({ numberOfPlayersSelected }: Props) => (
         min="2"
         max="4"
         value={numberOfPlayersSelected}
-        onChange={(event) => onPlayersNumberChangeHandler(+event.target.value)}
+        onChange={(event) => onChangeNumberOfPlayers(+event.target.value)}
         step="1"
       >
       </input>
@@ -48,7 +35,11 @@ const startGameInput = ({ numberOfPlayersSelected }: Props) => (
     <br />
     <div
       className="start-game-button"
-      onClick={() => onGameStartHandler(+numberOfPlayersSelected)}
+      onClick={() => onGameStartHandler({
+        numberOfPlayers:+numberOfPlayersSelected,
+        name,
+        balance
+      })}
     >
       Start Game with
       <span className="button-players-number"> {numberOfPlayersSelected} </span>
@@ -58,7 +49,12 @@ const startGameInput = ({ numberOfPlayersSelected }: Props) => (
 )
 
 interface Props {
-  numberOfPlayersSelected: number
+  numberOfPlayersSelected: number,
+  name: string,
+  balance: number,
+  onGameStartHandler: Function,
+  onChangeNumberOfPlayers: Function,
 }
 
-export default connect(mapStateToProps)(startGameInput);
+
+export default startGameInput;

@@ -1,21 +1,15 @@
 import React from 'react';
 import './Navbar.module.css';
-import { connect } from 'react-redux';
-import { AppState } from 'src/store/app.store';
+import { GameStatus } from '../../../../reducers/GameView.reducer';
 
 interface Props {
   name: string,
   balance: number,
+  dealCardsHandler: Function,
+  gameStatus: number,
 }
 
-const mapStateToProps = (state: AppState) => (
-  {
-    name: state.user.name,
-    balance: state.user.balance
-  }
-)
-
-const navBar = ({name, balance}: Props) => (
+const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => (
   <header className="Navbar">
       <p>
         Hello, <span className="name">{name}</span> |
@@ -23,9 +17,11 @@ const navBar = ({name, balance}: Props) => (
         &nbsp;&euro;
       </p>
       <nav>
-          ...
+          <ul>
+           {gameStatus && gameStatus === GameStatus._New ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
+          </ul>
       </nav>
   </header>
 );
 
-export default connect(mapStateToProps)(navBar);
+export default navBar;

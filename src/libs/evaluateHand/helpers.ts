@@ -1,12 +1,12 @@
 import { Card } from "../models";
 import _ from 'lodash';
 import { ICard, IPlayer } from '../../helpers/interfaces';
-import { getWinningHandName as getFinalHandName, getHighCardName } from '../models/evaluationResult.model';
+import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
 import { EvaluationResult } from './../models';
 import { getEvaluationResultFromHand } from './evaluateHand';
 
 /**
- * Factory function for number of sets expected in 5 card array
+ * Factory function for number of sets expected in 5 card array.
  * @param {Array<Card>}hand array of 5 Card Objects
  * @param {number} kindNumber Number of cards expected (e.g. For a four cards of a kind it's 4)
  * @param {number} sets Number of sets expected (e.g. for 2 pairs set it to 2)
@@ -98,43 +98,43 @@ const mapRankToNumber = (rank: string): number => {
 }
 
 //creates string array with notifications for players and their final hands
-const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
-  let evaluationResults: string[] = [];
-  players.forEach((player: IPlayer) => {
-    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-    if (evaluationResult) {
-      const finalHandName: string = getFinalHandName(evaluationResult.power)
-      const highCardName: string = getHighCardName(evaluationResult.highCardValue)
-      evaluationResults.push(`${player.name} has a ${finalHandName} with high card ${highCardName}`)
-    }
-    else {
-      evaluationResults.push('');
-    }
-  })
-  return evaluationResults;
-}
+// const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
+//   let evaluationResults: string[] = [];
+//   players.forEach((player: IPlayer) => {
+//     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
+//     if (evaluationResult) {
+//       const finalHandName: string = getFinalHandName(evaluationResult.power)
+//       const highCardName: string = getHighCardName(evaluationResult.highCardValue)
+//       evaluationResults.push(`${player.name} has a ${finalHandName} with high card ${highCardName}`)
+//     }
+//     else {
+//       evaluationResults.push('');
+//     }
+//   })
+//   return evaluationResults;
+// }
 
 // computes winning hand from players
-const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
+// const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
 
-  const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
-  let winningHand: EvaluationResult;
-  const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
-    Object.keys(prevValue).forEach((key) => {
-      if (!winningHand) {
-        if (prevValue[key] < currValue[key]) {
-          winningHand = currValue;
-        }
-        else if (prevValue[key] > currValue[key]) {
-          winningHand = prevValue;
-        }
-      }
-    })
-    return winningHand;
-  }
-  return evaluationResults.reduce(reducer)
+//   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+//   let winningHand: EvaluationResult;
+//   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
+//     Object.keys(prevValue).forEach((key) => {
+//       if (!winningHand) {
+//         if (prevValue[key] < currValue[key]) {
+//           winningHand = currValue;
+//         }
+//         else if (prevValue[key] > currValue[key]) {
+//           winningHand = prevValue;
+//         }
+//       }
+//     })
+//     return winningHand;
+//   }
+//   return evaluationResults.reduce(reducer)
 
-}
+// }
 
 const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
 
@@ -201,9 +201,9 @@ export {
   PairValues,
   mapRankToNumber,
   mapICardToCard,
-  UIGetStringArrayFromFinalHands,
+  // UIGetStringArrayFromFinalHands,
   getFinalHandArrayFromPlayersArray,
-  getWinningHandFromPlayers,
+  // getWinningHandFromPlayers,
   UIGetWinnerFromPlayers,
   getEvaluationResultsFromPlayers
 }

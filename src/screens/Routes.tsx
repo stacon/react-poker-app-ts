@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 
 import { Home, Game } from '../components/Views';
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
 const Routes = () => (
   <Router history={history}>
