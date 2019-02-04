@@ -2,18 +2,19 @@
 import React from 'react';
 
 // css
-import './info.module.css';
+import './Info.module.css';
 
-const Info = (props: any): JSX.Element => { // temp
+interface Props {
+  playerName: string,
+  balance: number
+}
 
-  console.log('info', props)
-
+const Info = ({playerName, balance}: Props): JSX.Element => {
   return (
     <div className="player_info border-gradient-grey">
-      {props.playerName}
+      {playerName} | <span className="info-balance">{balance.toFixed(2)}</span> &euro;
     </div>
   );
-
 }
 
 export default Info;

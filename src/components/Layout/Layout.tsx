@@ -8,7 +8,6 @@ const layout = () => (
   <>
   <Navbar/>
   <div className="container">
-    {/* <div className="playingCards faceImages"> */}
       <Routes />
   </div>
   </>

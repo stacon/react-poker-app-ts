@@ -1,4 +1,5 @@
 .container {
+  width:100%;
   align-items: center;
   position: fixed;
   top: calc(50% + 1.5rem);

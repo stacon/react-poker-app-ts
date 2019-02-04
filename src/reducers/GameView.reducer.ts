@@ -1,10 +1,11 @@
 import { START_GAME, DEAL_CARDS } from '../actions/game.actions.creator';
-import { getNewDeck, Card } from 'src/libs/models';
+import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
+import { UICard } from 'src/components/Views/Game/Card/Card';
 
 export interface GameState {
   players?: IPlayer[],
-  deck?: Card[],
+  deck?: UICard[],
   status?: number,
 }
 
@@ -25,7 +26,7 @@ export default function (state: GameState = {}, action: any) {
       break;
     }
     case DEAL_CARDS: {
-      let newDeck: Card[] = (state.deck) ? [...state.deck] : [];
+      let newDeck: UICard[] = (state.deck) ? [...state.deck] : [];
       let newPlayers: IPlayer[] = (state.players) ?
         state.players.map(player => ({
           ...player,
@@ -48,7 +49,7 @@ export default function (state: GameState = {}, action: any) {
 };
 
 export class IPlayer {
-  public hand: Card[];
+  public hand: UICard[];
   constructor(
     public name: string,
     public balance: number

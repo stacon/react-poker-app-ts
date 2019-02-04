@@ -1,23 +1,22 @@
-import Card from '../models/card.model';
-
 import { EvaluationResult } from '../models';
 import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './helpers';
+import { UICard } from 'src/components/Views/Game/Card/Card';
 
 
 
-const isRoyalFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
-const isStraightFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
-const isStraight = (hand: Card[]) => hasStraight(hand);
-const isFullHouse = (sortedHand: Card[]) => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
-const isFlush = (sortedHand: Card[]) => everyCardIsSameSuit(sortedHand);
+const isRoyalFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
+const isStraightFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
+const isStraight = (hand: UICard[]) => hasStraight(hand);
+const isFullHouse = (sortedHand: UICard[]) => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
+const isFlush = (sortedHand: UICard[]) => everyCardIsSameSuit(sortedHand);
 
 
 /**
  * From an array of 5 card you can get an evaluation result
- * @param {Array<Card>} hand
+ * @param {Array<UICard>} hand
  * @returns {EvaluationResult}
  */
-const getEvaluationResultFromHand = (hand: Card[]): EvaluationResult | null => {
+const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult | null => {
   if (hand.length !== 5) { console.error(`Number of cards expected is 5. Got ${hand.length}`); return null;}
   const evalResult: EvaluationResult = new EvaluationResult();
   evalResult.highCardValue = getHighCard(hand).value

@@ -30,15 +30,17 @@
   color: yellow;
 }
 
-li {
-  border-radius: 50%;
+nav li {
+  border-radius: 15px;
+  color: #fff;
+  font-weight: 500;
   margin-top: 8px;
   list-style-type: none;
-  border: 2px yellow solid;
+  border: 2px #fff solid;
   padding: 8px;
 }
 
-li:hover {
+nav li:hover {
   cursor: pointer;
-  background-color: yellow;
+  border-color: yellow;
 }

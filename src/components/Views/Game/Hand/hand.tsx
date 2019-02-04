@@ -2,28 +2,27 @@
 import React from 'react';
 
 // components
-import Card from '../Card/Card';
-
-// helpers
-import CardProperties from 'src/helpers/interfaces/CardProperties';
-
-// interfaces
-import { ICard } from '../../../../helpers/interfaces';
+import CardComponent, { UICard } from '../Card/Card';
 
 // css
-import './hand.module.css';
+import './Hand.module.css';
+
+
 
 interface Props {
-  hand: ICard[],
-  cardOwner: number
+  hand: UICard[],
+  closed: boolean,
 }
 
-const Hand = ({ hand }: Props): JSX.Element => (
+const Hand = ({ hand, closed }: Props): JSX.Element => (
     <ul className="table tbl_clear m-b-0">
-      {hand.map((item: ICard, i: number) => (
-        <Card
-          key={i}
-          card={new CardProperties(item.id, item.suit, item.rank, item.isFlipped, i)}
+      {hand.map((item: UICard) => (
+        <CardComponent
+          key={`${item.suit}+${item.rank}`}
+          isFlipped={(closed) ? true : false}
+          rank={item.rank}
+          suit={item.suit}
+          isSelected={item.selected}
         />
       ))}
     </ul>

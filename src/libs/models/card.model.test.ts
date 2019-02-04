@@ -1,9 +1,9 @@
-import { Card } from '.';
 import { Suit } from '../references';
+import { UICard } from 'src/components/Views/Game/Card/Card';
 
 
 it('should create this Ace of Spades', ()=>{
-    const aceOfSpades: Card = new Card(1, Suit.spades);
+    const aceOfSpades: UICard = new UICard(1, Suit.spades);
     expect(aceOfSpades.name).toBe('Ace of Spades');
     expect(aceOfSpades.value).toBe(14);
     expect(aceOfSpades.suit).toBe(Suit.spades);
@@ -11,7 +11,7 @@ it('should create this Ace of Spades', ()=>{
 });
 
 it('should create this King of Hearts', ()=>{
-    const kingOfHearts: Card = new Card(13, Suit.hearts);
+    const kingOfHearts: UICard = new UICard(13, Suit.hearts);
     expect(kingOfHearts.name).toBe('King of Hearts');
     expect(kingOfHearts.value).toBe(13);
     expect(kingOfHearts.suit).toBe(Suit.hearts);
@@ -19,7 +19,7 @@ it('should create this King of Hearts', ()=>{
 });
 
 it('should create this Five of Clubs', ()=>{
-    const fiveOfClubs: Card = new Card(5, Suit.clubs);
+    const fiveOfClubs: UICard = new UICard(5, Suit.clubs);
     expect(fiveOfClubs.name).toBe('Five of Clubs');
     expect(fiveOfClubs.value).toBe(5);
     expect(fiveOfClubs.suit).toBe(Suit.clubs);

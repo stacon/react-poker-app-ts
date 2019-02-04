@@ -1,28 +1,44 @@
 import React from 'react';
 
-// Interfaces
-import { ICard } from '../../../../helpers/interfaces';
-
 //css
 import './Card.module.css';
+import { getRankUIRepresentation } from './helpers';
+import { Suit } from 'src/libs/references';
+import Card from 'src/libs/models/card.model';
 
-const Card = (props: any): JSX.Element => {
+export class UICard extends Card {
+  public flipped: boolean;
+  public selected: boolean;
 
-  const _card: ICard = props.card;
+  constructor(rank: number, suit: Suit) {
+    super(rank, suit);
+    this.flipped = false;
+    this.selected = false;
+  }
+}
 
+interface Props {
+  isFlipped: boolean,
+  rank: number,
+  suit: string,
+  isSelected: boolean,
+}
+
+const card = ({isFlipped, rank, suit, isSelected }: Props): JSX.Element => {
+  console.log(isSelected)
   return (
     <li
       style={{ 'cursor': 'pointer' }}
-      className={`card ${_card.isFlipped ?
-        'rank-' + _card.rank.toString().toLowerCase() + ' ' + _card.suit.toString().toLowerCase() :
+      className={`card ${isFlipped ?
+        'rank-' + getRankUIRepresentation(rank).toLowerCase() + ' ' + suit.toString().toLowerCase() :
         'back'}`}
     >
-      {_card.isFlipped
+      {isFlipped
         ?
         (
           <div className="inner-wrapper">
-            <span className="rank">{`${_card.rank}`}</span>
-            <span className="suit" dangerouslySetInnerHTML={{ __html: `&${_card.suit.toLowerCase()};` }}></span>
+            <span className="rank">{`${getRankUIRepresentation(rank)}`}</span>
+            <span className="suit" dangerouslySetInnerHTML={{ __html: `&${suit.toLowerCase()};` }}></span>
           </div>
         )
         :
@@ -34,4 +50,4 @@ const Card = (props: any): JSX.Element => {
   );
 };
 
-export default Card;
+export default card;

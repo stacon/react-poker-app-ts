@@ -1,15 +1,23 @@
 import React from 'react';
 import './StartGameInput.module.css';
 
+interface Props {
+  numberOfPlayersSelected: number,
+  name: string,
+  balance: number,
+  onGameStartHandler: Function,
+  onChangeNumberOfPlayers: Function,
+}
+
 const startGameInput = (
-  { 
+  {
     numberOfPlayersSelected,
     name,
     balance,
     onGameStartHandler,
     onChangeNumberOfPlayers
    }: Props) => (
-  <>
+  <div className="start-game-control-container">
     <div className="range-control">
       <span className="range-number">
         2
@@ -45,16 +53,7 @@ const startGameInput = (
       <span className="button-players-number"> {numberOfPlayersSelected} </span>
       players
     </div>
-  </>
+  </div>
 )
-
-interface Props {
-  numberOfPlayersSelected: number,
-  name: string,
-  balance: number,
-  onGameStartHandler: Function,
-  onChangeNumberOfPlayers: Function,
-}
-
 
 export default startGameInput;

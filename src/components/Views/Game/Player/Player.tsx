@@ -1,19 +1,28 @@
 // core
 import React from 'react';
-import { connect } from 'react-redux';
 
 // component
-import Hand from '../Hand/hand';
-import Info from '../Info/info';
+import Hand from '../Hand/Hand';
+import Info from '../Info/Info';
 
 // css
 import './Player.module.css';
 
-const Player = ({ hand, index, name }: any): JSX.Element => (
+// Interfaces
+import { UICard } from '../Card/Card';
+
+interface Props {
+  hand: UICard[],
+  name: string,
+  balance: number,
+  isMainPlayer: boolean
+}
+
+const Player = ({ hand, name, balance, isMainPlayer }: Props): JSX.Element => (
   <article className="player">
-    <Hand hand={hand} cardOwner={index} />
-    <Info playerName={name} />
+    <Hand hand={hand} closed={isMainPlayer}/>
+    <Info playerName={name} balance={balance} />
   </article>
 );
 
-export default connect(undefined)(Player);
+export default Player;
