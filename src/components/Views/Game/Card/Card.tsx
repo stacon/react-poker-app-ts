@@ -22,13 +22,18 @@ interface Props {
   rank: number,
   suit: string,
   isSelected: boolean,
+  onCardClickHandler: Function,
+  keyForRef: string,
 }
 
-const card = ({isFlipped, rank, suit, isSelected }: Props): JSX.Element => {
-  console.log(isSelected)
+const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, keyForRef }: Props): JSX.Element => {
+  const liCardStyle = {
+    marginBottom: isSelected ? '10px' : '0px',
+    cursor: isFlipped ? 'pointer' : 'undefined'
+  }
   return (
     <li
-      style={{ 'cursor': 'pointer' }}
+      style={liCardStyle}
       className={`card ${isFlipped ?
         'rank-' + getRankUIRepresentation(rank).toLowerCase() + ' ' + suit.toString().toLowerCase() :
         'back'}`}
@@ -36,7 +41,9 @@ const card = ({isFlipped, rank, suit, isSelected }: Props): JSX.Element => {
       {isFlipped
         ?
         (
-          <div className="inner-wrapper">
+          <div className="inner-wrapper"
+            onClick= {() => onCardClickHandler(keyForRef)}
+          >
             <span className="rank">{`${getRankUIRepresentation(rank)}`}</span>
             <span className="suit" dangerouslySetInnerHTML={{ __html: `&${suit.toLowerCase()};` }}></span>
           </div>

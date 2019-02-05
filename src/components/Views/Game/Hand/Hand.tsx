@@ -2,8 +2,8 @@
 import React from 'react';
 
 // components
-import CardComponent, { UICard } from '../Card/Card';
-
+import  { UICard } from '../Card/Card';
+import CardContainer from '../../../../containers/Game/Card/Card.container';
 // css
 import './Hand.module.css';
 
@@ -14,12 +14,13 @@ interface Props {
 
 const Hand = ({ hand, closed }: Props): JSX.Element => (
     <ul className="table tbl_clear m-b-0">
-      {hand.map((item: UICard) => (
-        <CardComponent
+      {hand.map((item: UICard, index) => (
+        <CardContainer
           key={`${item.suit}+${item.rank}`}
           isFlipped={(closed) ? true : false}
           rank={item.rank}
           suit={item.suit}
+          keyForRef = {`${index}`}
           isSelected={item.selected}
         />
       ))}

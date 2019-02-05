@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS } from '../actions/game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED } from '../actions/game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
@@ -33,12 +33,22 @@ export default function (state: GameState = {}, action: any) {
           hand: newDeck.splice(0, 5)
         }
         )) : []
-
       return {
         ...state,
         players: newPlayers,
         deck: newDeck,
         status: GameStatus._FirstPhase
+      }
+    }
+    case CARD_SELECTED: {
+      let players = (state.players) ? [...state.players] : [];
+      if (players.length) {
+        players[0].hand[action.payload.key].selected = !players[0].hand[action.payload.key].selected;
+        console.log(players);
+        return {
+          ...state,
+          players,
+        }
       }
     }
     default: {
