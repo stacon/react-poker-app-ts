@@ -7,8 +7,6 @@ import CardComponent, { UICard } from '../Card/Card';
 // css
 import './Hand.module.css';
 
-
-
 interface Props {
   hand: UICard[],
   closed: boolean,
