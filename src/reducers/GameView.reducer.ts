@@ -44,7 +44,6 @@ export default function (state: GameState = {}, action: any) {
       let players = (state.players) ? [...state.players] : [];
       if (players.length) {
         players[0].hand[action.payload.key].selected = !players[0].hand[action.payload.key].selected;
-        console.log(players);
         return {
           ...state,
           players,

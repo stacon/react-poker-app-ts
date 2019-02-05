@@ -3,7 +3,7 @@ import React from 'react';
 
 // components
 import  { UICard } from '../Card/Card';
-import CardContainer from '../../../../containers/Game/Card/Card.container';
+import CardContainer from '../Card/Card';
 // css
 import './Hand.module.css';
 

@@ -6,7 +6,7 @@ export const NUMBER_OF_PLAYERS_SELECTED_CHANGED = 'NUMBER_OF_PLAYERS_SELECTED_CH
 export const changeNumberOfPlayers = (numberOfPlayers: number) => {
   return {
     type: NUMBER_OF_PLAYERS_SELECTED_CHANGED,
-    payload: numberOfPlayers,
+    payload: {numberOfPlayers},
   }
 }
 // #endregion Action Creators

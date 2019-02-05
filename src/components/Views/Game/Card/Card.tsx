@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { onCardSelect } from 'src/actions/game.actions.creator';
 
 //css
 import './Card.module.css';
@@ -26,9 +28,10 @@ interface Props {
   keyForRef: string,
 }
 
-const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, keyForRef }: Props): JSX.Element => {
+export const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, keyForRef }: Props): JSX.Element => {
   const liCardStyle = {
-    marginBottom: isSelected ? '10px' : '0px',
+    position: 'relative',
+    top: isSelected ? '-10px' : '0px',
     cursor: isFlipped ? 'pointer' : 'undefined'
   }
   return (
@@ -38,23 +41,24 @@ const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, keyForRef 
         'rank-' + getRankUIRepresentation(rank).toLowerCase() + ' ' + suit.toString().toLowerCase() :
         'back'}`}
     >
-      {isFlipped
-        ?
-        (
+      {isFlipped ? (
           <div className="inner-wrapper"
             onClick= {() => onCardClickHandler(keyForRef)}
           >
             <span className="rank">{`${getRankUIRepresentation(rank)}`}</span>
             <span className="suit" dangerouslySetInnerHTML={{ __html: `&${suit.toLowerCase()};` }}></span>
           </div>
-        )
-        :
-        (
+        ) : (
           <div className="inner-wrapper" />
-        )
-      }
+        )}
     </li>
   );
 };
 
-export default card;
+const mapDispatchToProps = (dispatch: any) =>  ({
+    onCardClickHandler: (key:number) => {
+      dispatch(onCardSelect(key));
+    }
+});
+
+export default connect(null, mapDispatchToProps)(card);
