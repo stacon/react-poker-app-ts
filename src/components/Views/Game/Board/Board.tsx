@@ -1,13 +1,19 @@
 // core
 import React from 'react';
+import { connect } from 'react-redux';
+import { AppState } from 'src/models/App/app.store';
 
 // components
 import Player from '../Player/Player';
 
 import './Board.module.css';
-import { IPlayer } from 'src/reducers/GameView.reducer';
+import { IPlayer } from 'src/models/Game/game.reducer';
 
-const Board = ({ players }: Props) => {
+interface Props {
+  players: IPlayer[]
+}
+
+export const board = ({ players }: Props) => {
   const playersGrid: JSX.Element = (!players) ?
     <div></div> : (
       <>
@@ -50,7 +56,10 @@ const Board = ({ players }: Props) => {
 
 }
 
-interface Props {
-  players: IPlayer[]
-}
-export default Board;
+const mapStateToProps = (state: AppState) => {
+  return {
+    players: state.game.players,
+  }
+};
+
+export default connect(mapStateToProps)(board);

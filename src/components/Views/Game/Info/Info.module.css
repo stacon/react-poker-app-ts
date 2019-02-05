@@ -4,6 +4,7 @@
   color: white;
   background: rgba(28,26,56,1);
   padding: 10px;
+  margin-top: 15px;
 }
 
 .player_info::after {

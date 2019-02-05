@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { onCardSelect } from 'src/actions/game.actions.creator';
+import { onCardSelect } from 'src/models/Game/game.actions.creator';
 
 //css
 import './Card.module.css';
@@ -25,25 +25,24 @@ interface Props {
   suit: string,
   isSelected: boolean,
   onCardClickHandler: Function,
-  keyForRef: string,
+  index: number,
 }
 
-export const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, keyForRef }: Props): JSX.Element => {
+export const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, index: keyForRef }: Props): JSX.Element => {
   const liCardStyle = {
-    position: 'relative',
     top: isSelected ? '-10px' : '0px',
     cursor: isFlipped ? 'pointer' : 'undefined'
   }
   return (
     <li
       style={liCardStyle}
+      onClick= {(isFlipped) ? () => onCardClickHandler(keyForRef) : () => null}
       className={`card ${isFlipped ?
         'rank-' + getRankUIRepresentation(rank).toLowerCase() + ' ' + suit.toString().toLowerCase() :
         'back'}`}
     >
       {isFlipped ? (
           <div className="inner-wrapper"
-            onClick= {() => onCardClickHandler(keyForRef)}
           >
             <span className="rank">{`${getRankUIRepresentation(rank)}`}</span>
             <span className="suit" dangerouslySetInnerHTML={{ __html: `&${suit.toLowerCase()};` }}></span>

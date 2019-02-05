@@ -1,6 +1,9 @@
 import React from 'react';
 import './Navbar.module.css';
-import { GameStatus } from '../../../../reducers/GameView.reducer';
+import { GameStatus } from '../../../../models/Game/game.reducer';
+import { connect } from 'react-redux';
+import { dealCards } from 'src/models/Game/game.actions.creator';
+import { AppState } from '../../../../models/App/app.store';
 
 interface Props {
   name: string,
@@ -9,7 +12,7 @@ interface Props {
   gameStatus: number,
 }
 
-const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => (
+export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => (
   <header className="Navbar">
       <p>
         Hello, <span className="name">{name}</span> |
@@ -24,4 +27,21 @@ const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => (
   </header>
 );
 
-export default navBar;
+const mapDispatchToProps = (dispatch:any ) => {
+    return {
+      dealCardsHandler: () => {
+        dispatch(dealCards());
+      }
+  }
+}
+
+  const mapStateToProps = (state: AppState) => {
+    return {
+      name: state.user.name,
+      balance: state.user.balance,
+      gameStatus: (state.game.status) ? state.game.status : null
+    }
+  };
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(navBar);

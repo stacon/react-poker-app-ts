@@ -1,5 +1,10 @@
 import React from 'react';
 import './StartGameInput.module.css';
+import { connect } from 'react-redux';
+import { startNewGame } from 'src/models/Game/game.actions.creator';
+import { AppState } from '../../../models/App/app.store';
+import { changeNumberOfPlayers } from '../../../models/App/app.action.creator'
+import { history } from "../../Routes";
 
 interface Props {
   numberOfPlayersSelected: number,
@@ -9,7 +14,7 @@ interface Props {
   onChangeNumberOfPlayers: Function,
 }
 
-const startGameInput = (
+export const startGameInput = (
   {
     numberOfPlayersSelected,
     name,
@@ -56,4 +61,27 @@ const startGameInput = (
   </div>
 )
 
-export default startGameInput;
+
+
+const mapDispatchToProps = (dispatch:any ) => {
+    return {
+      onGameStartHandler: (payload:any) => {
+        dispatch(startNewGame(payload));
+        history.push('/game');
+      },
+      onChangeNumberOfPlayers: (numberOfPlayers: number): void => {
+        dispatch(changeNumberOfPlayers(numberOfPlayers));
+    }
+  }
+}
+
+  const mapStateToProps = (state: AppState) => {
+    return {
+      numberOfPlayersSelected: state.app.numberOfPlayersSelected,
+      name: state.user.name,
+      balance: state.user.balance
+    }
+  };
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(startGameInput);

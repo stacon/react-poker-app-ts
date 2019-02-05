@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router';
 import { createBrowserHistory } from 'history';
 
-import { Home, Game } from '../components/Views';
+import { Home, Game } from './Views';
 
 export const history = createBrowserHistory();
 

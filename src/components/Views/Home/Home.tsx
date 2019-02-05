@@ -1,5 +1,5 @@
 import React from 'react';
-import StartGameInput from '../../../containers/UI/StartGameInput/StartGameInput.container';
+import StartGameInput from '../../UI/StartGameInput/StartGameInput';
 
 const home = () => (
   <StartGameInput/>

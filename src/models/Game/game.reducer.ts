@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED } from '../actions/game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED } from './game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
