@@ -1,15 +1,16 @@
-import { Card } from "../models";
+
 import { Suit } from "../references";
 import { getEvaluationResultFromHand } from './evaluateHand';
-import { EvaluationResult } from '../../classes/evaluationResult.class';
+import { EvaluationResult } from '../models';
+import { UICard } from 'src/components/Views/Game/Card/Card';
 
 it('should return a Royal Flush evalusationResult object', ()=>{
-  const flushRoyal: Card[] = [
-    new Card(1, Suit.hearts),
-    new Card(2, Suit.hearts),
-    new Card(3, Suit.hearts),
-    new Card(4, Suit.hearts),
-    new Card(5, Suit.hearts),
+  const flushRoyal: UICard[] = [
+    new UICard(1, Suit.hearts),
+    new UICard(2, Suit.hearts),
+    new UICard(3, Suit.hearts),
+    new UICard(4, Suit.hearts),
+    new UICard(5, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(10, 14 , 0, 0, 0)
@@ -17,12 +18,12 @@ it('should return a Royal Flush evalusationResult object', ()=>{
 })
 
 it('should return a Straight Flush evaluationResult object', ()=>{
-  const straightFlush: Card[] = [
-    new Card(6, Suit.hearts),
-    new Card(2, Suit.hearts),
-    new Card(3, Suit.hearts),
-    new Card(4, Suit.hearts),
-    new Card(5, Suit.hearts),
+  const straightFlush: UICard[] = [
+    new UICard(6, Suit.hearts),
+    new UICard(2, Suit.hearts),
+    new UICard(3, Suit.hearts),
+    new UICard(4, Suit.hearts),
+    new UICard(5, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(9, 6 , 0, 0, 0)
@@ -30,12 +31,12 @@ it('should return a Straight Flush evaluationResult object', ()=>{
 })
 
 it('should return a Four of a kind evaluationResult object', ()=>{
-  const fourOfAKind: Card[] = [
-    new Card(11, Suit.clubs),
-    new Card(11, Suit.spades),
-    new Card(11, Suit.diamonds),
-    new Card(11, Suit.hearts),
-    new Card(12, Suit.hearts),
+  const fourOfAKind: UICard[] = [
+    new UICard(11, Suit.clubs),
+    new UICard(11, Suit.spades),
+    new UICard(11, Suit.diamonds),
+    new UICard(11, Suit.hearts),
+    new UICard(12, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(8, 12, 11, 0, 0, 0);
@@ -43,12 +44,12 @@ it('should return a Four of a kind evaluationResult object', ()=>{
 })
 
 it('should return a Full House evaluationResult object', ()=>{
-  const fullHouse: Card[] = [
-    new Card(3, Suit.hearts),
-    new Card(4, Suit.spades),
-    new Card(4, Suit.clubs),
-    new Card(4, Suit.hearts),
-    new Card(3, Suit.diamonds),
+  const fullHouse: UICard[] = [
+    new UICard(3, Suit.hearts),
+    new UICard(4, Suit.spades),
+    new UICard(4, Suit.clubs),
+    new UICard(4, Suit.hearts),
+    new UICard(3, Suit.diamonds),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(7, 4, 0, 4, 3, 0);
@@ -56,12 +57,12 @@ it('should return a Full House evaluationResult object', ()=>{
 })
 
 it('should return a Flush evaluationResult object', ()=>{
-  const flush: Card[] = [
-    new Card(13, Suit.hearts),
-    new Card(1, Suit.hearts),
-    new Card(2, Suit.hearts),
-    new Card(4, Suit.hearts),
-    new Card(12, Suit.hearts),
+  const flush: UICard[] = [
+    new UICard(13, Suit.hearts),
+    new UICard(1, Suit.hearts),
+    new UICard(2, Suit.hearts),
+    new UICard(4, Suit.hearts),
+    new UICard(12, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(6, 14, 0, 0, 0, 0);
@@ -70,12 +71,12 @@ it('should return a Flush evaluationResult object', ()=>{
 
 //TODO: Should this and the following be equal?
 it('should return a Straight evaluationResult object', ()=>{
-  const straight: Card[] = [
-    new Card(1, Suit.spades),
-    new Card(2, Suit.diamonds),
-    new Card(3, Suit.clubs),
-    new Card(4, Suit.hearts),
-    new Card(5, Suit.hearts),
+  const straight: UICard[] = [
+    new UICard(1, Suit.spades),
+    new UICard(2, Suit.diamonds),
+    new UICard(3, Suit.clubs),
+    new UICard(4, Suit.hearts),
+    new UICard(5, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(5, 14, 0, 0, 0, 0);
@@ -84,12 +85,12 @@ it('should return a Straight evaluationResult object', ()=>{
 
 //TODO: Should this and the previous be equal?
 it('should return a Straight evaluationResult object', ()=>{
-  const straight: Card[] = [
-    new Card(10, Suit.spades),
-    new Card(11, Suit.diamonds),
-    new Card(12, Suit.clubs),
-    new Card(13, Suit.hearts),
-    new Card(14, Suit.hearts),
+  const straight: UICard[] = [
+    new UICard(10, Suit.spades),
+    new UICard(11, Suit.diamonds),
+    new UICard(12, Suit.clubs),
+    new UICard(13, Suit.hearts),
+    new UICard(14, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(5, 14, 0, 0, 0, 0);
@@ -97,12 +98,12 @@ it('should return a Straight evaluationResult object', ()=>{
 })
 
 it('should return a Three of a Kind evaluationResult object', ()=>{
-  const threeOfAKind: Card[] = [
-    new Card(5, Suit.spades),
-    new Card(5, Suit.diamonds),
-    new Card(5, Suit.clubs),
-    new Card(11, Suit.hearts),
-    new Card(2, Suit.hearts),
+  const threeOfAKind: UICard[] = [
+    new UICard(5, Suit.spades),
+    new UICard(5, Suit.diamonds),
+    new UICard(5, Suit.clubs),
+    new UICard(11, Suit.hearts),
+    new UICard(2, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(4, 11, 0, 5, 0, 0);
@@ -110,12 +111,12 @@ it('should return a Three of a Kind evaluationResult object', ()=>{
 })
 
 it('should return a Two Pairs evaluationResult object', ()=>{
-  const twoPairs: Card[] = [
-    new Card(5, Suit.spades),
-    new Card(5, Suit.diamonds),
-    new Card(2, Suit.clubs),
-    new Card(11, Suit.hearts),
-    new Card(2, Suit.hearts),
+  const twoPairs: UICard[] = [
+    new UICard(5, Suit.spades),
+    new UICard(5, Suit.diamonds),
+    new UICard(2, Suit.clubs),
+    new UICard(11, Suit.hearts),
+    new UICard(2, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(3, 11, 0, 0, 5, 2);
@@ -123,12 +124,12 @@ it('should return a Two Pairs evaluationResult object', ()=>{
 })
 
 it('should return a One Pair evaluationResult object', ()=>{
-  const pair: Card[] = [
-    new Card(5, Suit.spades),
-    new Card(3, Suit.diamonds),
-    new Card(2, Suit.clubs),
-    new Card(11, Suit.hearts),
-    new Card(2, Suit.hearts),
+  const pair: UICard[] = [
+    new UICard(5, Suit.spades),
+    new UICard(3, Suit.diamonds),
+    new UICard(2, Suit.clubs),
+    new UICard(11, Suit.hearts),
+    new UICard(2, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(2, 11, 0, 0, 2, 0);
@@ -136,12 +137,12 @@ it('should return a One Pair evaluationResult object', ()=>{
 })
 
 it('should return a High Card evaluationResult object', ()=>{
-  const highCard: Card[] = [
-    new Card(5, Suit.spades),
-    new Card(3, Suit.diamonds),
-    new Card(4, Suit.clubs),
-    new Card(11, Suit.hearts),
-    new Card(2, Suit.hearts),
+  const highCard: UICard[] = [
+    new UICard(5, Suit.spades),
+    new UICard(3, Suit.diamonds),
+    new UICard(4, Suit.clubs),
+    new UICard(11, Suit.hearts),
+    new UICard(2, Suit.hearts),
   ];
 
   const expectedEvaluationResult = new EvaluationResult(1, 11, 0, 0, 0, 0);
