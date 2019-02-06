@@ -8,6 +8,7 @@ import Player from '../Player/Player';
 
 import './Board.module.css';
 import { IPlayer } from 'src/models/Game/game.reducer';
+import { UIGetPlayerHandFromEvaluationResult } from 'src/libs/evaluateHand/helpers';
 
 interface Props {
   players: IPlayer[]
@@ -49,7 +50,7 @@ export const board = ({ players }: Props) => {
         </div>
       </div>
       <div className="status-wrapper">
-        <ul></ul>
+        <ul>{players && players.length ? UIGetPlayerHandFromEvaluationResult(players[0]) : null}</ul>
       </div>
     </>
   )
