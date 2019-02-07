@@ -22,7 +22,7 @@ interface Props {
 }
 
 const Player = ({hand, name, balance, isMainPlayer, isDealer }: Props): JSX.Element => (
-  <article className="player">
+  <article>
     <Hand hand={hand} closed={isMainPlayer}/>
     <Info playerName={name} balance={balance} />
     {(isDealer) ? <DealerBadge/> : null}

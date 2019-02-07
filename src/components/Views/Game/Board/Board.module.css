@@ -30,12 +30,11 @@
 
 .player_2 {
   order: 2;
-  bottom: 0vh;
+  bottom: 20vh;
 }
 
 .player_3 {
   order: 1;
-  -ms-flex-item-align: start;
   align-self: flex-start;
   position: absolute;
   top: -10vh;
@@ -43,7 +42,6 @@
 }
 .player_4 {
   position: absolute;
-  -ms-flex-order: 4;
   order: 4;
   top: -10vh;
   left: 75vw;
