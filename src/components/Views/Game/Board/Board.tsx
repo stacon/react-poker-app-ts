@@ -15,35 +15,42 @@ interface Props {
 }
 
 export const board = ({ players }: Props) => {
-  const playersGrid: JSX.Element = (!players) ?
+  const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
-      <>
-        <div className={"grid-item"}></div>
-        <div className={"grid-item"}>
-          {(players.length === 2) ? <Player key={players[1].name} {...players[1]} isMainPlayer={false} /> : null}
-          {(players.length === 4) ? <Player key={players[3].name} {...players[3]} isMainPlayer={false}/> : null}
-        </div>
-        <div className={"grid-item"}></div>
-        <div className={"grid-item"}>
-          {(players.length >= 3) ? <Player key={players[1].name} {...players[1]} isMainPlayer={false} /> : null}
-        </div>
-        <div className={"grid-item"}></div>
-        <div className={"grid-item"}>
-          {(players.length >= 3) ? <Player key={players[2].name} {...players[2]} isMainPlayer={false} /> : null}
-        </div>
-        <div className={"grid-item"}></div>
-        <div className={"grid-item"}>
-          <Player key={players[0].name} {...players[0]} isMainPlayer={true} />
-        </div>
-        <div className={"grid-item"}></div>
-      </>
+      players.map((player, index) => { 
+        return (
+          <div className = {`player player_${index+1}`}>
+           <Player pid= {index} key={player.name} {...player} isMainPlayer={index? false : true } isDealer = {index? false : true } />
+         </div>
+        )
+      })
+      // <>
+      //   <div className={"grid-item"}></div>
+      //   <div className={"grid-item"}>
+      //     {(players.length === 2) ? <Player pid={1} key={players[1].name} {...players[1]} isMainPlayer={false} isDealer = {false} /> : null}
+      //     {(players.length === 4) ? <Player pid={3} key={players[3].name} {...players[3]} isMainPlayer={false} isDealer = {false}/> : null}
+      //   </div>
+      //   <div className={"grid-item"}></div>
+      //   <div className={"grid-item"}>
+      //     {(players.length >= 3) ? <Player pid={1} key={players[1].name} {...players[1]} isMainPlayer={false} isDealer = {false}/> : null}
+      //   </div>
+      //   <div className={"grid-item"}></div>
+      //   <div className={"grid-item"}>
+      //     {(players.length >= 3) ? <Player pid={2} key={players[2].name} {...players[2]} isMainPlayer={false} isDealer = {false}/> : null}
+      //   </div>
+      //   <div className={"grid-item"}></div>
+      //   <div className={"grid-item"}>
+      //     <Player pid={0} key={players[0].name} {...players[0]} isMainPlayer={true} isDealer = {true}/>
+      //   </div>
+      //   <div className={"grid-item"}></div>
+      // </>
     )
 
 
   return (
     <>
       <div className="playingCards faceImages">
-        <div className="inner-wrapper grid">
+        <div className="inner-wrapper flex">
           {
             players && players.length ? playersGrid : null
           }
@@ -59,7 +66,7 @@ export const board = ({ players }: Props) => {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    players: state.game.players,
+    players: state.game.players
   }
 };
 
