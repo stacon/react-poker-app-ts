@@ -21,7 +21,7 @@ export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => 
       </p>
       <nav>
           <ul>
-           {gameStatus && gameStatus === GameStatus._New ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
+           {gameStatus && gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
           </ul>
       </nav>
   </header>

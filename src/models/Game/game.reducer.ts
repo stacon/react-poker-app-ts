@@ -27,7 +27,7 @@ export default function (state: GameState = {}, action: any) {
         ...state,
         players: players,
         deck: getNewDeck(),
-        status: GameStatus._New,
+        status: GameStatus._NewGame,
         dealerIndex: dealerIndex
       }
       break;
@@ -44,7 +44,7 @@ export default function (state: GameState = {}, action: any) {
         ...state,
         players: newPlayers,
         deck: newDeck,
-        status: GameStatus._FirstPhase
+        status: GameStatus._FirstBetPhase
       }
     }
 
@@ -76,6 +76,8 @@ export class IPlayer {
 }
 
 export enum GameStatus {
-  _New = 1,
-  _FirstPhase = 2,
+  _NewGame = 1,
+  _FirstBetPhase = 2,
+  _DiscardAndSecondBetPhase = 3,
+  _EvaluationPhase = 4,
 }

@@ -1,0 +1,35 @@
+.status-wrapper {
+  position: absolute;
+  z-index: 100;
+  right: 10px;
+  bottom: -46vh;
+  background-color: rgba(0,0,0,0.5);
+  padding: 10px;
+  color: #ffffff;
+}
+
+.status-wrapper ul {
+  list-style-type: none;
+  height: 200px;
+  width: 400px;
+  overflow: auto;
+}
+
+.status-wrapper li {
+  padding-left: 10px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.status-wrapper li::after {
+  content: "-";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.status-wrapper li:last-of-type {
+  margin-bottom: 0;
+}
