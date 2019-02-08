@@ -1,6 +1,6 @@
 import { NUMBER_OF_PLAYERS_SELECTED_CHANGED } from './app.action.creator'
 
-export interface AppState {
+export interface IndexState {
   numberOfPlayersSelected: number,
 }
 
@@ -8,7 +8,7 @@ const initialState = {
   numberOfPlayersSelected: 2,
 }
 
-export default function (state: AppState = initialState, action: any) {
+export default function (state: IndexState = initialState, action: any) {
   switch (action.type) {
     case (NUMBER_OF_PLAYERS_SELECTED_CHANGED): {
       return {

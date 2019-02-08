@@ -1,10 +1,11 @@
 .player_info {
-  position: relative;
+  position: absolute;
   display:inline-block;
   color: white;
   background: rgba(28,26,56,1);
   padding: 10px;
-  margin-top: 15px;
+  top: 91px;
+  left: -5px;
 }
 
 .player_info::after {

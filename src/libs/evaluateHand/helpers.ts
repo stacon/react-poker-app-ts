@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
-// import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
-// import { EvaluationResult } from './../models';
-// import { getEvaluationResultFromHand } from './evaluateHand';
+import { IPlayer } from 'src/models/Game/game.reducer';
+import { EvaluationResult } from '../models';
+import { getEvaluationResultFromHand } from './evaluateHand';
+import { getHighCardName } from '../models/evaluationResult.model';
+import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
 
 /**
  * Factory function for number of sets expected in 5 card array.
@@ -87,94 +89,89 @@ const mapRankToNumber = (rank: string): number => {
   return rankNumber;
 }
 
-//creates string array with notifications for players and their final hands
-// const UIGetStringArrayFromFinalHands = (players: IPlayer[]): string[] => {
-//   let evaluationResults: string[] = [];
-//   players.forEach((player: IPlayer) => {
-//     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-//     if (evaluationResult) {
-//       const finalHandName: string = getFinalHandName(evaluationResult.power)
-//       const highCardName: string = getHighCardName(evaluationResult.highCardValue)
-//       evaluationResults.push(`${player.name} has a ${finalHandName} with high card ${highCardName}`)
-//     }
-//     else {
-//       evaluationResults.push('');
-//     }
-//   })
-//   return evaluationResults;
-// }
+// creates string array with notifications for players and their final hands
+const UIGetPlayerHandFromEvaluationResult = (player: IPlayer): string => {
+  if (player) {
+    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(player.hand);
+    if (evaluationResult) {
+      const finalHandName: string = getFinalHandName(evaluationResult.power)
+      const highCardName: string = getHighCardName(evaluationResult.highCardValue)
+      return `- You have ${finalHandName} with high card ${highCardName}`;
+    }
+  }
+  return '';
+}
 
 // computes winning hand from players
-// const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
+const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
+  const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+  let winningHand: EvaluationResult;
+  const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
+    Object.keys(prevValue).forEach((key) => {
+      if (!winningHand) {
+        if (prevValue[key] < currValue[key]) {
+          winningHand = currValue;
+        }
+        else if (prevValue[key] > currValue[key]) {
+          winningHand = prevValue;
+        }
+      }
+    })
+    return winningHand;
+  }
+  return evaluationResults.reduce(reducer)
 
-//   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
-//   let winningHand: EvaluationResult;
-//   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
-//     Object.keys(prevValue).forEach((key) => {
-//       if (!winningHand) {
-//         if (prevValue[key] < currValue[key]) {
-//           winningHand = currValue;
-//         }
-//         else if (prevValue[key] > currValue[key]) {
-//           winningHand = prevValue;
-//         }
-//       }
-//     })
-//     return winningHand;
-//   }
-//   return evaluationResults.reduce(reducer)
+}
 
-// }
+const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
 
-// const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
+  const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
+  console.log(evaluationResults)
 
-//   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
-//   console.log(evaluationResults)
+  const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
+    let winningHand: EvaluationResult = <EvaluationResult>{};
+    let winner: boolean = false;
+    Object.keys(prevValue).forEach((key) => {
+      if (!winner) {
+        if (prevValue[key] < currValue[key]) {
+          winningHand = currValue;
+          winner = true;
+        }
+        else if (prevValue[key] > currValue[key]) {
+          winningHand = prevValue;
+          winner = true;
+        }
+      }
+    })
+    return winningHand;
+  }
+  const winningHand: EvaluationResult = evaluationResults.reduce(reducer);
+  let winnerIndex: number = evaluationResults.findIndex((result) => result === winningHand);
+  const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])
+  return `Winner is ${players[winnerIndex].name} with ${finalHand[0]}`;
 
-//   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
-//     let winningHand: EvaluationResult = <EvaluationResult>{};
-//     let winner: boolean = false;
-//     Object.keys(prevValue).forEach((key) => {
-//       if (!winner) {
-//         if (prevValue[key] < currValue[key]) {
-//           winningHand = currValue;
-//           winner = true;
-//         }
-//         else if (prevValue[key] > currValue[key]) {
-//           winningHand = prevValue;
-//           winner = true;
-//         }
-//       }
-//     })
-//     return winningHand;
-//   }
-//   const winningHand: EvaluationResult = evaluationResults.reduce(reducer);
-//   let winnerIndex: number = evaluationResults.findIndex((result) => result === winningHand);
-//   const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])
-//   return `Winner is ${players[winnerIndex].name} with ${finalHand[0]}`;
-
-// }
+}
 
 
-//extracts final hands from players
-// const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
-//   let handPowers: string[] = [];
-//   players.forEach((player: IPlayer) => {
-//     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-//     const finalHandName: string = getFinalHandName(evaluationResult !== null ? evaluationResult.power : 0)
-//     handPowers.push(finalHandName);
-//   });
-//   return handPowers;
-// }
+// extracts final hands from players
+const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
+  let handPowers: string[] = [];
+  players.forEach((player: IPlayer) => {
+    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(player.hand);
+    const finalHandName: string = getFinalHandName(evaluationResult !== null ? evaluationResult.power : 0)
+    handPowers.push(finalHandName);
+  });
+  return handPowers;
+}
 
-// const getEvaluationResultsFromPlayers = (players: IPlayer[]): EvaluationResult[] => {
-//   let evaluationResults: EvaluationResult[] = [];
-//   players.forEach((player: IPlayer, index: number) => {
-//     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(mapICardToCard(player.hand));
-//     evaluationResults.push(evaluationResult ? evaluationResult : <EvaluationResult>{});
-//   });
-//   return evaluationResults;
-// }
+const getEvaluationResultsFromPlayers = (players: IPlayer[]): EvaluationResult[] => {
+  let evaluationResults: EvaluationResult[] = [];
+  players.forEach((player: IPlayer, index: number) => {
+    const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(player.hand);
+    evaluationResults.push(evaluationResult ? evaluationResult : <EvaluationResult>{});
+  });
+  return evaluationResults;
+}
 export {
   everyCardIsSameSuit,
   isRoyal,
@@ -190,10 +187,9 @@ export {
   getPairsGroupValues,
   PairValues,
   mapRankToNumber,
-  // mapICardToCard,
-  // UIGetStringArrayFromFinalHands,
-  // getFinalHandArrayFromPlayersArray,
-  // getWinningHandFromPlayers,
-  // UIGetWinnerFromPlayers,
-  // getEvaluationResultsFromPlayers
+  UIGetPlayerHandFromEvaluationResult,
+  getFinalHandArrayFromPlayersArray,
+  getWinningHandFromPlayers,
+  UIGetWinnerFromPlayers,
+  getEvaluationResultsFromPlayers
 }

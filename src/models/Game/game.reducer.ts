@@ -7,21 +7,28 @@ export interface GameState {
   players?: IPlayer[],
   deck?: UICard[],
   status?: number,
+  dealerIndex?: number
 }
 
 export default function (state: GameState = {}, action: any) {
 
   switch (action.type) {
     case START_GAME: {
+      const dealerIndex: number = Math.floor(Math.random() * action.payload.numberOfPlayers)
+      const players = _.times(action.payload.numberOfPlayers).map(
+        (i) => {
+          if (i === 0) {
+            return new IPlayer(action.payload.name, action.payload.balance);
+          }
+            return new IPlayer(`Player_${i + 1}`, 1000);
+        });
+      console.log(players);
       return {
         ...state,
-        players: _.times(action.payload.numberOfPlayers).map((i) => {
-          return (i === 0) ?
-            new IPlayer(action.payload.name, action.payload.balance) :
-            new IPlayer(`Player_${i + 1}`, 1000)
-        }),
+        players: players,
         deck: getNewDeck(),
-        status: GameStatus._New
+        status: GameStatus._New,
+        dealerIndex: dealerIndex
       }
       break;
     }
@@ -40,6 +47,7 @@ export default function (state: GameState = {}, action: any) {
         status: GameStatus._FirstPhase
       }
     }
+
     case CARD_SELECTED: {
       let players = (state.players) ? [...state.players] : [];
       if (players.length) {

@@ -1,12 +1,12 @@
 import { createStore } from "redux";
 import rootReducer from "../root.reducer";
 import { UserState } from 'src/models/User/user.reducer';
-import { AppState } from 'src/models/App/app.reducer';
+import { IndexState } from 'src/models/App/app.reducer';
 import { GameState } from 'src/models/Game/game.reducer';
 
 export interface AppState {
   user: UserState,
-  app: AppState,
+  app: IndexState,
   game: GameState
 }
 

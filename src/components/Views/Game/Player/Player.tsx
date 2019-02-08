@@ -10,18 +10,22 @@ import './Player.module.css';
 
 // Interfaces
 import { UICard } from '../Card/Card';
+import DealerBadge from '../DealerBadge/DealerBadge';
 
 interface Props {
+  pid: number,
   hand: UICard[],
   name: string,
   balance: number,
-  isMainPlayer: boolean
+  isMainPlayer: boolean,
+  isDealer: boolean,
 }
 
-const Player = ({ hand, name, balance, isMainPlayer }: Props): JSX.Element => (
-  <article className="player">
+const Player = ({hand, name, balance, isMainPlayer, isDealer }: Props): JSX.Element => (
+  <article>
     <Hand hand={hand} closed={isMainPlayer}/>
     <Info playerName={name} balance={balance} />
+    {(isDealer) ? <DealerBadge/> : null}
   </article>
 );
 
