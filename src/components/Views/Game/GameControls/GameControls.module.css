@@ -1,0 +1,26 @@
+.game-control-container {
+  position: absolute;
+  z-index: 100;
+  border-bottom: solid 3px #fff;
+  padding: 15px;
+  left: 30px;
+  bottom: -46vh;
+}
+
+.game-control-container li {
+  display: inline-block;
+  border-radius: 15px;
+  text-align: center;
+  width: 150px;
+  color: #fff;
+  font-weight: 500;
+  margin: 8px;
+  list-style-type: none;
+  border: 2px #fff solid;
+  padding: 8px;
+}
+
+.game-control-container li:hover {
+  cursor: pointer;
+  border-color: yellow;
+}

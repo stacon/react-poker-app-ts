@@ -9,6 +9,7 @@ import Player from '../Player/Player';
 import './Board.module.css';
 import { IPlayer } from 'src/models/Game/game.reducer';
 import { statusFrame as StatusFrame } from '../StatusFrame/StatusFrame';
+import { gameControls as GameControls } from '../GameControls/GameControls';
 
 interface Props {
   players: IPlayer[]
@@ -38,6 +39,7 @@ export const board = ({ players }: Props) => {
         </div>
       </div>
       <StatusFrame messages={messages}/>
+      <GameControls/>
     </>
   )
 
