@@ -5,6 +5,7 @@ import { startNewGame } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../models/App/app.store';
 import { changeNumberOfPlayers } from '../../../models/App/app.action.creator'
 import { history } from "../../Routes";
+import { initializeMessages } from 'src/models/Messages/messages.action.creator';
 
 interface Props {
   numberOfPlayersSelected: number,
@@ -66,12 +67,15 @@ export const startGameInput = (
 const mapDispatchToProps = (dispatch:any ) => {
     return {
       onGameStartHandler: (payload:any) => {
+        dispatch(initializeMessages());
         dispatch(startNewGame(payload));
         history.push('/game');
       },
       onChangeNumberOfPlayers: (numberOfPlayers: number): void => {
         dispatch(changeNumberOfPlayers(numberOfPlayers));
-    }
+    },
+      
+
   }
 }
 
@@ -79,7 +83,7 @@ const mapDispatchToProps = (dispatch:any ) => {
     return {
       numberOfPlayersSelected: state.app.numberOfPlayersSelected,
       name: state.user.name,
-      balance: state.user.balance
+      balance: state.user.balance,
     }
   };
 

@@ -1,10 +1,11 @@
 .game-control-container {
-  position: absolute;
+  position: relative;
   z-index: 100;
   border-bottom: solid 3px #fff;
   padding: 15px;
-  left: 30px;
-  bottom: -46vh;
+  left: 224px;
+  top: 40vh;
+  width: 57vw;
 }
 
 .game-control-container li {

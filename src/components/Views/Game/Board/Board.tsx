@@ -8,7 +8,7 @@ import Player from '../Player/Player';
 
 import './Board.module.css';
 import { IPlayer } from 'src/models/Game/game.reducer';
-import { statusFrame as StatusFrame } from '../StatusFrame/StatusFrame';
+import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import { gameControls as GameControls } from '../GameControls/GameControls';
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
 }
 
 export const board = ({ players }: Props) => {
-  const messages = ['You won!'];
   const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
       players.map((player, index) => {
@@ -28,7 +27,6 @@ export const board = ({ players }: Props) => {
       })
     )
 
-
   return (
     <>
       <div className="playingCards faceImages">
@@ -38,7 +36,7 @@ export const board = ({ players }: Props) => {
           }
         </div>
       </div>
-      <StatusFrame messages={messages}/>
+      <MessagesFrame/>
       <GameControls/>
     </>
   )
