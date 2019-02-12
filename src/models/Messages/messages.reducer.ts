@@ -1,19 +1,16 @@
-import { INITIALIZE_MESSAGES } from './messages.action.creator';
-
-// import { SHOW_HAND_VALUE } from './messages.action.creator';
+import { START_GAME } from '../Game/game.actions.creator';
 
 export interface MessagesState {
-  messagesArray?: string[]
+  list?: string[]
 }
 
-export default function (state: MessagesState = {}, action: any) {
+export default function (state: MessagesState = {list: []}, action: any) {
   switch (action.type) {
-    case (INITIALIZE_MESSAGES): {
-      const messages: string[] = [];
-      console.log(messages);
+    case (START_GAME): {
+      console.log('Mpike mesa');
       return {
         ...state,
-        messagesArray: messages.push('TEST')
+        list: []
       }
     }
     default: {

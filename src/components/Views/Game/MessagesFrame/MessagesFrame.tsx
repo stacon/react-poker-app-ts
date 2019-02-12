@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const messagesFrame = ({ messagesArray }: Props) => (
-
   <div className="status-wrapper">
     <ul>
       {messagesArray.map(message => <li>{message}</li>)}
@@ -18,7 +17,7 @@ export const messagesFrame = ({ messagesArray }: Props) => (
 
 const mapStateToProps = (state: AppState) => {
   return {
-    messagesArray: state.messages.messagesArray
+    messagesArray: state.messages.list
   }
 };
 
