@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT } from './game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE } from './game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
@@ -8,7 +8,8 @@ export interface GameState {
   deck?: UICard[],
   status?: number,
   dealerIndex?: number,
-  amountForRaise?: number
+  amountForRaise?: number,
+  pot?: number
 }
 
 export default function (state: GameState = {}, action: any) {
@@ -21,9 +22,9 @@ export default function (state: GameState = {}, action: any) {
           if (i === 0) {
             return new IPlayer(action.payload.name, action.payload.balance);
           }
-            return new IPlayer(`Player_${i + 1}`, 1000);
+          return new IPlayer(`Player_${i + 1}`, 1000);
         });
-      console.log(players);
+      
       return {
         ...state,
         players: players,
@@ -31,6 +32,7 @@ export default function (state: GameState = {}, action: any) {
         status: GameStatus._NewGame,
         dealerIndex: dealerIndex,
         amountForRaise: 0,
+        pot: 0
       }
       break;
     }
@@ -41,7 +43,7 @@ export default function (state: GameState = {}, action: any) {
           ...player,
           hand: newDeck.splice(0, 5)
         }
-        )) : []    
+        )) : []
       return {
         ...state,
         players: newPlayers,
@@ -49,7 +51,6 @@ export default function (state: GameState = {}, action: any) {
         status: GameStatus._FirstBetPhase
       }
     }
-
     case CARD_SELECTED: {
       let players = (state.players) ? [...state.players] : [];
       if (players.length) {
@@ -60,25 +61,48 @@ export default function (state: GameState = {}, action: any) {
         }
       }
     }
-    case CHANGE_RAISE_AMOUNT: {
+    case PLACE_ANTE: {
+      let players: IPlayer[] = (state.players) ? [...state.players] : [];
+      if (players) {
+        const newBalance: number = players[0].balance - 10;
+        players.map((player) => (player.balance = newBalance));
+        let pot = (state.pot)? state.pot : 0;
+        pot = pot + 10*players.length;
         return {
           ...state,
-          amountForRaise: action.payload.amount,
+          players,
+          pot
         }
+      }
+      console.log('PLAYERS NOT FOUND!');
+      return {
+        ...state
+      }
+    }
+    case CHANGE_RAISE_AMOUNT: {
+      return {
+        ...state,
+        amountForRaise: action.payload.amount,
+      }
     }
     case RAISE: {
       const players: IPlayer[] = (state.players) ? [...state.players] : [];
-      const raiseAmount: number = state.amountForRaise? state.amountForRaise : 0;
+      const raiseAmount: number = state.amountForRaise ? state.amountForRaise : 0;
       if (players.length) {
-        const newBalance: number = players[0].balance - raiseAmount; 
+        const newBalance: number = players[0].balance - raiseAmount;
+        let pot: number = 0;
+        if(state.pot) {
+          pot = state.pot + raiseAmount;
+        }
         players[0].balance = newBalance
         return {
           ...state,
-          players
+          players,
+          pot
         }
       }
     }
-    
+
     default: {
       return state;
     }
