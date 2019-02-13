@@ -4,6 +4,7 @@ export const DEAL_CARDS = 'DEAL_CARDS';
 export const CARD_SELECTED = 'CARD_SELECTED';
 export const RAISE = 'RAISE';
 export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
+export const CALL = 'CALL';
 export const PLACE_ANTE = 'PLACE_ANTE';
 export const RESET_MESSAGES = 'RESET_MESSAGES';
 
@@ -49,9 +50,19 @@ export const changeRaiseAmount = (amount: number) => {
     payload: {amount}
   }
 }
+
+export const call = (amount: number) => {
+  return {
+    type:CALL,
+    payload: {amount}
+  }
+}
+
 export const resetMessages = () => {
   return {
     type:RESET_MESSAGES
   }
 }
+
+
 // #endregion Action Creators

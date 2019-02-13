@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE } from './game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE, CALL } from './game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
@@ -25,7 +25,7 @@ export default function (state: GameState = {}, action: any) {
           }
           return new IPlayer(`Player_${i + 1}`, 1000);
         });
-      
+
       return {
         ...state,
         players: players,
@@ -67,8 +67,8 @@ export default function (state: GameState = {}, action: any) {
       if (players) {
         const newBalance: number = players[0].balance - 10;
         players.map((player) => (player.balance = newBalance));
-        let pot = (state.pot)? state.pot : 0;
-        pot = pot + 10*players.length;
+        let pot = (state.pot) ? state.pot : 0;
+        pot = pot + 10 * players.length;
         return {
           ...state,
           players,
@@ -92,7 +92,7 @@ export default function (state: GameState = {}, action: any) {
       if (players.length) {
         const newBalance: number = players[0].balance - raiseAmount;
         let pot: number = 0;
-        if(state.pot) {
+        if (state.pot) {
           pot = state.pot + raiseAmount;
         }
         players[0].balance = newBalance
@@ -104,6 +104,26 @@ export default function (state: GameState = {}, action: any) {
       }
     }
 
+    case CALL: {
+      const players: IPlayer[] = (state.players) ? [...state.players] : [];
+      const raiseAmount: number = action.payload.amount ? action.payload.amount : 0;
+      let pot: number = 0;
+      if (players.length) {
+        players.map((player, index) => {
+          //TODO: NEEDS REFACTORING BECAUSE IN REAL GAME ALL PLAYERS CAN BET
+          if (index !== 0)
+            player.balance = player.balance - raiseAmount
+        })       
+        if (state.pot) {
+          pot = state.pot + raiseAmount;
+        }
+      }
+      return {
+        ...state,
+        players,
+        pot
+      }
+    }
     default: {
       return state;
     }

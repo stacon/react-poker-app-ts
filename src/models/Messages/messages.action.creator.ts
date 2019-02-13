@@ -11,7 +11,7 @@ export const initializeMessages = () => {
   }
 }
 
-export const addMessage = (message: String) => {
+export const addMessage = (message: string) => {
   return { 
     type: ADD_MESSAGE,
     payload: {message}

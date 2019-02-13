@@ -2,7 +2,7 @@ import React from 'react';
 import './GameControls.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
-import { raise, changeRaiseAmount } from 'src/models/Game/game.actions.creator';
+import { raise, changeRaiseAmount, call } from 'src/models/Game/game.actions.creator';
 
 interface Props {
   balance: number,
@@ -46,6 +46,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     onRaise: (amount: number) => {
       dispatch(raise(amount));
+      //TODO: AUTOMATICALLY CALL, NEEDS REFACTORING
+      setTimeout(() => dispatch(call(+amount)), 1000);
     },
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));
