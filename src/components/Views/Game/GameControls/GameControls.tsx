@@ -22,7 +22,7 @@ return (
         className="raise-range"
         id='raise'
         type="range"
-        min="1"
+        min="10"
         max={balance}
         step="1"
         value={amountForRaise}
@@ -30,7 +30,7 @@ return (
       >
       </input>
       <div>{amountForRaise.toFixed(2)}</div>
-      <div className="raise" onClick = {() => onRaise()} >Raise</div></li>
+      <div className="raise" onClick = {() => onRaise(amountForRaise.toFixed(2))} >Raise</div></li>
       <li>Replace Cards</li>
     </div>
   )
@@ -44,8 +44,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onRaise: () => {
-      dispatch(raise());
+    onRaise: (amount: number) => {
+      dispatch(raise(amount));
     },
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));

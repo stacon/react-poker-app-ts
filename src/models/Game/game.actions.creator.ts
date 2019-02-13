@@ -29,9 +29,10 @@ export const dealCards = () => {
   }
 }
 
-export const raise = () => {
+export const raise = (amount: number ) => {
   return {
-    type: RAISE
+    type: RAISE,
+    payload: {amount}
   }
 }
 
