@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED } from './game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT } from './game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
@@ -7,7 +7,8 @@ export interface GameState {
   players?: IPlayer[],
   deck?: UICard[],
   status?: number,
-  dealerIndex?: number
+  dealerIndex?: number,
+  amountForRaise?: number
 }
 
 export default function (state: GameState = {}, action: any) {
@@ -28,7 +29,8 @@ export default function (state: GameState = {}, action: any) {
         players: players,
         deck: getNewDeck(),
         status: GameStatus._NewGame,
-        dealerIndex: dealerIndex
+        dealerIndex: dealerIndex,
+        amountForRaise: 0,
       }
       break;
     }
@@ -39,7 +41,7 @@ export default function (state: GameState = {}, action: any) {
           ...player,
           hand: newDeck.splice(0, 5)
         }
-        )) : []
+        )) : []    
       return {
         ...state,
         players: newPlayers,
@@ -58,6 +60,25 @@ export default function (state: GameState = {}, action: any) {
         }
       }
     }
+    case CHANGE_RAISE_AMOUNT: {
+        return {
+          ...state,
+          amountForRaise: action.payload.amount,
+        }
+    }
+    case RAISE: {
+      const players: IPlayer[] = (state.players) ? [...state.players] : [];
+      const raiseAmount: number = state.amountForRaise? state.amountForRaise : 0;
+      if (players.length) {
+        const newBalance: number = players[0].balance - raiseAmount; 
+        players[0].balance = newBalance
+        return {
+          ...state,
+          players
+        }
+      }
+    }
+    
     default: {
       return state;
     }
@@ -80,4 +101,12 @@ export enum GameStatus {
   _FirstBetPhase = 2,
   _DiscardAndSecondBetPhase = 3,
   _EvaluationPhase = 4,
+}
+
+export enum ActionType {
+  _Fold = 1,
+  _Check = 2,
+  _Call = 3,
+  _Raise = 4,
+  _ReplaceCards = 5,
 }

@@ -9,13 +9,14 @@ import Player from '../Player/Player';
 import './Board.module.css';
 import { IPlayer } from 'src/models/Game/game.reducer';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
-import { gameControls as GameControls } from '../GameControls/GameControls';
+import GameControls from '../GameControls/GameControls';
 
 interface Props {
   players: IPlayer[]
 }
 
 export const board = ({ players }: Props) => {
+  
   const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
       players.map((player, index) => {
@@ -25,8 +26,7 @@ export const board = ({ players }: Props) => {
          </div>
         )
       })
-    )
-
+   ) 
   return (
     <>
       <div className="playingCards faceImages">
@@ -37,10 +37,9 @@ export const board = ({ players }: Props) => {
         </div>
       </div>
       <MessagesFrame/>
-      <GameControls/>
+      {(players[0].hand.length) ? <GameControls/> : <></>}
     </>
   )
-
 }
 
 const mapStateToProps = (state: AppState) => {

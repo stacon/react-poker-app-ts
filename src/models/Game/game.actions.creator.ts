@@ -2,6 +2,8 @@
 export const START_GAME = 'START_GAME';
 export const DEAL_CARDS = 'DEAL_CARDS';
 export const CARD_SELECTED = 'CARD_SELECTED';
+export const RAISE = 'RAISE';
+export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
 
 // #endregion Actions
 
@@ -21,8 +23,22 @@ export const onCardSelect = (key: number) => {
 } 
 
 export const dealCards = () => {
+
   return {
-    type: DEAL_CARDS,
+    type: DEAL_CARDS
+  }
+}
+
+export const raise = () => {
+  return {
+    type: RAISE
+  }
+}
+
+export const changeRaiseAmount = (amount: number) => {
+  return {
+    type:CHANGE_RAISE_AMOUNT,
+    payload: {amount}
   }
 }
 // #endregion Action Creators
