@@ -16,7 +16,8 @@ export default function (state: GameState = {}, action: any) {
 
   switch (action.type) {
     case START_GAME: {
-      const dealerIndex: number = Math.floor(Math.random() * action.payload.numberOfPlayers)
+      // const dealerIndex: number = Math.floor(Math.random() * action.payload.numberOfPlayers)
+      const dealerIndex: number = 1;
       const players = _.times(action.payload.numberOfPlayers).map(
         (i) => {
           if (i === 0) {

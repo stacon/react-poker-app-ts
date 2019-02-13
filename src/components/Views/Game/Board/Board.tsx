@@ -13,17 +13,18 @@ import GameControls from '../GameControls/GameControls';
 
 interface Props {
   players: IPlayer[],
-  pot: number
+  pot: number,
+  dealerIndex: number
 }
 
-export const board = ({ players, pot }: Props) => {
-
+export const board = ({ players, pot, dealerIndex }: Props) => {
+  console.log('dealerINdex', dealerIndex)
   const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
       players.map((player, index) => {
         return (
           <div className={`player player_${index + 1}`}>
-            <Player pid={index} key={player.name} {...player} isMainPlayer={index ? false : true} isDealer={index ? false : true} />
+            <Player pid={index} key={player.name} {...player} isMainPlayer={index ? false : true} isDealer={index === dealerIndex ? true : false} />
           </div>
         )
       })
@@ -50,7 +51,8 @@ export const board = ({ players, pot }: Props) => {
 const mapStateToProps = (state: AppState) => {
   return {
     players: state.game.players,
-    pot: state.game.pot
+    pot: state.game.pot,
+    dealerIndex: state.game.dealerIndex
   }
 };
 
