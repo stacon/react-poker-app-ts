@@ -1,4 +1,4 @@
-import { RAISE } from '../Game/game.actions.creator';
+import { RAISE, PLACE_ANTE } from '../Game/game.actions.creator';
 
 export interface UserState {
   name: string,
@@ -15,6 +15,13 @@ export default function (state: UserState = initialState, action: any) {
     case RAISE: {
       const raiseAmount: number = action.payload.amount ? action.payload.amount : 0;
       const newBalance: number = state.balance - raiseAmount;
+      return {
+        ...state,
+        balance: newBalance
+      }
+    }
+    case PLACE_ANTE: {
+      const newBalance: number = state.balance - 10; 
       return {
         ...state,
         balance: newBalance

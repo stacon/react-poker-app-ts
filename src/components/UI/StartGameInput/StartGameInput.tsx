@@ -1,7 +1,7 @@
 import React from 'react';
 import './StartGameInput.module.css';
 import { connect } from 'react-redux';
-import { startNewGame } from 'src/models/Game/game.actions.creator';
+import { startNewGame, resetMessages } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../models/App/app.store';
 import { changeNumberOfPlayers } from '../../../models/App/app.action.creator'
 import { history } from "../../Routes";
@@ -66,6 +66,7 @@ export const startGameInput = (
 const mapDispatchToProps = (dispatch:any ) => {
     return {
       onGameStartHandler: (payload:any) => {
+        dispatch(resetMessages());
         dispatch(startNewGame(payload));
         history.push('/game');
       },
