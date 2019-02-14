@@ -30,7 +30,7 @@ return (
       >
       </input>
       <div>{amountForRaise.toFixed(2)}</div>
-      <div className="raise" onClick = {() => onRaise(amountForRaise.toFixed(2))} >Raise</div></li>
+      <div className="raise" onClick = {() => onRaise(amountForRaise.toFixed(2)) /* OPINION: Vgale to toFixed apo tin parametro kai diaxeirisouto me tin methodo tou fix otan einai mono na to kaneis view kai oxi otan to pernas san orisma */} >Raise</div></li>
       <li>Replace Cards</li>
     </div>
   )

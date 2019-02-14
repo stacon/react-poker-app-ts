@@ -45,6 +45,7 @@ export default function (state: MessagesState = {list: []}, action: any) {
         list
       }
     }
+    // OPINION: Giati kaneis reset ta messages? Then mas peirazei na gemizei me log kai na deixnei panta to pio prosfato
     case (RESET_MESSAGES): {
       const list: string[] = [];
       return {
