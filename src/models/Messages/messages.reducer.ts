@@ -1,4 +1,4 @@
-import { DEAL_CARDS, RAISE, RESET_MESSAGES, PLACE_ANTE, CALL } from '../Game/game.actions.creator';
+import { DEAL_CARDS, RAISE, RESET_MESSAGES, PLACE_ANTE, CALL, CHECK } from '../Game/game.actions.creator';
 import { ADD_MESSAGE } from './messages.action.creator';
 
 export interface MessagesState {
@@ -31,6 +31,18 @@ export default function (state: MessagesState = {list: []}, action: any) {
        [
          ...state.list, 
          `ALL PLAYERS CALLED!`,
+       ] : [];       
+      return {
+        ...state,
+        list
+      } 
+    }
+
+    case (CHECK): {
+      const list=  (state.list) ?
+       [
+         ...state.list, 
+         `ALL PLAYERS CHECKED!`,
        ] : [];       
       return {
         ...state,

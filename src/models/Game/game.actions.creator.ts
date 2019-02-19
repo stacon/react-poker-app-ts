@@ -5,8 +5,10 @@ export const CARD_SELECTED = 'CARD_SELECTED';
 export const RAISE = 'RAISE';
 export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
 export const CALL = 'CALL';
+export const CHECK = 'CHECK';
 export const PLACE_ANTE = 'PLACE_ANTE';
 export const RESET_MESSAGES = 'RESET_MESSAGES';
+export const REPLACE_CARDS = 'REPLACE_CARDS';
 
 // #endregion Actions
 
@@ -55,6 +57,18 @@ export const call = (amount: number) => {
   return {
     type:CALL,
     payload: {amount}
+  }
+}
+
+export const check = () => {
+  return {
+    type:CHECK
+  }
+}
+
+export const replaceCards = () => {
+  return {
+    type:REPLACE_CARDS
   }
 }
 

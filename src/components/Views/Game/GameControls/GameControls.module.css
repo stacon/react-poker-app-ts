@@ -5,7 +5,7 @@
   padding: 15px;
   left: 25vw;
   top: 28vh;
-  width: 46vw;
+  min-width: 46vw;
 }
 
 .game-control-container li {
@@ -20,8 +20,10 @@
   border: 2px #fff solid;
   padding: 8px;
 }
-
-.game-control-container li:hover {
+.status3,.status5 {
+  background-color:grey;
+}
+.status2:hover,.status4:hover {
   cursor: pointer;
   border-color: yellow;
 }

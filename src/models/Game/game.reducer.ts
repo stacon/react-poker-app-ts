@@ -1,4 +1,4 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE, CALL } from './game.actions.creator';
+import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE, CALL, CHECK, REPLACE_CARDS } from './game.actions.creator';
 import { getNewDeck } from 'src/libs/models';
 import _ from 'lodash';
 import { UICard } from 'src/components/Views/Game/Card/Card';
@@ -53,13 +53,18 @@ export default function (state: GameState = {}, action: any) {
       }
     }
     case CARD_SELECTED: {
-      let players = (state.players) ? [...state.players] : [];
-      if (players.length) {
-        players[0].hand[action.payload.key].selected = !players[0].hand[action.payload.key].selected;
-        return {
-          ...state,
-          players,
+      if (state.status === GameStatus._Discard) {
+        let players = (state.players) ? [...state.players] : [];
+        if (players.length) {
+          players[0].hand[action.payload.key].selected = !players[0].hand[action.payload.key].selected;
+          return {
+            ...state,
+            players,
+          }
         }
+      }
+      return {
+        ...state
       }
     }
     case PLACE_ANTE: {
@@ -89,6 +94,7 @@ export default function (state: GameState = {}, action: any) {
     case RAISE: {
       const players: IPlayer[] = (state.players) ? [...state.players] : [];
       const raiseAmount: number = state.amountForRaise ? state.amountForRaise : 0;
+      let status: number = state.status ? state.status : 0;
       if (players.length) {
         const newBalance: number = players[0].balance - raiseAmount;
         let pot: number = 0;
@@ -99,8 +105,18 @@ export default function (state: GameState = {}, action: any) {
         return {
           ...state,
           players,
-          pot
+          pot,
+          status: status + 1
         }
+      }
+    }
+
+    case CHECK: {
+      //TODO: HAVE TO CHECK IF THE PLAYER IS DEALER (PLAYS LAST)
+      let status: number = state.status ? state.status : 0;
+      return {
+        ...state,
+        status: status + 1
       }
     }
 
@@ -113,7 +129,7 @@ export default function (state: GameState = {}, action: any) {
           //TODO: NEEDS REFACTORING BECAUSE IN REAL GAME ALL PLAYERS CAN BET
           if (index !== 0)
             player.balance = player.balance - raiseAmount
-        })       
+        })
         if (state.pot) {
           pot = state.pot + raiseAmount;
         }
@@ -122,6 +138,28 @@ export default function (state: GameState = {}, action: any) {
         ...state,
         players,
         pot
+      }
+    }
+    case REPLACE_CARDS: {
+      let players: IPlayer[] = (state.players) ? [...state.players] : [];
+      let newDeck: UICard[] = (state.deck) ? [...state.deck] : [];
+      let newHand: UICard[] = players[0].hand.reduce(
+        (newHand, card, index) => {
+          if (card.selected) {
+            return [...newHand.slice(0, index),
+              newDeck.splice(0, 1)[0],
+              ...newHand.slice(index + 1)];
+          }
+          return newHand;
+        },
+        players[0].hand);
+      players[0] = {...players[0], hand:newHand}
+      let status: number = state.status ? state.status : 0;
+      return {
+        ...state,
+        players: players,
+        deck: newDeck,
+        status: status+1
       }
     }
     default: {
@@ -144,8 +182,9 @@ export class IPlayer {
 export enum GameStatus {
   _NewGame = 1,
   _FirstBetPhase = 2,
-  _DiscardAndSecondBetPhase = 3,
-  _EvaluationPhase = 4,
+  _Discard = 3,
+  _SecondBetPhase = 4,
+  _EvaluationPhase = 5,
 }
 
 export enum ActionType {
