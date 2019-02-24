@@ -2,7 +2,7 @@ import React from 'react';
 import './Navbar.module.css';
 import { GameStatus } from '../../../../models/Game/game.reducer';
 import { connect } from 'react-redux';
-import { dealCards } from 'src/models/Game/game.actions.creator';
+import { dealCards, resetMessages, placeAnte } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../../models/App/app.store';
 
 interface Props {
@@ -21,7 +21,7 @@ export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => 
       </p>
       <nav>
           <ul>
-           {gameStatus && gameStatus === GameStatus._New ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
+           {gameStatus && gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
           </ul>
       </nav>
   </header>
@@ -30,7 +30,9 @@ export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => 
 const mapDispatchToProps = (dispatch:any ) => {
     return {
       dealCardsHandler: () => {
+        dispatch(resetMessages());
         dispatch(dealCards());
+        dispatch(placeAnte());
       }
   }
 }

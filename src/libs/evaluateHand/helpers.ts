@@ -96,7 +96,7 @@ const UIGetPlayerHandFromEvaluationResult = (player: IPlayer): string => {
     if (evaluationResult) {
       const finalHandName: string = getFinalHandName(evaluationResult.power)
       const highCardName: string = getHighCardName(evaluationResult.highCardValue)
-      return `- You have ${finalHandName} with high card ${highCardName}`;
+      return `You have ${finalHandName} with high card ${highCardName}`;
     }
   }
   return '';

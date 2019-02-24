@@ -2,6 +2,13 @@
 export const START_GAME = 'START_GAME';
 export const DEAL_CARDS = 'DEAL_CARDS';
 export const CARD_SELECTED = 'CARD_SELECTED';
+export const RAISE = 'RAISE';
+export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
+export const CALL = 'CALL';
+export const CHECK = 'CHECK';
+export const PLACE_ANTE = 'PLACE_ANTE';
+export const RESET_MESSAGES = 'RESET_MESSAGES';
+export const REPLACE_CARDS = 'REPLACE_CARDS';
 
 // #endregion Actions
 
@@ -22,7 +29,54 @@ export const onCardSelect = (key: number) => {
 
 export const dealCards = () => {
   return {
-    type: DEAL_CARDS,
+    type: DEAL_CARDS
   }
 }
+
+export const placeAnte = () => {
+  return {
+    type: PLACE_ANTE
+  }
+}
+
+export const raise = (amount: number ) => {
+  return {
+    type: RAISE,
+    payload: {amount}
+  }
+}
+
+export const changeRaiseAmount = (amount: number) => {
+  return {
+    type:CHANGE_RAISE_AMOUNT,
+    payload: {amount}
+  }
+}
+
+export const call = (amount: number) => {
+  return {
+    type:CALL,
+    payload: {amount}
+  }
+}
+
+export const check = () => {
+  return {
+    type:CHECK
+  }
+}
+
+export const replaceCards = () => {
+  return {
+    type:REPLACE_CARDS
+  }
+}
+
+export const resetMessages = () => {
+  return {
+    type:RESET_MESSAGES
+  }
+}
+
+
 // #endregion Action Creators

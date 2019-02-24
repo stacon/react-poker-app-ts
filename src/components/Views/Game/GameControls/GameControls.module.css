@@ -1,0 +1,32 @@
+.game-control-container {
+  position: absolute;
+  z-index: 100;
+  border-bottom: solid 3px #fff;
+  padding: 15px;
+  left: 25vw;
+  top: 28vh;
+  min-width: 46vw;
+}
+
+.game-control-container li {
+  display: inline-block;
+  border-radius: 15px;
+  text-align: center;
+  width: 150px;
+  color: #fff;
+  font-weight: 500;
+  margin: 8px;
+  list-style-type: none;
+  border: 2px #fff solid;
+  padding: 8px;
+}
+.status3,.status5 {
+  background-color:grey;
+}
+.status2:hover,.status4:hover {
+  cursor: pointer;
+  border-color: yellow;
+}
+.game-control-container .raise {
+display:block;
+}
