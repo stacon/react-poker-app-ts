@@ -16,22 +16,19 @@ export default function (state: GameState = {}, action: any) {
 
   switch (action.type) {
     case START_GAME: {
-      // const dealerIndex: number = Math.floor(Math.random() * action.payload.numberOfPlayers)
       const dealerIndex: number = 1;
-      const players = _.times(action.payload.numberOfPlayers).map(
-        (i) => {
-          if (i === 0) {
-            return new IPlayer(action.payload.name, action.payload.balance);
-          }
-          return new IPlayer(`Player_${i + 1}`, 1000);
-        });
+      const players = _.times(action.payload.numberOfPlayers)
+          .map(i => new IPlayer(
+              i === 0 ? action.payload.name : `Player_${i + 1}`,
+              i === 0 ?action.payload.balance : 1000
+              ))
 
       return {
         ...state,
-        players: players,
+        players,
         deck: getNewDeck(),
         status: GameStatus._NewGame,
-        dealerIndex: dealerIndex,
+        dealerIndex,
         amountForRaise: 0,
         pot: 0
       }
@@ -97,7 +94,7 @@ export default function (state: GameState = {}, action: any) {
     case RAISE: {
       const players: IPlayer[] = (state.players) ? [...state.players] : [];
       const raiseAmount: number = state.amountForRaise ? state.amountForRaise : 0;
-      let status: number = state.status ? state.status : 0;
+      const status: number = state.status ? state.status + 1  : 0;
       if (players.length) {
         const newBalance: number = players[0].balance - raiseAmount;
         let pot: number = 0;
@@ -109,17 +106,17 @@ export default function (state: GameState = {}, action: any) {
           ...state,
           players,
           pot,
-          status: status + 1
+          status,
         }
       }
     }
 
     case CHECK: {
       //TODO: HAVE TO CHECK IF THE PLAYER IS DEALER (PLAYS LAST)
-      let status: number = state.status ? state.status : 0;
+      const status: number = state.status ? state.status + 1  : 0;
       return {
         ...state,
-        status: status + 1
+        status
       }
     }
 
@@ -157,12 +154,12 @@ export default function (state: GameState = {}, action: any) {
         },
         players[0].hand);
       players[0] = {...players[0], hand:newHand}
-      let status: number = state.status ? state.status : 0;
+      const status: number = state.status ? state.status + 1  : 0;
       return {
         ...state,
-        players: players,
+        players,
         deck: newDeck,
-        status: status+1
+        status
       }
     }
     default: {
