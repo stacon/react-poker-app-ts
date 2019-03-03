@@ -54,9 +54,12 @@ export default function (state: GameState = {}, action: any) {
     }
     case CARD_SELECTED: {
       if (state.status === GameStatus._Discard) {
-        let players = (state.players) ? [...state.players] : [];
+        const cardsForReplacement: number = state.players ? state.players[0].hand.filter(card => card.selected).length : 0;
+        let players = state.players ? [...state.players] : [];
         if (players.length) {
-          players[0].hand[action.payload.key].selected = !players[0].hand[action.payload.key].selected;
+          const clickedCard: UICard = players[0].hand[action.payload.key]
+          clickedCard.selected = clickedCard.selected || cardsForReplacement  < 3 ?
+              !clickedCard.selected : clickedCard.selected;
           return {
             ...state,
             players,
