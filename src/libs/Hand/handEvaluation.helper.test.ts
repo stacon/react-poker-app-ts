@@ -1,4 +1,3 @@
-import { Suit } from '../references';
 import {
   everyCardIsSameSuit,
   isRoyal,
@@ -12,8 +11,10 @@ import {
   getThreeOfAKindGroupValue,
   getPairGroupValue,
   getPairsGroupValues,
-} from './helpers';
-import { UICard } from 'src/components/Views/Game/Card/Card';
+} from './handEvaluation.helper';
+import { UICard } from 'src/types';
+import { Suit } from 'src/enums';
+
 
 it('should evaluate the cardset to be truthy cause all cards are hearts suit and it\'s straight', ()=> {
   const fiveCardsOfSameSuitAndStraight = [

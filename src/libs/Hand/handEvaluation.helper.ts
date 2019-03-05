@@ -1,10 +1,8 @@
 import _ from 'lodash';
-import { UICard } from 'src/components/Views/Game/Card/Card';
-import { IPlayer } from 'src/models/Game/game.reducer';
-import { EvaluationResult } from '../models';
-import { getEvaluationResultFromHand } from './evaluateHand';
-import { getHighCardName } from '../models/evaluationResult.model';
-import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
+import getEvaluationResultFromHand from './getEvaluationResultFromHand';
+import { UICard, IPlayer, EvaluationResult } from 'src/types';
+import getCardNameFromValue from './getCardNameFromValue';
+import getWinningHandNameFromValue from './getWinningHandNameFromValue';
 
 /**
  * Factory function for number of sets expected in 5 card array.
@@ -94,8 +92,8 @@ const UIGetPlayerHandFromEvaluationResult = (player: IPlayer): string => {
   if (player) {
     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(player.hand);
     if (evaluationResult) {
-      const finalHandName: string = getFinalHandName(evaluationResult.power)
-      const highCardName: string = getHighCardName(evaluationResult.highCardValue)
+      const finalHandName: string = getWinningHandNameFromValue(evaluationResult.power)
+      const highCardName: string = getCardNameFromValue(evaluationResult.highCardValue)
       return `You have ${finalHandName} with high card ${highCardName}`;
     }
   }
@@ -158,7 +156,7 @@ const getFinalHandArrayFromPlayersArray = (players: IPlayer[]): string[] => {
   let handPowers: string[] = [];
   players.forEach((player: IPlayer) => {
     const evaluationResult: EvaluationResult | null = getEvaluationResultFromHand(player.hand);
-    const finalHandName: string = getFinalHandName(evaluationResult !== null ? evaluationResult.power : 0)
+    const finalHandName: string = getWinningHandNameFromValue(evaluationResult !== null ? evaluationResult.power : 0)
     handPowers.push(finalHandName);
   });
   return handPowers;

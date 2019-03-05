@@ -1,6 +1,6 @@
-import {Suit} from '../references';
 import shuffle from 'shuffle-array';
-import { UICard } from 'src/components/Views/Game/Card/Card';
+import { UICard } from 'src/types';
+import { Suit } from 'src/enums';
 
 const generateSuitDeck = (suit: Suit): UICard[] => {
   let suitDeck: UICard[] = [];

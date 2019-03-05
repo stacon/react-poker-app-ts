@@ -1,8 +1,5 @@
 import { NUMBER_OF_PLAYERS_SELECTED_CHANGED } from './app.action.creator'
-
-export interface IndexState {
-  numberOfPlayersSelected: number,
-}
+import IndexState from 'src/types/IndexState.type';
 
 const initialState = {
   numberOfPlayersSelected: 2,

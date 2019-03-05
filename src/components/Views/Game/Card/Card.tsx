@@ -5,19 +5,6 @@ import { onCardSelect } from 'src/models/Game/game.actions.creator';
 //css
 import './Card.module.css';
 import { getRankUIRepresentation } from './helpers';
-import { Suit } from 'src/libs/references';
-import Card from 'src/libs/models/card.model';
-
-export class UICard extends Card {
-  public flipped: boolean;
-  public selected: boolean;
-
-  constructor(rank: number, suit: Suit) {
-    super(rank, suit);
-    this.flipped = false;
-    this.selected = false;
-  }
-}
 
 interface Props {
   isFlipped: boolean,

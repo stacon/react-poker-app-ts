@@ -1,8 +1,5 @@
-import { EvaluationResult } from '../models';
-import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './helpers';
-import { UICard } from 'src/components/Views/Game/Card/Card';
-
-
+import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './handEvaluation.helper';
+import { UICard, EvaluationResult } from 'src/types';
 
 const isRoyalFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
 const isStraightFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
@@ -64,5 +61,5 @@ const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult | null =>
   return evalResult
 }
 
-export { getEvaluationResultFromHand };
+export default getEvaluationResultFromHand;
 
