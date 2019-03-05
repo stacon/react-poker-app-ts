@@ -13,7 +13,7 @@ import {
 import _ from 'lodash';
 import GameState from 'src/types/GameState.type';
 import { IPlayer, UICard } from 'src/types';
-import getNewDeck from 'src/libs/evaluateHand/getNewDeck';
+import getNewDeck from 'src/libs/Deck/getNewDeck';
 
 
 export default function (state: GameState = {}, action: any) {
