@@ -6,7 +6,7 @@ import {
  replaceCardsSuccess,
 } from './game.actions.creator';
 
-import { GameState, IPlayer } from './game.reducer';
+import { GameState, IPlayer } from 'src/types';
 
 const replaceCardsEpic = (action$: any, state$: any) => action$.pipe(
  ofType(REPLACE_CARDS),

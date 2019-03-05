@@ -1,10 +1,8 @@
 import _ from 'lodash';
-import { UICard } from 'src/components/Views/Game/Card/Card';
-import { IPlayer } from 'src/models/Game/game.reducer';
-import { EvaluationResult } from '../models';
 import { getEvaluationResultFromHand } from './evaluateHand';
 import { getHighCardName } from '../models/evaluationResult.model';
 import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
+import { UICard, IPlayer, EvaluationResult } from 'src/types';
 
 /**
  * Factory function for number of sets expected in 5 card array.

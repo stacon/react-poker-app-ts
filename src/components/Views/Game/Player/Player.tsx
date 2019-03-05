@@ -9,8 +9,10 @@ import Info from '../Info/Info';
 import './Player.module.css';
 
 // Interfaces
-import { UICard } from '../Card/Card';
 import DealerBadge from '../DealerBadge/DealerBadge';
+import { UICard } from 'src/types';
+
+// Types
 
 interface Props {
   pid: number,

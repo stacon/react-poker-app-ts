@@ -7,9 +7,9 @@ import { AppState } from 'src/models/App/app.store';
 import Player from '../Player/Player';
 
 import './Board.module.css';
-import { IPlayer } from 'src/models/Game/game.reducer';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
+import { IPlayer } from 'src/types';
 
 interface Props {
   players: IPlayer[],
@@ -33,10 +33,10 @@ export const board = ({ players, pot, dealerIndex }: Props) => {
     <>
       <div className="playingCards faceImages">
         <div className="inner-wrapper flex">
-        {pot? 
+        {pot?
             <div className="pokerchip iso">
               <div className="pot">{pot} $</div>
-            </div> : ''}          
+            </div> : ''}
           {
             players && players.length ? playersGrid : null
           }

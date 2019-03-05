@@ -2,7 +2,7 @@ import React from 'react';
 import Board from './Board/Board';
 import { connect } from 'react-redux';
 import { AppState } from 'src/models/App/app.store';
-import { GameState } from 'src/models/Game/game.reducer';
+import { GameState } from 'src/types';
 import { history } from "../../Routes";
 
 

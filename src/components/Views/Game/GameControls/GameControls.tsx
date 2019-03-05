@@ -4,6 +4,7 @@ import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { raise, changeRaiseAmount, call, check, replaceCards } from 'src/models/Game/game.actions.creator';
 import { GameStatus } from 'src/models/Game/game.reducer';
+import { UICard } from 'src/types';
 
 interface Props {
   balance: number,
@@ -50,7 +51,7 @@ const mapStateToProps = (state: AppState) => {
     amountForRaise: state.game.amountForRaise,
     status: state.game.status,
     selectedCardsForReplacement: state.game.players && state.game.players[0].hand ?
-          state.game.players[0].hand.filter(card => card.selected).length : null
+          state.game.players[0].hand.filter((card: UICard) => card.selected).length : null
   }
 };
 

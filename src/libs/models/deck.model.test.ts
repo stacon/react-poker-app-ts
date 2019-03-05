@@ -1,5 +1,5 @@
 import { getNewDeck } from './';
-import { UICard } from 'src/components/Views/Game/Card/Card';
+import { UICard } from 'src/types';
 
 it('should create a shuffled 52 card deck', () => {
   const deck: UICard[] = getNewDeck();

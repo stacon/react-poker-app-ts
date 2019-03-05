@@ -1,8 +1,7 @@
 
-import { Suit } from "../references";
 import { getEvaluationResultFromHand } from './evaluateHand';
-import { EvaluationResult } from '../models';
-import { UICard } from 'src/components/Views/Game/Card/Card';
+import { UICard, EvaluationResult } from 'src/types';
+import { Suit } from 'src/enums';
 
 it('should return a Royal Flush evalusationResult object', ()=>{
   const flushRoyal: UICard[] = [

@@ -8,30 +8,22 @@ import {
   CALL,
   CHECK,
   REPLACE_CARDS_SUCCESS
- } from './game.actions.creator';
- import { getNewDeck } from 'src/libs/models';
- import _ from 'lodash';
- import { UICard } from 'src/components/Views/Game/Card/Card';
+} from './game.actions.creator';
+import { getNewDeck } from 'src/libs/models';
+import _ from 'lodash';
+import GameState from 'src/types/GameState.type';
+import { IPlayer, UICard } from 'src/types';
 
- export interface GameState {
-  players?: IPlayer[],
-  deck?: UICard[],
-  status?: number,
-  dealerIndex?: number,
-  amountForRaise?: number,
-  pot?: number
- }
-
- export default function (state: GameState = {}, action: any) {
+export default function (state: GameState = {}, action: any) {
 
   switch (action.type) {
     case START_GAME: {
       const dealerIndex: number = 1;
       const players = _.times(action.payload.numberOfPlayers)
-          .map(i => new IPlayer(
-              i === 0 ? action.payload.name : `Player_${i + 1}`,
-              i === 0 ?action.payload.balance : 1000
-              ))
+        .map(i => new IPlayer(
+          i === 0 ? action.payload.name : `Player_${i + 1}`,
+          i === 0 ? action.payload.balance : 1000
+        ))
 
       return {
         ...state,
@@ -62,12 +54,12 @@ import {
 
     case CARD_SELECTED: {
       if (state.status === GameStatus._Discard) {
-        const cardsForReplacement: number = state.players ? state.players[0].hand.filter(card => card.selected).length : 0;
+        const cardsForReplacement: number = state.players ? state.players[0].hand.filter((card: UICard) => card.selected).length : 0;
         let players = state.players ? [...state.players] : [];
         if (players.length) {
           const clickedCard: UICard = players[0].hand[action.payload.key]
-          clickedCard.selected = clickedCard.selected || cardsForReplacement  < 3 ?
-              !clickedCard.selected : clickedCard.selected;
+          clickedCard.selected = clickedCard.selected || cardsForReplacement < 3 ?
+            !clickedCard.selected : clickedCard.selected;
           return {
             ...state,
             players,
@@ -105,7 +97,7 @@ import {
     case RAISE: {
       const players: IPlayer[] = (state.players) ? [...state.players] : [];
       const raiseAmount: number = state.amountForRaise ? state.amountForRaise : 0;
-      const status: number = state.status ? state.status + 1  : 0;
+      const status: number = state.status ? state.status + 1 : 0;
       if (players.length) {
         const newBalance: number = players[0].balance - raiseAmount;
         let pot: number = 0;
@@ -123,7 +115,7 @@ import {
     }
     case CHECK: {
       //TODO: HAVE TO CHECK IF THE PLAYER IS DEALER (PLAYS LAST)
-      const status: number = state.status ? state.status + 1  : 0;
+      const status: number = state.status ? state.status + 1 : 0;
       return {
         ...state,
         status
@@ -183,17 +175,7 @@ import {
     }
   };
 
- };
-
- export class IPlayer {
-  public hand: UICard[];
-  constructor(
-    public name: string,
-    public balance: number
-  ) {
-    this.hand = [];
-  }
-}
+};
 
 export enum GameStatus {
   _NewGame = 1,

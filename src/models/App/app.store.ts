@@ -1,22 +1,19 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import {
- createEpicMiddleware,
+  createEpicMiddleware,
 } from 'redux-observable';
 
 
 import rootReducer from 'src/models/root.reducer';
 import rootEpic from 'src/models/root.epic';
+import { UserState, IndexState, GameState, MessagesState } from 'src/types/';
 
-import { UserState } from 'src/models/User/user.reducer';
-import { IndexState } from 'src/models/App/app.reducer';
-import { GameState } from 'src/models/Game/game.reducer';
-import { MessagesState } from 'src/models/Messages/messages.reducer';
 
 export interface AppState {
- user: UserState,
- app: IndexState,
- game: GameState,
- messages: MessagesState
+  user: UserState,
+  app: IndexState,
+  game: GameState,
+  messages: MessagesState
 }
 
 const enhancers = [];
@@ -26,16 +23,16 @@ const epicMiddleware = createEpicMiddleware();
 const middleware = [epicMiddleware];
 
 if (devToolsExtension && typeof devToolsExtension === 'function') {
- enhancers.push(devToolsExtension());
+  enhancers.push(devToolsExtension());
 }
 
 const store = createStore(
- rootReducer,
- {},
- compose(
-   applyMiddleware(...middleware),
-   ...enhancers,
- ),
+  rootReducer,
+  {},
+  compose(
+    applyMiddleware(...middleware),
+    ...enhancers,
+  ),
 );
 
 epicMiddleware.run(rootEpic);

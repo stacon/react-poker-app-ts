@@ -2,10 +2,14 @@
 import React from 'react';
 
 // components
-import CardContainer, { UICard } from '../Card/Card';
+import CardContainer from '../Card/Card';
+
 
 // css
 import './Hand.module.css';
+
+// types
+import { UICard } from 'src/types';
 
 interface Props {
   hand: UICard[],
