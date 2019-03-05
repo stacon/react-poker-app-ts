@@ -1,5 +1,5 @@
 
-import { getEvaluationResultFromHand } from './evaluateHand';
+import getEvaluationResultFromHand from './getEvaluationResultFromHand';
 import { UICard, EvaluationResult } from 'src/types';
 import { Suit } from 'src/enums';
 

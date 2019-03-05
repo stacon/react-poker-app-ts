@@ -11,7 +11,7 @@ import {
   getThreeOfAKindGroupValue,
   getPairGroupValue,
   getPairsGroupValues,
-} from './helpers';
+} from './handEvaluation.helper';
 import { UICard } from 'src/types';
 import { Suit } from 'src/enums';
 

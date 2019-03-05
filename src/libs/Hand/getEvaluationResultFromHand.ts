@@ -1,4 +1,4 @@
-import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './helpers';
+import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './handEvaluation.helper';
 import { UICard, EvaluationResult } from 'src/types';
 
 const isRoyalFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
@@ -61,5 +61,5 @@ const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult | null =>
   return evalResult
 }
 
-export { getEvaluationResultFromHand };
+export default getEvaluationResultFromHand;
 
