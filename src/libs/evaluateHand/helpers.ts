@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { getEvaluationResultFromHand } from './evaluateHand';
-import { getHighCardName } from '../models/evaluationResult.model';
-import { getWinningHandName as getFinalHandName } from '../models/evaluationResult.model';
+import { getHighCardName } from './handInfo.functions';
+import { getWinningHandName as getFinalHandName } from './handInfo.functions';
 import { UICard, IPlayer, EvaluationResult } from 'src/types';
 
 /**

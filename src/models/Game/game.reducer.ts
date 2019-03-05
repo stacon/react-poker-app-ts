@@ -9,10 +9,11 @@ import {
   CHECK,
   REPLACE_CARDS_SUCCESS
 } from './game.actions.creator';
-import { getNewDeck } from 'src/libs/models';
+
 import _ from 'lodash';
 import GameState from 'src/types/GameState.type';
 import { IPlayer, UICard } from 'src/types';
+import getNewDeck from 'src/libs/evaluateHand/getNewDeck';
 
 export default function (state: GameState = {}, action: any) {
 
