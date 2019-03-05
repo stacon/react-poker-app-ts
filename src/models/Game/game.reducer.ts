@@ -1,18 +1,28 @@
-import { START_GAME, DEAL_CARDS, CARD_SELECTED, RAISE, CHANGE_RAISE_AMOUNT, PLACE_ANTE, CALL, CHECK, REPLACE_CARDS } from './game.actions.creator';
-import { getNewDeck } from 'src/libs/models';
-import _ from 'lodash';
-import { UICard } from 'src/components/Views/Game/Card/Card';
+import {
+  START_GAME,
+  DEAL_CARDS,
+  CARD_SELECTED,
+  RAISE,
+  CHANGE_RAISE_AMOUNT,
+  PLACE_ANTE,
+  CALL,
+  CHECK,
+  REPLACE_CARDS_SUCCESS
+ } from './game.actions.creator';
+ import { getNewDeck } from 'src/libs/models';
+ import _ from 'lodash';
+ import { UICard } from 'src/components/Views/Game/Card/Card';
 
-export interface GameState {
+ export interface GameState {
   players?: IPlayer[],
   deck?: UICard[],
   status?: number,
   dealerIndex?: number,
   amountForRaise?: number,
   pot?: number
-}
+ }
 
-export default function (state: GameState = {}, action: any) {
+ export default function (state: GameState = {}, action: any) {
 
   switch (action.type) {
     case START_GAME: {
@@ -49,6 +59,7 @@ export default function (state: GameState = {}, action: any) {
         status: GameStatus._FirstBetPhase
       }
     }
+
     case CARD_SELECTED: {
       if (state.status === GameStatus._Discard) {
         const cardsForReplacement: number = state.players ? state.players[0].hand.filter(card => card.selected).length : 0;
@@ -110,7 +121,6 @@ export default function (state: GameState = {}, action: any) {
         }
       }
     }
-
     case CHECK: {
       //TODO: HAVE TO CHECK IF THE PLAYER IS DEALER (PLAYS LAST)
       const status: number = state.status ? state.status + 1  : 0;
@@ -140,36 +150,42 @@ export default function (state: GameState = {}, action: any) {
         pot
       }
     }
-    case REPLACE_CARDS: {
-      let players: IPlayer[] = (state.players) ? [...state.players] : [];
-      let newDeck: UICard[] = (state.deck) ? [...state.deck] : [];
-      let newHand: UICard[] = players[0].hand.reduce(
-        (newHand, card, index) => {
-          if (card.selected) {
-            return [...newHand.slice(0, index),
-              newDeck.splice(0, 1)[0],
-              ...newHand.slice(index + 1)];
-          }
-          return newHand;
-        },
-        players[0].hand);
-      players[0] = {...players[0], hand:newHand}
-      const status: number = state.status ? state.status + 1  : 0;
+    // case REPLACE_CARDS: {
+    //   let players: IPlayer[] = (state.players) ? [...state.players] : [];
+    //   let newDeck: UICard[] = (state.deck) ? [...state.deck] : [];
+    //   let newHand: UICard[] = players[0].hand.reduce(
+    //     (newHand, card, index) => {
+    //       if (card.selected) {
+    //         return [...newHand.slice(0, index),
+    //           newDeck.splice(0, 1)[0],
+    //           ...newHand.slice(index + 1)];
+    //       }
+    //       return newHand;
+    //     },
+    //     players[0].hand);
+    //   players[0] = {...players[0], hand:newHand}
+    //   const status: number = state.status ? state.status + 1  : 0;
+    //   return {
+    //     ...state,
+    //     players,
+    //     deck: newDeck,
+    //     status
+    //   }
+    // }
+    case REPLACE_CARDS_SUCCESS: {
       return {
         ...state,
-        players,
-        deck: newDeck,
-        status
-      }
+        ...action.payload
+      };
     }
     default: {
       return state;
     }
   };
 
-};
+ };
 
-export class IPlayer {
+ export class IPlayer {
   public hand: UICard[];
   constructor(
     public name: string,
@@ -185,12 +201,4 @@ export enum GameStatus {
   _Discard = 3,
   _SecondBetPhase = 4,
   _EvaluationPhase = 5,
-}
-
-export enum ActionType {
-  _Fold = 1,
-  _Check = 2,
-  _Call = 3,
-  _Raise = 4,
-  _ReplaceCards = 5,
 }
