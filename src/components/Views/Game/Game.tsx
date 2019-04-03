@@ -11,7 +11,6 @@ interface Props {
 }
 
 export const game = ({game} : Props) => {
-  console.log(game);
   if (Object.keys(game).length === 0 && game.constructor === Object) {
     history.push('/');
     return <></>

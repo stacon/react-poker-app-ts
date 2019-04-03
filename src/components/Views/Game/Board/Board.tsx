@@ -18,7 +18,6 @@ interface Props {
 }
 
 export const board = ({ players, pot, dealerIndex }: Props) => {
-  console.log('dealerINdex', dealerIndex)
   const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
       players.map((player, index) => {
@@ -43,7 +42,7 @@ export const board = ({ players, pot, dealerIndex }: Props) => {
         </div>
       </div>
       <MessagesFrame />
-      {(players[0].hand.length) ? <GameControls /> : <></>}
+      {(players && players[0].hand.length) ? <GameControls /> : <></>}
     </>
   )
 }

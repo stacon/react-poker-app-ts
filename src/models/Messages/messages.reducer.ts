@@ -1,10 +1,10 @@
-import { DEAL_CARDS, RAISE, RESET_MESSAGES, PLACE_ANTE, CALL, CHECK } from '../Game/game.actions.creator';
+import { RAISE, RESET_MESSAGES, CALL, CHECK, CARDS_DEALT } from '../Game/game.actions.creator';
 import { ADD_MESSAGE } from './messages.action.creator';
 import MessagesState from 'src/types/MessagesState.type';
 
 export default function (state: MessagesState = {list: []}, action: any) {
   switch (action.type) {
-    case (DEAL_CARDS): {
+    case (CARDS_DEALT): {
       const list=  (state.list) ? [...state.list, 'HANDS DEALT! GOOD LUCK'] : [];
       return {
         ...state,
@@ -62,13 +62,13 @@ export default function (state: MessagesState = {list: []}, action: any) {
         list: list
       }
     }
-    case (PLACE_ANTE): {
-      const list=  (state.list) ? [...state.list, 'PLAYERS PLACED THEIR ANTES'] : [];
-      return {
-        ...state,
-        list
-      }
-    }
+    // case (PLACE_ANTE): {
+    //   const list=  (state.list) ? [...state.list, 'PLAYERS PLACED THEIR ANTES'] : [];
+    //   return {
+    //     ...state,
+    //     list
+    //   }
+    // }
     default: {
       return state;
     }
