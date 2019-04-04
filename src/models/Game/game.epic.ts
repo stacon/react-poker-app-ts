@@ -94,9 +94,7 @@ const dealCardsEpic = (action$: any, state$: any) => action$.pipe(
 
 const cardClickedEpic = (action$: any, state$: any) => action$.pipe(
   ofType(CARD_CLICKED),
-  filter(() => {
-    return state$.value.game.status === GameStatus._Discard
-  }),
+  filter(() => state$.value.game.status === GameStatus._Discard),
   map((action: any) => {
     console.log('Am in')
     const { payload } = action;
