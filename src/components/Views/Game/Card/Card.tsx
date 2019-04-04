@@ -43,7 +43,7 @@ export const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, ind
 
 const mapDispatchToProps = (dispatch: any) =>  ({
     onCardClickHandler: (key:number) => {
-      dispatch(onCardClick(key));
+      dispatch(onCardClick({key}));
     }
 });
 

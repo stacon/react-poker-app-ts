@@ -27,10 +27,10 @@ export const startNewGame = (payload: { numberOfPlayers: number, name: string, b
   }
 }
 
-export const onCardClick = (key: number) => {
+export const onCardClick = (payload: {key: number}) => {
   return {
     type: CARD_CLICKED,
-    payload: { key }
+    payload
   }
 }
 

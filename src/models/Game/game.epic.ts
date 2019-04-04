@@ -1,4 +1,4 @@
-import { map, tap } from 'rxjs/operators';
+import { map, tap, filter, delay } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 import _ from 'lodash';
 import { history } from "../../components/Routes";
@@ -11,7 +11,7 @@ import {
   resetMessages,
   DEAL_CARDS,
   cardsDealt,
-  // placeAnte,
+  placeAnte,
   PLACE_ANTE,
   antePlacedSuccessfully,
   CARD_CLICKED,
@@ -88,14 +88,18 @@ const dealCardsEpic = (action$: any, state$: any) => action$.pipe(
       players: newPlayers,
     });
   }),
-  // tap(() => store.dispatch(placeAnte())),
+  delay(1000), // TODO: Better approach?
+  tap(() => store.dispatch(placeAnte())),
 )
 
 const cardClickedEpic = (action$: any, state$: any) => action$.pipe(
   ofType(CARD_CLICKED),
+  filter(() => {
+    return state$.value.game.status === GameStatus._Discard
+  }),
   map((action: any) => {
+    console.log('Am in')
     const { payload } = action;
-    if (state$.value.status !== GameStatus._Discard) return;
     const cardsForReplacement: number = state$.value.game.players ? state$.value.game.players[0].hand.filter((card: UICard) => card.selected).length : 0;
     let players = state$.value.game.players ? [...state$.value.game.players] : [];
     const clickedCard: UICard = players[0].hand[payload.key]
@@ -108,9 +112,8 @@ const cardClickedEpic = (action$: any, state$: any) => action$.pipe(
 const placeAnteEpic = (action$: any, state$: any) => action$.pipe(
   ofType(PLACE_ANTE),
   map(() => {
-    let players: IPlayer[] = (state$.value.game.players) ? [...state$.value.game.players] : [];
-    const newBalance: number = players[0].balance - 10;
-    players.forEach((player) => (player.balance = newBalance));
+    let players: IPlayer[] = state$.value.game.players ? [...state$.value.game.players] : [];
+    players.forEach((player) => (player.balance -= 10));
     let pot = (state$.value.game.pot) ? state$.value.game.pot : 0;
     pot = pot + 10 * players.length;
     return antePlacedSuccessfully({
