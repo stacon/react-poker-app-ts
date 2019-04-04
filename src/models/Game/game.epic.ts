@@ -4,18 +4,18 @@ import _ from 'lodash';
 import { history } from "../../components/Routes";
 
 import {
-  REPLACE_CARDS,
-  replaceCardsSuccess,
-  START_GAME,
-  startGameSuccess,
-  resetMessages,
-  DEAL_CARDS,
-  cardsDealt,
-  placeAnte,
-  PLACE_ANTE,
-  antePlacedSuccessfully,
   CARD_CLICKED,
+  DEAL_CARDS,
+  PLACE_ANTE,
+  REPLACE_CARDS,
+  START_GAME,
+  antePlacedSuccessfully,
+  cardsDealt,
   cardSelectedSuccessfully,
+  placeAnte,
+  replaceCardsSuccess,
+  resetMessages,
+  startGameSuccess,
 } from './game.actions.creator';
 
 import { GameState, IPlayer, UICard } from 'src/types';
@@ -88,7 +88,7 @@ const dealCardsEpic = (action$: any, state$: any) => action$.pipe(
       players: newPlayers,
     });
   }),
-  delay(1000), // TODO: Better approach?
+  delay(200), // TODO: Better approach?
   tap(() => store.dispatch(placeAnte())),
 )
 
