@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { dealCards } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../../models/App/app.store';
 import { GameStatus } from 'src/enums';
+import { getUserInfo } from 'src/models/User/user.selectors';
+import { getGameStatus } from 'src/models/Game/game.selectors';
 
 interface Props {
   name: string,
@@ -21,7 +23,7 @@ export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => 
       </p>
       <nav>
           <ul>
-           {gameStatus && gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
+           {gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
           </ul>
       </nav>
   </header>
@@ -37,9 +39,9 @@ const mapDispatchToProps = (dispatch: Function ) => {
 
   const mapStateToProps = (state: AppState) => {
     return {
-      name: state.user.name,
-      balance: state.user.balance,
-      gameStatus: (state.game.status) ? state.game.status : null
+      name: getUserInfo(state).name,
+      balance: getUserInfo(state).balance,
+      gameStatus: getGameStatus(state),
     }
   };
 
