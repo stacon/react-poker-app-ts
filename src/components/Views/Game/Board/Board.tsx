@@ -10,14 +10,16 @@ import './Board.module.css';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
 import { IPlayer } from 'src/types';
+import { getGamePlayers, getGamePot, getGameDealerIndex, gameHasStarted } from 'src/models/Game/game.selectors';
 
 interface Props {
+  gameHasStarted: boolean
   players: IPlayer[],
   pot: number,
   dealerIndex: number
 }
 
-export const board = ({ players, pot, dealerIndex }: Props) => {
+export const board = ({gameHasStarted, players, pot, dealerIndex }: Props) => {
   const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
     <div></div> : (
       players.map((player, index) => {
@@ -37,21 +39,22 @@ export const board = ({ players, pot, dealerIndex }: Props) => {
               <div className="pot">{pot} $</div>
             </div> : ''}
           {
-            players && players.length ? playersGrid : null
+            players.length ? playersGrid : null
           }
         </div>
       </div>
       <MessagesFrame />
-      {(players && players[0].hand.length) ? <GameControls /> : <></>}
+      {(gameHasStarted && players[0].hand) ? <GameControls /> : <></>}
     </>
   )
 }
 
 const mapStateToProps = (state: AppState) => {
   return {
-    players: state.game.players,
-    pot: state.game.pot,
-    dealerIndex: state.game.dealerIndex
+    gameHasStarted: gameHasStarted(state),
+    players: getGamePlayers(state),
+    pot: getGamePot(state),
+    dealerIndex: getGameDealerIndex(state),
   }
 };
 

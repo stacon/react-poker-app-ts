@@ -10,12 +10,10 @@ export const gameHasPlayers = (state: AppState): boolean => (
 
 export const gameHasStarted = (state: AppState): boolean => (
     gameHasPlayers(state) &&
-    !!getGameState(state).status &&
-    !!getGameState(state).pot &&
-    !!getGameState(state).deck &&
-    !!getGameState(state).dealerIndex
+    getGameStatus(state) > GameStatus._NewGame
 );
 
 export const getGamePlayers = (state: AppState): IPlayer[] => [...getGameState(state).players];
 export const getGameStatus = (state: AppState): GameStatus => getGameState(state).status;
 export const getGamePot = (state: AppState): number => getGameState(state).pot;
+export const getGameDealerIndex = (state: AppState): number => getGameState(state).dealerIndex;
