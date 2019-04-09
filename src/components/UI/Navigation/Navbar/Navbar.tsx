@@ -1,9 +1,9 @@
 import React from 'react';
 import './Navbar.module.css';
-import { GameStatus } from '../../../../models/Game/game.reducer';
 import { connect } from 'react-redux';
 import { dealCards } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../../models/App/app.store';
+import { GameStatus } from 'src/enums';
 
 interface Props {
   name: string,

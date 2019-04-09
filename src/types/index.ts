@@ -5,5 +5,15 @@ import UserState from './UserState.type';
 import UICard from './UICard.type';
 import IPlayer from './IPlayer.type';
 import EvaluationResult from './EvaluationResult.type';
+import UserInformation from './UserInformation.type';
 
-export { GameState, IndexState, MessagesState, UserState, UICard, IPlayer, EvaluationResult }
+export { 
+    GameState,
+    IndexState,
+    MessagesState,
+    UserState,
+    UICard,
+    IPlayer,
+    EvaluationResult,
+    UserInformation
+}

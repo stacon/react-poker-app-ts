@@ -14,9 +14,18 @@ import _ from 'lodash';
 import GameState from 'src/types/GameState.type';
 import { IPlayer } from 'src/types';
 import getNewDeck from 'src/libs/Deck/getNewDeck';
+import { GameStatus } from 'src/enums';
 
+const initialState: GameState = {
+  players: [],
+  deck: [],
+  status: GameStatus._Uninitialized,
+  dealerIndex: 0,
+  amountForRaise: 0,
+  pot: 0
+}
 
-export default function (state: GameState = {}, action: any) {
+export default function (state: GameState = initialState, action: any) {
 
   switch (action.type) {
     case CARDS_DEALT: {
@@ -119,11 +128,3 @@ export default function (state: GameState = {}, action: any) {
   };
 
 };
-
-export enum GameStatus {
-  _NewGame = 1,
-  _FirstBetPhase = 2,
-  _Discard = 3,
-  _SecondBetPhase = 4,
-  _EvaluationPhase = 5,
-}

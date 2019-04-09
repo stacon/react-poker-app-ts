@@ -20,7 +20,7 @@ import {
 
 import { GameState, IPlayer, UICard } from 'src/types';
 import store from '../App/app.store';
-import { GameStatus } from './game.reducer';
+import { GameStatus } from 'src/enums';
 
 const replaceCardsEpic = (action$: any, state$: any) => action$.pipe(
   ofType(REPLACE_CARDS),

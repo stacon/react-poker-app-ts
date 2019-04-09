@@ -3,8 +3,8 @@ import './GameControls.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { raise, changeRaiseAmount, call, check, replaceCards } from 'src/models/Game/game.actions.creator';
-import { GameStatus } from 'src/models/Game/game.reducer';
 import { UICard } from 'src/types';
+import { GameStatus } from 'src/enums';
 
 interface Props {
   balance: number,
