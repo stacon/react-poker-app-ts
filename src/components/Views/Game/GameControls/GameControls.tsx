@@ -3,8 +3,8 @@ import './GameControls.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { raise, changeRaiseAmount, call, check, replaceCards } from 'src/models/Game/game.actions.creator';
-import { UICard } from 'src/types';
 import { GameStatus } from 'src/enums';
+import { getGameStatus, getMainPlayer, getGameAmountForRaise, getSelectedCardsForReplacementNumber } from 'src/models/Game/game.selectors';
 
 interface Props {
   balance: number,
@@ -47,11 +47,10 @@ export const gameControls = (
 
 const mapStateToProps = (state: AppState) => {
   return {
-    balance: (state.game.players) ? state.game.players[0].balance : 0,
-    amountForRaise: state.game.amountForRaise,
-    status: state.game.status,
-    selectedCardsForReplacement: state.game.players && state.game.players[0].hand ?
-          state.game.players[0].hand.filter((card: UICard) => card.selected).length : null
+    balance: !!getMainPlayer(state).balance ? getMainPlayer(state).balance : 0,
+    amountForRaise: getGameAmountForRaise(state),
+    status: getGameStatus(state),
+    selectedCardsForReplacement: getSelectedCardsForReplacementNumber(state),
   }
 };
 
