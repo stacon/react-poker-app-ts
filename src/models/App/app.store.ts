@@ -37,13 +37,5 @@ const store = createStore(
 
 epicMiddleware.run(rootEpic);
 
-// const pingEpic = (action$: any) => action$.pipe(
-//   ofType('‘'PING’),
-//   delay(1000), // Asynchronously wait 1000ms then continue
-//   mapTo({ type: '‘'PONG’ })
-// );
-//
-// epicMiddleware.run(pingEpic);
-
 
 export default store;

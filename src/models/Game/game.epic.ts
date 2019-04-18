@@ -1,5 +1,5 @@
 import { map, tap, filter, delay } from 'rxjs/operators';
-import { ofType, combineEpics } from 'redux-observable';
+import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable';
 import _ from 'lodash';
 import { history } from "../../components/Routes";
 
@@ -19,16 +19,17 @@ import {
 } from './game.actions.creator';
 
 import { GameState, IPlayer, UICard } from 'src/types';
-import store from '../App/app.store';
+import store, { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
+import { Action } from 'redux';
 
-const replaceCardsEpic = (action$: any, state$: any) => action$.pipe(
+const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
   map(() => {
     const state: GameState = state$.value.game;
     const players: IPlayer[] = [...(state.players || [])];
     const [player] = players;
-    const newDeck: any[] = [...(state.deck || [])];
+    const newDeck: UICard[] = [...(state.deck || [])];
     const newHand: any[] = player.hand.reduce(
       (newHand, card, index) => {
         if (card.selected) {
@@ -55,7 +56,7 @@ const replaceCardsEpic = (action$: any, state$: any) => action$.pipe(
   })
 );
 
-const startGameEpic = (action$: any) => action$.pipe(
+const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
   map((action: any) => {
     const { payload } = action;
@@ -72,7 +73,7 @@ const startGameEpic = (action$: any) => action$.pipe(
   })
 )
 
-const dealCardsEpic = (action$: any, state$: any) => action$.pipe(
+const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(DEAL_CARDS),
   tap(() => store.dispatch(resetMessages())),
   map(() => {
@@ -92,7 +93,7 @@ const dealCardsEpic = (action$: any, state$: any) => action$.pipe(
   tap(() => store.dispatch(placeAnte())),
 )
 
-const cardClickedEpic = (action$: any, state$: any) => action$.pipe(
+const cardClickedEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CARD_CLICKED),
   filter(() => state$.value.game.status === GameStatus._Discard),
   map((action: any) => {
@@ -107,7 +108,7 @@ const cardClickedEpic = (action$: any, state$: any) => action$.pipe(
   }),
 )
 
-const placeAnteEpic = (action$: any, state$: any) => action$.pipe(
+const placeAnteEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(PLACE_ANTE),
   map(() => {
     let players: IPlayer[] = state$.value.game.players ? [...state$.value.game.players] : [];
