@@ -1,10 +1,10 @@
 import React from 'react';
 import './StartGameInput.module.css';
 import { connect } from 'react-redux';
-import { startNewGame, resetMessages } from 'src/models/Game/game.actions.creator';
+import { startNewGame } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../models/App/app.store';
 import { changeNumberOfPlayers } from '../../../models/App/app.action.creator'
-import { history } from "../../Routes";
+import { getUserInfo, getNumberOfSelectedPlayers } from 'src/models/User/user.selectors';
 
 interface Props {
   numberOfPlayersSelected: number,
@@ -63,26 +63,24 @@ export const startGameInput = (
 
 
 
-const mapDispatchToProps = (dispatch:any ) => {
+const mapDispatchToProps = (dispatch: Function ) => {
     return {
-      onGameStartHandler: (payload:any) => {
-        dispatch(resetMessages());
+      onGameStartHandler: (payload: {numberOfPlayers: number, name: string, balance: number}) => {
         dispatch(startNewGame(payload));
-        history.push('/game');
       },
       onChangeNumberOfPlayers: (numberOfPlayers: number): void => {
         dispatch(changeNumberOfPlayers(numberOfPlayers));
     },
-      
+
 
   }
 }
 
   const mapStateToProps = (state: AppState) => {
     return {
-      numberOfPlayersSelected: state.app.numberOfPlayersSelected,
-      name: state.user.name,
-      balance: state.user.balance,
+      numberOfPlayersSelected: getNumberOfSelectedPlayers(state),
+      name: getUserInfo(state).name,
+      balance: getUserInfo(state).balance,
     }
   };
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AppState } from 'src/models/App/app.store';
 import { GameState } from 'src/types';
 import { history } from "../../Routes";
+import { getGameState } from 'src/models/Game/game.selectors';
 
 
 interface Props {
@@ -11,7 +12,6 @@ interface Props {
 }
 
 export const game = ({game} : Props) => {
-  console.log(game);
   if (Object.keys(game).length === 0 && game.constructor === Object) {
     history.push('/');
     return <></>
@@ -21,7 +21,7 @@ export const game = ({game} : Props) => {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    game: state.game
+    game: getGameState(state),
   }
 };
 

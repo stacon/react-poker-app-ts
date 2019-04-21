@@ -1,9 +1,11 @@
 import React from 'react';
 import './Navbar.module.css';
-import { GameStatus } from '../../../../models/Game/game.reducer';
 import { connect } from 'react-redux';
-import { dealCards, resetMessages, placeAnte } from 'src/models/Game/game.actions.creator';
+import { dealCards } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../../models/App/app.store';
+import { GameStatus } from 'src/enums';
+import { getUserInfo } from 'src/models/User/user.selectors';
+import { getGameStatus } from 'src/models/Game/game.selectors';
 
 interface Props {
   name: string,
@@ -21,27 +23,25 @@ export const navBar = ({name, balance, dealCardsHandler, gameStatus}: Props) => 
       </p>
       <nav>
           <ul>
-           {gameStatus && gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
+           {gameStatus === GameStatus._NewGame ? <li onClick={() => dealCardsHandler()}>Deal Cards</li> : null }
           </ul>
       </nav>
   </header>
 );
 
-const mapDispatchToProps = (dispatch:any ) => {
+const mapDispatchToProps = (dispatch: Function ) => {
     return {
       dealCardsHandler: () => {
-        dispatch(resetMessages());
         dispatch(dealCards());
-        dispatch(placeAnte());
       }
   }
 }
 
   const mapStateToProps = (state: AppState) => {
     return {
-      name: state.user.name,
-      balance: state.user.balance,
-      gameStatus: (state.game.status) ? state.game.status : null
+      name: getUserInfo(state).name,
+      balance: getUserInfo(state).balance,
+      gameStatus: getGameStatus(state),
     }
   };
 

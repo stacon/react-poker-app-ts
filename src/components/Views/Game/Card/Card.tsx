@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { onCardSelect } from 'src/models/Game/game.actions.creator';
+import { onCardClick } from 'src/models/Game/game.actions.creator';
 
 //css
 import './Card.module.css';
@@ -43,7 +43,7 @@ export const card = ({isFlipped, rank, suit, isSelected, onCardClickHandler, ind
 
 const mapDispatchToProps = (dispatch: any) =>  ({
     onCardClickHandler: (key:number) => {
-      dispatch(onCardSelect(key));
+      dispatch(onCardClick({key}));
     }
 });
 
