@@ -16,8 +16,10 @@ export const gameHasStarted = (state: AppState): boolean => (
 // By ref
 export const getGamePlayers = (state: AppState): IPlayer[] => [...getGameState(state).players];
 export const getMainPlayer = (state: AppState): IPlayer => ({...getGameState(state).players[0]});
+export const getGameDeck = (state: AppState): UICard[] => [...getGameState(state).deck];
 
 // By val
+export const getCurrentPlayerId = (state: AppState): number => getGameState(state).currentPlayerId;
 export const getGameStatus = (state: AppState): GameStatus => getGameState(state).status;
 export const getGamePot = (state: AppState): number => getGameState(state).pot;
 export const getGameDealerIndex = (state: AppState): number => getGameState(state).dealerIndex;

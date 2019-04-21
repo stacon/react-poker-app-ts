@@ -23,7 +23,8 @@ export const gameControls = (
     <div className="game-control-container">
       <li className={'status' + status}>Fold</li>
       <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck() : null}>Check</li>
-      <li className={'status' + status}><input
+      <li className={'status' + status}>
+      <input
         className="raise-range"
         id='raise'
         type="range"

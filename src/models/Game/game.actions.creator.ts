@@ -23,20 +23,20 @@ export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
 export const startNewGame = (payload: { numberOfPlayers: number, name: string, balance: number }) => {
   return {
     type: START_GAME,
-    payload
+    payload,
   }
 }
 
 export const onCardClick = (payload: {key: number}) => {
   return {
     type: CARD_CLICKED,
-    payload
+    payload,
   }
 }
 
 export const dealCards = () => {
   return {
-    type: DEAL_CARDS
+    type: DEAL_CARDS,
   }
 }
 
