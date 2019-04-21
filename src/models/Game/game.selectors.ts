@@ -25,3 +25,21 @@ export const getGamePot = (state: AppState): number => getGameState(state).pot;
 export const getGameDealerIndex = (state: AppState): number => getGameState(state).dealerIndex;
 export const getGameAmountForRaise = (state: AppState): number => getGameState(state).amountForRaise;
 export const getSelectedCardsForReplacementNumber = (state: AppState): number => getMainPlayer(state).hand.filter((card: UICard) => card.selected).length;
+export const getCurrentPlayer = (state: AppState) => ({...getGamePlayers(state)[getCurrentPlayerId(state)]});
+export const getPlayerById = (state: AppState, id: number) => ({...getGamePlayers(state)[id]});
+
+// Advanced Selectors
+export const getPreviousPlayerId = (state: AppState) => {
+  const currentPlayerId: number = getGameState(state).currentPlayerId;
+  return currentPlayerId - 1 === -1 ? getGamePlayers(state).length - 1 : currentPlayerId - 1
+}
+
+export const getNextPlayerId = (state: AppState) => (
+  getGameState(state).currentPlayerId + 1 > getGamePlayers(state).length - 1 ? 0 : getGameState(state).currentPlayerId + 1
+);
+
+export const getHighestRoundPot = (state: AppState) => (
+  Math.max(...getGamePlayers(state)
+    .filter(({roundPot}) => roundPot > getCurrentPlayer(state).roundPot)
+    .map(player => player.roundPot))
+)
