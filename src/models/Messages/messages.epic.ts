@@ -1,9 +1,14 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from "redux-observable";
-import { CARDS_DEALT, ANTE_PLACED_SUCCESSFULLY } from '../Game/game.actions.creator';
+import { CARDS_DEALT, ANTE_PLACED_SUCCESSFULLY, resetMessages, GAME_STARTED } from '../Game/game.actions.creator';
 import { map } from 'rxjs/internal/operators/map';
 import { addMessage, messageAddedSuccessfully, ADD_MESSAGE } from './messages.action.creator';
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
+
+const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
+  ofType(GAME_STARTED),
+  map(() => resetMessages())
+)
 
 const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(CARDS_DEALT),
@@ -25,6 +30,7 @@ const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObserva
 );
 
 export default combineEpics(
+  startGameEpic,
   antesPlacedEpic,
   addMessageEpic,
   cardsDealtEpic,

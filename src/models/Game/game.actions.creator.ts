@@ -11,7 +11,7 @@ export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
 export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
-export const CALL_SUCCESSFUL = 'CALL_SUCCESSFUL';
+export const CALL_CHECK_SUCCESSFUL = 'CALL_SUCCESSFUL';
 export const CALL_CHECK = 'CALL_CHECK';
 export const PLACE_ANTE = 'PLACE_ANTE';
 export const RESET_MESSAGES = 'RESET_MESSAGES';
@@ -75,7 +75,7 @@ export const raiseSuccessful = (payload: {players: IPlayer[], pot: number }) => 
 
 export const callSuccessful = (payload: {players: IPlayer[], pot: number }) => {
   return {
-    type: CALL_SUCCESSFUL,
+    type: CALL_CHECK_SUCCESSFUL,
     payload,
   }
 }

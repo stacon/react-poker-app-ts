@@ -17,16 +17,17 @@ export const gameHasStarted = (state: AppState): boolean => (
 export const getGamePlayers = (state: AppState): IPlayer[] => [...getGameState(state).players];
 export const getMainPlayer = (state: AppState): IPlayer => ({...getGameState(state).players[0]});
 export const getGameDeck = (state: AppState): UICard[] => [...getGameState(state).deck];
+export const getPlayerById = (state: AppState, id: number) => ({...getGamePlayers(state)[id]});
+export const getCurrentPlayer = (state: AppState) => ({...getGamePlayers(state)[getCurrentPlayerId(state)]});
+export const getGamePhase = (state: AppState) => ({...getGameState(state).phase});
 
 // By val
 export const getCurrentPlayerId = (state: AppState): number => getGameState(state).currentPlayerId;
-export const getGameStatus = (state: AppState): GameStatus => getGameState(state).status;
+export const getGameStatus = (state: AppState): GameStatus => getGamePhase(state).statusId;
 export const getGamePot = (state: AppState): number => getGameState(state).pot;
 export const getGameDealerIndex = (state: AppState): number => getGameState(state).dealerIndex;
 export const getGameAmountForRaise = (state: AppState): number => getGameState(state).amountForRaise;
 export const getSelectedCardsForReplacementNumber = (state: AppState): number => getMainPlayer(state).hand.filter((card: UICard) => card.selected).length;
-export const getCurrentPlayer = (state: AppState) => ({...getGamePlayers(state)[getCurrentPlayerId(state)]});
-export const getPlayerById = (state: AppState, id: number) => ({...getGamePlayers(state)[id]});
 
 // Advanced Selectors
 export const getPreviousPlayerId = (state: AppState) => {

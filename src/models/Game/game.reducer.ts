@@ -17,11 +17,14 @@ import { GameStatus } from 'src/enums';
 const initialState: GameState = {
   players: [],
   deck: [],
-  status: GameStatus._Uninitialized,
   currentPlayerId: -1,
   dealerIndex: 0,
   amountForRaise: 0,
-  pot: 0
+  pot: 0,
+  phase: {
+    statusId: GameStatus._Uninitialized,
+    playerIDsTookAction: [],
+  }
 }
 
 export default function (state: GameState = initialState, action: any) {
@@ -31,7 +34,10 @@ export default function (state: GameState = initialState, action: any) {
       return {
         ...state,
         ...action.payload,
-        status: GameStatus._FirstBetPhase
+        phase: {
+          ...state.phase,
+          status: GameStatus._FirstBetPhase
+        }
       }
     }
 
@@ -83,7 +89,10 @@ export default function (state: GameState = initialState, action: any) {
         ...state,
         ...action.payload,
         deck: getNewDeck(),
-        status: GameStatus._NewGame,
+        phase: {
+          ...state.phase,
+          status: GameStatus._NewGame,
+        },
         currentPlayerId: 0,
         dealerIndex: 1,
         amountForRaise: 0,
