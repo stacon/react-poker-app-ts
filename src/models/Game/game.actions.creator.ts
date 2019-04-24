@@ -1,26 +1,25 @@
 import { IPlayer, UICard } from 'src/types';
 
 // #region Actions
-export const START_GAME = 'START_GAME';
-export const GAME_STARTED = 'GAME_STARTED';
-export const DEAL_CARDS = 'DEAL_CARDS';
-export const CARDS_DEALT = 'CARDS_DEALT';
+export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
+export const CALL_CHECK = 'CALL_CHECK';
+export const CALL_CHECK_SUCCESSFUL = 'CALL_CHECK_SUCCESSFUL';
 export const CARD_CLICKED = 'CARD_CLICKED';
+export const CARDS_DEALT = 'CARDS_DEALT';
 export const CARD_SELECTED = 'CARD_SELECTED';
+export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
+export const DEAL_CARDS = 'DEAL_CARDS';
+export const END_TURN = 'END_TURN';
+export const GAME_STARTED = 'GAME_STARTED';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
-export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
-export const CALL_CHECK_SUCCESSFUL = 'CALL_SUCCESSFUL';
-export const CALL_CHECK = 'CALL_CHECK';
 export const PLACE_ANTE = 'PLACE_ANTE';
-export const RESET_MESSAGES = 'RESET_MESSAGES';
 export const REPLACE_CARDS = 'REPLACE_CARDS';
 export const REPLACE_CARDS_SUCCESS = 'REPLACE_CARDS_SUCCESS';
-export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
+export const START_GAME = 'START_GAME';
 export const SHIFT_PLAYER_TURN = 'SHIFT_PLAYER_TURN';
 export const SHIFT_PLAYER_TURN_SUCCESSFUL = 'SHIFT_PLAYER_TURN_SUCCESSFUL';
-export const END_TURN = 'END_TURN';
 export const TURN_ENDED = 'TURN_ENDED';
 
 // #endregion Actions
@@ -139,12 +138,6 @@ export const cardSelectedSuccessfully = (payload: {players: IPlayer[]}) => {
   return {
     type: CARD_SELECTED,
     payload,
-  }
-}
-
-export const resetMessages = () => {
-  return {
-    type: RESET_MESSAGES,
   }
 }
 

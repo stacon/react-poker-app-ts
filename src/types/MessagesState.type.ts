@@ -1,5 +1,5 @@
 interface MessagesState {
-  list?: string[]
+  list: string[]
 }
 
 export default MessagesState;
