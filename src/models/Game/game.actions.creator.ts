@@ -73,7 +73,7 @@ export const raiseSuccessful = (payload: {players: IPlayer[], pot: number }) => 
   }
 }
 
-export const callSuccessful = (payload: {players: IPlayer[], pot: number }) => {
+export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number }) => {
   return {
     type: CALL_CHECK_SUCCESSFUL,
     payload,
