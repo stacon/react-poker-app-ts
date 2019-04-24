@@ -4,6 +4,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { addMessage, messageAddedSuccessfully, ADD_MESSAGE } from './messages.action.creator';
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
+import { getMessagesList } from './messages.selectors';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(GAME_STARTED),
@@ -24,7 +25,7 @@ const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObserva
   ofType(ADD_MESSAGE),
   map((action: any) => {
     console.log('state ', state$)
-    const list: string[] = (state$.value.messages.list) ? [...state$.value.messages.list, action.payload.message] : [];
+    const list: string[] = getMessagesList(state$.value);
     return messageAddedSuccessfully({list})
   }),
 );
