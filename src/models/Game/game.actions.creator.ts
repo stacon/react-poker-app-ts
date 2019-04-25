@@ -65,14 +65,14 @@ export const raise = (payload: {amount: number, pid: number}) => {
   }
 }
 
-export const raiseSuccessful = (payload: {players: IPlayer[], pot: number }) => {
+export const raiseSuccessful = (payload: {players: IPlayer[], pot: number, phase: {statusId: number ,playerIDsTookAction: number[]}}) => {
   return {
     type: RAISE_SUCCESSFUL,
     payload,
   }
 }
 
-export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number }) => {
+export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, phase: {statusId: number ,playerIDsTookAction: number[]} }) => {
   return {
     type: CALL_CHECK_SUCCESSFUL,
     payload,

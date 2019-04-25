@@ -6,7 +6,8 @@ import {
   GAME_STARTED,
   ANTE_PLACED_SUCCESSFULLY,
   RAISE_SUCCESSFUL,
-  SHIFT_PLAYER_TURN_SUCCESSFUL
+  SHIFT_PLAYER_TURN_SUCCESSFUL,
+  CALL_CHECK_SUCCESSFUL
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -42,6 +43,13 @@ export default function (state: GameState = initialState, action: any) {
     }
 
     case CARD_SELECTED: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+
+    case CALL_CHECK_SUCCESSFUL: {
       return {
         ...state,
         ...action.payload,

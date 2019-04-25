@@ -1,4 +1,4 @@
-import { map, tap, filter, delay, distinctUntilChanged } from 'rxjs/operators';
+import { map, tap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable';
 import _ from 'lodash';
 import { history } from "../../components/Routes";
@@ -21,7 +21,6 @@ import {
   cardSelectedSuccessfully,
   checkCall,
   currentPlayerChanged,
-  placeAnte,
   playerTurnShiftSuccessFul,
   raiseSuccessful,
   replaceCardsSuccess,
@@ -30,10 +29,10 @@ import {
 } from './game.actions.creator';
 
 import { GameState, IPlayer, UICard } from 'src/types';
-import store, { AppState } from '../App/app.store';
+import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
-import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot } from './game.selectors';
+import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase } from './game.selectors';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
@@ -66,14 +65,14 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
       players: newPlayers,
     });
   }),
-  delay(200), // TODO: Better approach?
-  tap(() => store.dispatch(placeAnte())),
+  // delay(200), // TODO: Better approach?
+  // tap(() => store.dispatch(placeAnte())),
 )
 
 const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
   map(() => {
-    const state: GameState = state$.value.game;
+    const state: GameState = getGameState(state$.value);
     const players: IPlayer[] = [...(state.players || [])];
     const [player] = players;
     const newDeck: UICard[] = [...(state.deck || [])];
@@ -108,8 +107,8 @@ const cardClickedEpic = (action$: ActionsObservable<Action>, state$: StateObserv
   filter(() => getGameStatus(state$.value) === GameStatus._Discard),
   map((action: any) => {
     const { payload } = action;
-    const cardsForReplacement: number = state$.value.game.players ? state$.value.game.players[0].hand.filter((card: UICard) => card.selected).length : 0;
-    let players = state$.value.game.players ? [...state$.value.game.players] : [];
+    const cardsForReplacement: number = getGamePlayers(state$.value) ? getGamePlayers(state$.value)[0].hand.filter((card: UICard) => card.selected).length : 0;
+    const players = getGamePlayers(state$.value);
     const clickedCard: UICard = players[0].hand[payload.key]
     clickedCard.selected = clickedCard.selected || cardsForReplacement < 3 ?
       !clickedCard.selected : clickedCard.selected;
@@ -141,12 +140,17 @@ const callRequestEpic = (action$: ActionsObservable<Action>, state$: StateObserv
     const amountToCall: number = highestRoundPot - playerRoundPot;
     const newBalance: number = getGamePlayers(state$.value)[pid].balance - amountToCall;
     const pot = getGamePot(state$.value) + amountToCall;
+    const phase = getGamePhase(state$.value);
+    if(phase.playerIDsTookAction.indexOf(pid) === -1) {
+      phase.playerIDsTookAction.push(pid);
+    }    
 
     players[pid].roundPot += amountToCall;
     players[pid].balance = newBalance;
     return callCheckSuccessful({
       players,
       pot,
+      phase,
     })
   })
 )
@@ -164,11 +168,17 @@ const raiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const players: IPlayer[] = getGamePlayers(state$.value);
     const newBalance: number = players[pid].balance - amount;
     const pot = getGamePot(state$.value) + amount;
+    const phase = getGamePhase(state$.value);
+    if(phase.playerIDsTookAction.indexOf(pid) === -1) {
+      phase.playerIDsTookAction.push(pid);
+    }
+
     players[pid].roundPot += amount;
     players[pid].balance = newBalance;
     return raiseSuccessful({
       players,
       pot,
+      phase,
     })
   }),
 )

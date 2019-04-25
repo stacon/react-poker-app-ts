@@ -17,7 +17,7 @@ import { getMessagesList } from './messages.selectors';
 
 const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(CARDS_DEALT),
-  map(() => addMessage('HANDS DEALT! GOOD LUCK')),
+  map(() => addMessage('Hands Dealt! Good Luck')),
 );
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
@@ -27,7 +27,7 @@ const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
 
 const antesPlacedEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(ANTE_PLACED_SUCCESSFULLY),
-  map(() => addMessage('PLAYERS PLACED THEIR ANTES')),
+  map(() => addMessage('Players Placed their Antes!')),
 );
 
 const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
