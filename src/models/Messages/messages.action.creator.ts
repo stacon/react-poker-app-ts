@@ -16,6 +16,7 @@ export const addMessage = (message: string) => {
 
 export const resetMessages = () => ({
   type: RESET_MESSAGES,
+  payload: null,
 })
 
 export const messageAddedSuccessfully = (payload: {list: string[]}) => {
