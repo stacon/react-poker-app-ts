@@ -14,11 +14,9 @@ export const addMessage = (message: string) => {
   }
 }
 
-export const resetMessages = () => {
-  return {
-    type: RESET_MESSAGES,
-  }
-}
+export const resetMessages = () => ({
+  type: RESET_MESSAGES,
+})
 
 export const messageAddedSuccessfully = (payload: {list: string[]}) => {
   return {

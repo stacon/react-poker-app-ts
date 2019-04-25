@@ -35,14 +35,14 @@ const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObserva
   map((action: any) => {
     const { payload } = action;
     const { message } = payload;
-    const list: string[] = [...getMessagesList(state$.value) + message];
+    const list: string[] = [...getMessagesList(state$.value), message];
     return messageAddedSuccessfully({list})
   }),
 );
 
 export default combineEpics(
   cardsDealtEpic,
-  startGameEpic,
   antesPlacedEpic,
   addMessageEpic,
+  startGameEpic,
 )

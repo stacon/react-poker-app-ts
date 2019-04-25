@@ -35,7 +35,7 @@ const store = createStore(
   ),
 );
 
-epicMiddleware.run(rootEpic);
+epicMiddleware.run(<any>rootEpic);
 
 
 export default store;

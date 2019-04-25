@@ -36,7 +36,7 @@ export default function (state: GameState = initialState, action: any) {
         ...action.payload,
         phase: {
           ...state.phase,
-          status: GameStatus._FirstBetPhase
+          statusId: GameStatus._FirstBetPhase
         }
       }
     }
@@ -91,7 +91,7 @@ export default function (state: GameState = initialState, action: any) {
         deck: getNewDeck(),
         phase: {
           ...state.phase,
-          status: GameStatus._NewGame,
+          statusId: GameStatus._NewGame,
         },
         currentPlayerId: 0,
         dealerIndex: 1,
