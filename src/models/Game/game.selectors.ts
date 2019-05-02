@@ -15,6 +15,8 @@ export const gameHasStarted = (state: AppState): boolean => (
 
 // By ref
 export const getGamePlayers = (state: AppState): IPlayer[] => [...getGameState(state).players];
+export const getActivePlayersIDs = (state: AppState): number[] => [...getGamePhase(state).playersIDsInGamePhase];
+export const getActivePlayers = (state: AppState): IPlayer[] => getActivePlayersIDs(state).map(i =>getGamePlayers(state)[i]);
 export const getMainPlayer = (state: AppState): IPlayer => ({...getGameState(state).players[0]});
 export const getGameDeck = (state: AppState): UICard[] => [...getGameState(state).deck];
 export const getPlayerById = (state: AppState, id: number) => ({...getGamePlayers(state)[id]});
@@ -35,12 +37,16 @@ export const getPreviousPlayerId = (state: AppState) => {
   return currentPlayerId - 1 === -1 ? getGamePlayers(state).length - 1 : currentPlayerId - 1
 }
 
-export const getNextPlayerId = (state: AppState) => (
-  getGameState(state).currentPlayerId + 1 > getGamePlayers(state).length - 1 ? 0 : getGameState(state).currentPlayerId + 1
-);
+export const getNextPlayerId = (state: AppState): number => {
+  const { currentPlayerId } = getGameState(state);
+  const playerIndex = getActivePlayersIDs(state).findIndex(i => i === currentPlayerId);
+  const nextPlayerIndex = getActivePlayersIDs(state).findIndex(i => i === playerIndex + 1);
+  return (nextPlayerIndex === -1) ? getActivePlayersIDs(state)[0] : nextPlayerIndex;
+};
 
 export const getHighestRoundPot = (state: AppState) => (
-  Math.max(...getGamePlayers(state)
-    .filter(({roundPot}) => roundPot > getCurrentPlayer(state).roundPot)
-    .map(player => player.roundPot))
+  Math.max(...getActivePlayers(state)
+    .filter(({roundPot}) => roundPot >= getCurrentPlayer(state).roundPot)
+    .map(player => player.roundPot)
+  )
 )

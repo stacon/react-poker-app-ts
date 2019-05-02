@@ -8,6 +8,7 @@ interface GameState {
   pot: number,
   phase: {
     statusId: number,
+    playersIDsInGamePhase: number[],
     playerIDsTookAction: number[]
   }
   amountForRaise: number,

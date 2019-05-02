@@ -1,4 +1,5 @@
 import { IPlayer, UICard } from 'src/types';
+import { GameStatus } from 'src/enums';
 
 // #region Actions
 export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
@@ -8,6 +9,7 @@ export const CARD_CLICKED = 'CARD_CLICKED';
 export const CARDS_DEALT = 'CARDS_DEALT';
 export const CARD_SELECTED = 'CARD_SELECTED';
 export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
+export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const DEAL_CARDS = 'DEAL_CARDS';
 export const END_TURN = 'END_TURN';
@@ -160,5 +162,11 @@ export const shiftPlayerTurn = () => {
   }
 }
 
+export const changeStatus = (payload: {statusId: GameStatus}) => {
+  return {
+    type: CHANGE_STATUS,
+    payload
+  }
+}
 
  // #endregion Action Creators

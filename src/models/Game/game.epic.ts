@@ -26,13 +26,14 @@ import {
   replaceCardsSuccess,
   startGameSuccess,
   shiftPlayerTurn,
+  changeStatus,
 } from './game.actions.creator';
 
 import { GameState, IPlayer, UICard } from 'src/types';
 import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
-import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase } from './game.selectors';
+import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase, getActivePlayersIDs, getActivePlayers } from './game.selectors';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
@@ -99,7 +100,8 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
       deck: newDeck,
       status
     });
-  })
+  }),
+  map(() => shiftPlayerTurn())
 );
 
 const cardClickedEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
@@ -207,13 +209,35 @@ const onCurrentPlayerIdChangeEpic = (action$: ActionsObservable<Action>, state$:
   }),
 )
 
-const afterCurrentPlayerChange = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getCurrentPlayerId(state$.value) !== 0),
   map((action: any) => {
     const { payload } = action;
     const { currentPlayerId } = payload;
     return checkCall(currentPlayerId);
+  }),
+)
+
+const afterPlayerChangeWithOneRemainingPlayer = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(CURRENT_PLAYER_CHANGED),
+  filter(() => getActivePlayersIDs(state$.value).length === 1),
+  map(() => changeStatus({statusId: GameStatus._EvaluationPhase})),
+)
+
+const afterPlayerChange = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(CURRENT_PLAYER_CHANGED),
+  filter(() => getActivePlayersIDs(state$.value).length > 1),
+  filter(() => {
+    const everyOneHasTakenAction: boolean = getActivePlayersIDs(state$.value).length === getGamePhase(state$.value).playerIDsTookAction.length;
+    const activePlayersBets: number[] = getActivePlayers(state$.value).map(player => player.roundPot);
+    const everyOneHasSameBet: boolean = _.every(activePlayersBets, bet => bet === activePlayersBets[0]);
+    return everyOneHasTakenAction && everyOneHasSameBet
+  }),
+  map(() => {
+    const currentStatus: number = getGameStatus(state$.value);
+    const nextStatusId: number = currentStatus + 1;
+    return changeStatus({statusId: (nextStatusId <= 5) ? nextStatusId : GameStatus._Uninitialized});
   }),
 )
 
@@ -230,7 +254,9 @@ export default combineEpics(
   shiftPlayerTurnEpic,
   onCurrentPlayerIdChangeEpic,
   callRequestEpic,
-  afterCurrentPlayerChange,
+  onBotPlayerTurn,
   onSuccessfulCallCheckEpic,
   onSuccessfulRaiseEpic,
+  afterPlayerChangeWithOneRemainingPlayer,
+  afterPlayerChange,
 );

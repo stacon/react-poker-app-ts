@@ -7,7 +7,8 @@ import {
   ANTE_PLACED_SUCCESSFULLY,
   RAISE_SUCCESSFUL,
   SHIFT_PLAYER_TURN_SUCCESSFUL,
-  CALL_CHECK_SUCCESSFUL
+  CALL_CHECK_SUCCESSFUL,
+  CHANGE_STATUS
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -25,6 +26,7 @@ const initialState: GameState = {
   phase: {
     statusId: GameStatus._Uninitialized,
     playerIDsTookAction: [],
+    playersIDsInGamePhase: []
   }
 }
 
@@ -37,6 +39,7 @@ export default function (state: GameState = initialState, action: any) {
         ...action.payload,
         phase: {
           ...state.phase,
+          playersIDsInGamePhase: _.times(action.payload.players.length, Number),
           statusId: GameStatus._FirstBetPhase
         }
       }
@@ -56,10 +59,19 @@ export default function (state: GameState = initialState, action: any) {
       }
     }
 
+    case CHANGE_STATUS: {
+      return {
+        ...state,
+        phase: {
+          ...state.phase,
+          ...action.payload,
+        }
+      }
+    }
+
     case ANTE_PLACED_SUCCESSFULLY: {
       return {
         ...state,
-        ...action.payload,
       }
 
     }
