@@ -27,13 +27,16 @@ import {
   startGameSuccess,
   shiftPlayerTurn,
   changeStatus,
+  REPLACE_CARDS_SUCCESS,
 } from './game.actions.creator';
 
-import { GameState, IPlayer, UICard } from 'src/types';
+import { IPlayer, UICard } from 'src/types';
 import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
 import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase, getActivePlayersIDs, getActivePlayers } from './game.selectors';
+import { getWinnerAnnouncementMessage } from 'src/libs/Hand/handEvaluation.helper';
+import { addMessage } from '../Messages/messages.action.creator';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
@@ -73,35 +76,31 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
 const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
   map(() => {
-    const state: GameState = getGameState(state$.value);
-    const players: IPlayer[] = [...(state.players || [])];
-    const [player] = players;
-    const newDeck: UICard[] = [...(state.deck || [])];
-    const newHand: any[] = player.hand.reduce(
+    const players: IPlayer[] = getActivePlayers(state$.value);
+    const deck: UICard[] = getGameDeck(state$.value);
+    const hand: any[] = players[0].hand.reduce(
       (newHand, card, index) => {
         if (card.selected) {
           return [
             ...newHand.slice(0, index),
-            newDeck.pop(),
+            deck.pop(),
             ...newHand.slice(index + 1)
           ];
         }
         return newHand;
       },
-      player.hand
+      players[0].hand
     );
     players[0] = {
-      ...player,
-      hand: newHand
+      ...players[0],
+      hand
     };
-    const status: number = getGameStatus(state$.value);
+
     return replaceCardsSuccess({
       players,
-      deck: newDeck,
-      status
+      deck,
     });
   }),
-  map(() => shiftPlayerTurn())
 );
 
 const cardClickedEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
@@ -162,6 +161,11 @@ const onSuccessfulCallCheckEpic = (action$: ActionsObservable<Action>) => action
   map(() => shiftPlayerTurn())
 )
 
+const onSuccessfulCardsReplacement = (action$: ActionsObservable<Action>) => action$.pipe(
+  ofType(REPLACE_CARDS_SUCCESS),
+  map(() => shiftPlayerTurn())
+)
+
 const raiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(RAISE),
   map((action: any) => {
@@ -206,6 +210,16 @@ const onCurrentPlayerIdChangeEpic = (action$: ActionsObservable<Action>, state$:
   filter(id => id !== -1),
   map((currentPlayerId) => {
     return currentPlayerChanged({ currentPlayerId });
+  }),
+)
+
+const onEvaluationPhaseEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => state$.pipe(
+  map(() => (getGamePhase(state$.value).statusId)),
+  distinctUntilChanged(),
+  filter(id => id === 5),
+  map(() => {
+    const players = getActivePlayers(state$.value);
+    return addMessage(getWinnerAnnouncementMessage(players));
   }),
 )
 
@@ -259,4 +273,6 @@ export default combineEpics(
   onSuccessfulRaiseEpic,
   afterPlayerChangeWithOneRemainingPlayer,
   afterPlayerChange,
+  onEvaluationPhaseEpic,
+  onSuccessfulCardsReplacement,
 );

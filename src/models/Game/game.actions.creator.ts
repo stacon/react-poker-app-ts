@@ -115,7 +115,10 @@ export const replaceCards = () => {
   }
 }
 
-export const replaceCardsSuccess = (payload: any) => {
+export const replaceCardsSuccess = (payload: {
+  players: IPlayer[],
+  deck: UICard[]
+}) => {
   return {
     type: REPLACE_CARDS_SUCCESS,
     payload,
