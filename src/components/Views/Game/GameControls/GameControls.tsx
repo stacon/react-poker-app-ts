@@ -28,7 +28,7 @@ export const gameControls = (
         className="raise-range"
         id='raise'
         type="range"
-        min="10"
+        min={1}
         max={status%2 === 0? balance: 10}
         step="1"
         value={amountForRaise}

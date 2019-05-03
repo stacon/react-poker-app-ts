@@ -21,7 +21,7 @@ const initialState: GameState = {
   deck: [],
   currentPlayerId: -1,
   dealerIndex: 0,
-  amountForRaise: 0,
+  amountForRaise: 1,
   pot: 0,
   phase: {
     statusId: GameStatus._Uninitialized,
@@ -115,7 +115,7 @@ export default function (state: GameState = initialState, action: any) {
         },
         currentPlayerId: 0,
         dealerIndex: 1,
-        amountForRaise: 0,
+        amountForRaise: 1,
         pot: 0
       };
     }

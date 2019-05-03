@@ -1,4 +1,4 @@
-import { map, tap, filter, distinctUntilChanged } from 'rxjs/operators';
+import { map, tap, filter, distinctUntilChanged, delay } from 'rxjs/operators';
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable';
 import _ from 'lodash';
 import { history } from "../../components/Routes";
@@ -226,6 +226,7 @@ const onEvaluationPhaseEpic = (action$: ActionsObservable<Action>, state$: State
 const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getCurrentPlayerId(state$.value) !== 0),
+  delay(2000),
   map((action: any) => {
     const { payload } = action;
     const { currentPlayerId } = payload;
