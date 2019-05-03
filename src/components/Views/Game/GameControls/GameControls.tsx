@@ -2,7 +2,7 @@ import React from 'react';
 import './GameControls.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
-import { raise, changeRaiseAmount, call, check, replaceCards } from 'src/models/Game/game.actions.creator';
+import { raise, changeRaiseAmount, checkCall, replaceCards } from 'src/models/Game/game.actions.creator';
 import { GameStatus } from 'src/enums';
 import { getGameStatus, getMainPlayer, getGameAmountForRaise, getSelectedCardsForReplacementNumber } from 'src/models/Game/game.selectors';
 
@@ -22,7 +22,7 @@ export const gameControls = (
 ) => (
     <div className="game-control-container">
       <li className={'status' + status}>Fold</li>
-      <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck() : null}>Check</li>
+      <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck(0) : null}>Check</li>
       <li className={'status' + status}>
       <input
         className="raise-range"
@@ -32,12 +32,11 @@ export const gameControls = (
         max={status%2 === 0? balance: 10}
         step="1"
         value={amountForRaise}
-        onChange={(event) => onChangeRaiseAmount(+event.target.value)
-        }
+        onChange={(event) => onChangeRaiseAmount(+event.target.value)}
       >
       </input>
         <div>{amountForRaise.toFixed(2)}</div>
-        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise.toFixed(2)) : null /* OPINION: Vgale to toFixed apo tin parametro kai diaxeirisouto me tin methodo tou fix otan einai mono na to kaneis view kai oxi otan to pernas san orisma */} >Raise</div></li>
+        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, 0) : null /* OPINION: Vgale to toFixed apo tin parametro kai diaxeirisouto me tin methodo tou fix otan einai mono na to kaneis view kai oxi otan to pernas san orisma */} >Raise</div></li>
       {status === GameStatus._Discard ?
         <li className="status2" onClick={() => onReplaceCards()}>
           {selectedCardsForReplacement && selectedCardsForReplacement > 0 ? `Replace ${selectedCardsForReplacement} Cards` : 'Keep Cards'}
@@ -57,13 +56,13 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onRaise: (amount: number) => {
-      dispatch(raise(amount));
+    onRaise: (amount: number, pid: number) => {
+      dispatch(raise({amount, pid}));
       //TODO: AUTOMATICALLY CALL, NEEDS REFACTORING
-      setTimeout(() => dispatch(call(+amount)), 1000);
+      // setTimeout(() => dispatch(call(+amount)), 1000);
     },
-    onCheck: () => {
-      dispatch(check());
+    onCheck: (pid: number) => {
+      dispatch(checkCall(pid));
       //TODO: OTHERS PLAYERS AUTOMATICALLY CHECK, NEEDS REFACTORING
     },
     onChangeRaiseAmount: (amount: number): void => {

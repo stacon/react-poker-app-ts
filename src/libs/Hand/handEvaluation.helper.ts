@@ -121,7 +121,7 @@ const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
 
 }
 
-const UIGetWinnerFromPlayers = (players: IPlayer[]): string => {
+const getWinnerAnnouncementMessage = (players: IPlayer[]): string => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
   console.log(evaluationResults)
@@ -188,6 +188,6 @@ export {
   UIGetPlayerHandFromEvaluationResult,
   getFinalHandArrayFromPlayersArray,
   getWinningHandFromPlayers,
-  UIGetWinnerFromPlayers,
+  getWinnerAnnouncementMessage,
   getEvaluationResultsFromPlayers
 }

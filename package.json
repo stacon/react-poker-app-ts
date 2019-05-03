@@ -13,7 +13,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "3.1.0",
     "redux-observable": "^1.1.0",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.5.1",
     "shuffle-array": "^1.0.1"
   },
   "scripts": {
@@ -25,14 +25,14 @@
   "devDependencies": {
     "@types/jest": "^23.3.14",
     "@types/lodash": "^4.14.123",
-    "@types/node": "^10.14.4",
-    "@types/react": "^16.8.13",
-    "@types/react-dom": "^16.8.3",
+    "@types/node": "^10.14.5",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
     "@types/react-router": "^4.4.5",
-    "@types/react-router-dom": "^4.0.4",
+    "@types/react-router-dom": "^4.3.2",
     "@types/shuffle-array": "0.0.28",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
-    "typescript": "^3.4.2"
+    "typescript": "^3.4.4"
   }
 }

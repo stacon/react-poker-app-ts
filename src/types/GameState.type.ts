@@ -3,10 +3,15 @@ import { UICard, IPlayer } from '.';
 interface GameState {
   players: IPlayer[],
   deck: UICard[],
-  status: number,
   dealerIndex: number,
+  currentPlayerId: number,
+  pot: number,
+  phase: {
+    statusId: number,
+    playersIDsInGamePhase: number[],
+    playerIDsTookAction: number[]
+  }
   amountForRaise: number,
-  pot: number
 }
 
 export default GameState;
