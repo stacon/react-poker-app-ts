@@ -31,6 +31,7 @@ import {
   onEvaluationCompletion,
   EVALUATION_COMPLETED,
   evaluationCompletionSuccessful,
+  replaceCards,
 } from './game.actions.creator';
 
 import { IPlayer, UICard } from 'src/types';
@@ -262,17 +263,16 @@ const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObserv
     const { currentPlayerId } = payload;
     const phase = getGamePhase(state$.value);
     const players = getGamePlayers(state$.value);
-    const deck = getGameDeck(state$.value);
+    const cardsForReplacement: number = players[currentPlayerId].hand.filter(cards => cards.selected).length;
 
     if(phase.playerIDsTookAction.indexOf(currentPlayerId) === -1) {
       phase.playerIDsTookAction.push(currentPlayerId);
     }
 
     if(phase.statusId === GameStatus._Discard) {
-      return replaceCardsSuccess({
-        phase,
-        players,
-        deck,
+      return replaceCards({
+        pid: currentPlayerId,
+        cardsForReplacement,
       });
     }
     return checkCall({pid: currentPlayerId});

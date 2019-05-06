@@ -1,18 +1,19 @@
 import { map } from 'rxjs/internal/operators/map';
 import { ofType, combineEpics, ActionsObservable, StateObservable } from "redux-observable";
-import { 
-  CARDS_DEALT, 
-  ANTE_PLACED_SUCCESSFULLY, 
-  GAME_STARTED, 
+import {
+  CARDS_DEALT,
+  ANTE_PLACED_SUCCESSFULLY,
+  GAME_STARTED,
   EVALUATION_COMPLETED,
   RAISE,
   REPLACE_CARDS,
+  CALL_CHECK,
 } from '../Game/game.actions.creator';
-import { 
-  ADD_MESSAGE, 
+import {
+  ADD_MESSAGE,
   addMessage,
-  messageAddedSuccessfully, 
-  resetMessages 
+  messageAddedSuccessfully,
+  resetMessages
 } from './messages.action.creator';
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
@@ -35,6 +36,16 @@ const onRaiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObs
   }),
 )
 
+const callRequestEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(CALL_CHECK),
+  map((action: any) => {
+    const { payload } = action;
+    const { pid } = payload;
+    const player = getPlayerById(state$.value, pid);
+    return addMessage(`${player.name} called/checked.`)
+  })
+)
+
 const onReplaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
   map((action: any) => {
@@ -43,9 +54,9 @@ const onReplaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObs
     const players: IPlayer[] = getActivePlayers(state$.value);
 
     return addMessage(
-      cardsForReplacement < 1 ? 
-      `${players[pid].name} didn't replace any cards.` :
-      `${players[pid].name} replaced ${cardsForReplacement} cards.`
+      cardsForReplacement < 1 ?
+        `${players[pid].name} didn't replace any cards.` :
+        `${players[pid].name} replaced ${cardsForReplacement} cards.`
     );
   }),
 );
@@ -77,11 +88,12 @@ const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObserva
     const { payload } = action;
     const { message } = payload;
     const list: string[] = [...getMessagesList(state$.value), message];
-    return messageAddedSuccessfully({list})
+    return messageAddedSuccessfully({ list })
   }),
 );
 
 export default combineEpics(
+  callRequestEpic,
   cardsDealtEpic,
   antesPlacedEpic,
   addMessageEpic,
