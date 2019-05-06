@@ -1,12 +1,12 @@
 import { ActionsObservable, StateObservable, ofType, combineEpics } from "redux-observable";
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
-import { RAISE, CALL_CHECK } from '../Game/game.actions.creator';
+import { RAISE, CALL_CHECK, EVALUATION_COMPLETED } from '../Game/game.actions.creator';
 import { getUserBalance } from '../Messages/messages.selectors';
 import { filter } from 'rxjs/internal/operators/filter';
 import { map } from 'rxjs/internal/operators/map';
 import { userBalanceChangedSuccessfully } from './user.action.creator';
-import { getGamePlayers, getHighestRoundPot } from '../Game/game.selectors';
+import { getGamePlayers, getHighestRoundPot, getPlayerIdByName, getGamePot } from '../Game/game.selectors';
 
 const changeUserBalanceOnRaiseEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
     ofType(RAISE),
@@ -34,7 +34,21 @@ const changeUserBalanceOnCheckCallEpic = (action$: ActionsObservable<Action>, st
     })
 );
 
+const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+    ofType(EVALUATION_COMPLETED),
+    filter((action: any) => {
+        const { payload } = action;
+        const { playerWon } = payload;
+        return getPlayerIdByName(state$.value, playerWon.name) === 0;
+    }),
+    map(() => {
+        const balance = getUserBalance(state$.value) + getGamePot(state$.value)
+        return userBalanceChangedSuccessfully({ balance });
+    }),
+)
+
 export default combineEpics(
     changeUserBalanceOnRaiseEpic,
-    changeUserBalanceOnCheckCallEpic
+    changeUserBalanceOnCheckCallEpic,
+    onEvaluationCompletionEpic,
 )

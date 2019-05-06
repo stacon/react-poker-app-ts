@@ -3,7 +3,8 @@ import { ofType, combineEpics, ActionsObservable, StateObservable } from "redux-
 import { 
   CARDS_DEALT, 
   ANTE_PLACED_SUCCESSFULLY, 
-  GAME_STARTED 
+  GAME_STARTED, 
+  EVALUATION_COMPLETED
 } from '../Game/game.actions.creator';
 import { 
   ADD_MESSAGE, 
@@ -19,6 +20,17 @@ const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(CARDS_DEALT),
   map(() => addMessage('Hands Dealt! Good Luck')),
 );
+
+const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(EVALUATION_COMPLETED),
+  map((action: any) => {
+    const { payload } = action;
+    const { playerWon, winningHand } = payload;
+    return addMessage(
+      `Winner is ${playerWon.name} with ${winningHand}`,
+    )
+  }),
+)
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(GAME_STARTED),
@@ -45,4 +57,5 @@ export default combineEpics(
   antesPlacedEpic,
   addMessageEpic,
   startGameEpic,
+  onEvaluationCompletionEpic,
 )

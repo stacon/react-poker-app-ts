@@ -13,6 +13,8 @@ export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const DEAL_CARDS = 'DEAL_CARDS';
 export const END_TURN = 'END_TURN';
+export const EVALUATION_COMPLETED = 'EVALUATION_COMPLETED';
+export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFULLY';
 export const GAME_STARTED = 'GAME_STARTED';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
@@ -84,6 +86,16 @@ export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, p
     payload,
   }
 }
+
+export const onEvaluationCompletion = (payload: {playerWon: IPlayer, winningHand: string}) => ({
+  type: EVALUATION_COMPLETED,
+  payload
+})
+
+export const evaluationCompletionSuccessful = (payload: {players: IPlayer[] }) => ({
+  type: EVALUATION_COMPLETED_SUCCESSFULLY,
+  payload,
+})
 
 export const playerTurnShiftSuccessFul = (payload: {currentPlayerId: number }) => {
   return {

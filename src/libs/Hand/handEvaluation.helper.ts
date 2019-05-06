@@ -3,6 +3,7 @@ import getEvaluationResultFromHand from './getEvaluationResultFromHand';
 import { UICard, IPlayer, EvaluationResult } from 'src/types';
 import getCardNameFromValue from './getCardNameFromValue';
 import getWinningHandNameFromValue from './getWinningHandNameFromValue';
+import WinnerResult from 'src/types/WinnerResult.type';
 
 /**
  * Factory function for number of sets expected in 5 card array.
@@ -121,7 +122,7 @@ const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
 
 }
 
-const getWinnerAnnouncementMessage = (players: IPlayer[]): string => {
+const getWinnerResult = (players: IPlayer[]): WinnerResult => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
   console.log(evaluationResults)
@@ -146,8 +147,10 @@ const getWinnerAnnouncementMessage = (players: IPlayer[]): string => {
   const winningHand: EvaluationResult = evaluationResults.reduce(reducer);
   let winnerIndex: number = evaluationResults.findIndex((result) => result === winningHand);
   const finalHand: string[] = getFinalHandArrayFromPlayersArray([players[winnerIndex]])
-  return `Winner is ${players[winnerIndex].name} with ${finalHand[0]}`;
-
+  return {
+    winningPlayer: players[winnerIndex],
+    winningHandName: finalHand[0],
+  }
 }
 
 
@@ -188,6 +191,6 @@ export {
   UIGetPlayerHandFromEvaluationResult,
   getFinalHandArrayFromPlayersArray,
   getWinningHandFromPlayers,
-  getWinnerAnnouncementMessage,
+  getWinnerResult,
   getEvaluationResultsFromPlayers
 }

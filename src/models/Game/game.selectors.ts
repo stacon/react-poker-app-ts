@@ -50,3 +50,8 @@ export const getHighestRoundPot = (state: AppState) => (
     .map(player => player.roundPot)
   )
 )
+
+export const getPlayerIdByName = (state: AppState, name: string): number => {
+  const players: IPlayer[] = getActivePlayers(state);
+  return players.findIndex(player => player.name === name);
+}

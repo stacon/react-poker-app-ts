@@ -8,7 +8,8 @@ import {
   RAISE_SUCCESSFUL,
   SHIFT_PLAYER_TURN_SUCCESSFUL,
   CALL_CHECK_SUCCESSFUL,
-  CHANGE_STATUS
+  CHANGE_STATUS,
+  EVALUATION_COMPLETED_SUCCESSFULLY
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -101,8 +102,15 @@ export default function (state: GameState = initialState, action: any) {
     case REPLACE_CARDS_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
+    }
+
+    case EVALUATION_COMPLETED_SUCCESSFULLY: {
+      return {
+        ...state,
+        ...action.payload,
+      }
     }
 
     case GAME_STARTED: {

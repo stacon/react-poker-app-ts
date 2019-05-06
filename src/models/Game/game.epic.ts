@@ -28,15 +28,18 @@ import {
   shiftPlayerTurn,
   changeStatus,
   REPLACE_CARDS_SUCCESS,
+  onEvaluationCompletion,
+  EVALUATION_COMPLETED,
+  evaluationCompletionSuccessful,
 } from './game.actions.creator';
 
 import { IPlayer, UICard } from 'src/types';
 import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
-import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase, getActivePlayersIDs, getActivePlayers } from './game.selectors';
-import { getWinnerAnnouncementMessage } from 'src/libs/Hand/handEvaluation.helper';
-import { addMessage } from '../Messages/messages.action.creator';
+import { getGamePlayers, getGamePot, getCurrentPlayerId, getGameStatus, getGameDeck, getGameState, getNextPlayerId, getHighestRoundPot, getGamePhase, getActivePlayersIDs, getActivePlayers, getPlayerIdByName } from './game.selectors';
+import { getWinnerResult } from 'src/libs/Hand/handEvaluation.helper';
+import WinnerResult from 'src/types/WinnerResult.type';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
@@ -227,7 +230,26 @@ const onEvaluationPhaseEpic = (action$: ActionsObservable<Action>, state$: State
   filter(id => id === 5),
   map(() => {
     const players = getActivePlayers(state$.value);
-    return addMessage(getWinnerAnnouncementMessage(players));
+    const winnerResult: WinnerResult = getWinnerResult(players);
+    return onEvaluationCompletion({
+      playerWon: winnerResult.winningPlayer,
+      winningHand: winnerResult.winningHandName,
+    })
+  }),
+)
+
+const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(EVALUATION_COMPLETED),
+  map((action:any) => {
+    const { payload } = action;
+    const { playerWon } = payload;
+    const winnerId = getPlayerIdByName(state$.value, playerWon.name);
+    const gamePot = getGamePot(state$.value);
+    const players = getActivePlayers(state$.value);
+    players[winnerId].balance = players[winnerId].balance + gamePot
+    return evaluationCompletionSuccessful({
+      players
+    })
   }),
 )
 
@@ -285,4 +307,5 @@ export default combineEpics(
   afterPlayerChange,
   onEvaluationPhaseEpic,
   onSuccessfulCardsReplacement,
+  onEvaluationCompletionEpic,
 );
