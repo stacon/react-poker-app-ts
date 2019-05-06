@@ -75,10 +75,12 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
 
 const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
-  map(() => {
+  map((action: any) => {
+    const { payload } = action;
+    const { pid } = payload;
     const players: IPlayer[] = getActivePlayers(state$.value);
     const deck: UICard[] = getGameDeck(state$.value);
-    const hand: any[] = players[0].hand.reduce(
+    const hand: any[] = players[pid].hand.reduce(
       (newHand, card, index) => {
         if (card.selected) {
           return [
@@ -89,16 +91,16 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
         }
         return newHand;
       },
-      players[0].hand
+      players[pid].hand
     );
-    players[0] = {
-      ...players[0],
+    players[pid] = {
+      ...players[pid],
       hand
     };
 
     const phase = getGamePhase(state$.value);
-    if(phase.playerIDsTookAction.indexOf(0) === -1) {
-      phase.playerIDsTookAction.push(0);
+    if(phase.playerIDsTookAction.indexOf(pid) === -1) {
+      phase.playerIDsTookAction.push(pid);
     }    
 
     return replaceCardsSuccess({

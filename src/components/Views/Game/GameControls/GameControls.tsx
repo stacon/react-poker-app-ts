@@ -36,9 +36,9 @@ export const gameControls = (
       >
       </input>
         <div>{amountForRaise.toFixed(2)}</div>
-        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, 0) : null /* OPINION: Vgale to toFixed apo tin parametro kai diaxeirisouto me tin methodo tou fix otan einai mono na to kaneis view kai oxi otan to pernas san orisma */} >Raise</div></li>
+        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, 0) : null } >Raise</div></li>
       {status === GameStatus._Discard ?
-        <li className="status2" onClick={() => onReplaceCards()}>
+        <li className="status2" onClick={() => onReplaceCards(0)}>
           {selectedCardsForReplacement && selectedCardsForReplacement > 0 ? `Replace ${selectedCardsForReplacement} Cards` : 'Keep Cards'}
         </li>
       : null}
@@ -58,18 +58,15 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     onRaise: (amount: number, pid: number) => {
       dispatch(raise({amount, pid}));
-      //TODO: AUTOMATICALLY CALL, NEEDS REFACTORING
-      // setTimeout(() => dispatch(call(+amount)), 1000);
     },
     onCheck: (pid: number) => {
       dispatch(checkCall({pid}));
-      //TODO: OTHERS PLAYERS AUTOMATICALLY CHECK, NEEDS REFACTORING
     },
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));
     },
-    onReplaceCards: () => {
-      dispatch(replaceCards());
+    onReplaceCards: (pid: number) => {
+      dispatch(replaceCards({pid}));
     }
   }
 }
