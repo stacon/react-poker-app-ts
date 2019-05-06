@@ -261,8 +261,19 @@ const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObserv
     const { payload } = action;
     const { currentPlayerId } = payload;
     const phase = getGamePhase(state$.value);
+    const players = getGamePlayers(state$.value);
+    const deck = getGameDeck(state$.value);
+
     if(phase.playerIDsTookAction.indexOf(currentPlayerId) === -1) {
       phase.playerIDsTookAction.push(currentPlayerId);
+    }
+
+    if(phase.statusId === GameStatus._Discard) {
+      return replaceCardsSuccess({
+        phase,
+        players,
+        deck,
+      });
     }
     return checkCall({pid: currentPlayerId});
   }),

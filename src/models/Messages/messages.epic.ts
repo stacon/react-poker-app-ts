@@ -4,7 +4,9 @@ import {
   CARDS_DEALT, 
   ANTE_PLACED_SUCCESSFULLY, 
   GAME_STARTED, 
-  EVALUATION_COMPLETED
+  EVALUATION_COMPLETED,
+  RAISE,
+  REPLACE_CARDS,
 } from '../Game/game.actions.creator';
 import { 
   ADD_MESSAGE, 
@@ -15,10 +17,37 @@ import {
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
 import { getMessagesList } from './messages.selectors';
+import { IPlayer } from 'src/types';
+import { getPlayerById, getActivePlayers } from '../Game/game.selectors';
 
 const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(CARDS_DEALT),
   map(() => addMessage('Hands Dealt! Good Luck')),
+);
+
+const onRaiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(RAISE),
+  map((action: any) => {
+    const { payload } = action;
+    const { amount, pid } = payload;
+    const player: IPlayer = getPlayerById(state$.value, pid);
+    return addMessage(`${player.name} raised by ${amount.toFixed(2)} $.`)
+  }),
+)
+
+const onReplaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+  ofType(REPLACE_CARDS),
+  map((action: any) => {
+    const { payload } = action;
+    const { pid, cardsForReplacement } = payload;
+    const players: IPlayer[] = getActivePlayers(state$.value);
+
+    return addMessage(
+      cardsForReplacement < 1 ? 
+      `${players[pid].name} didn't replace any cards.` :
+      `${players[pid].name} replaced ${cardsForReplacement} cards.`
+    );
+  }),
 );
 
 const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
@@ -58,4 +87,6 @@ export default combineEpics(
   addMessageEpic,
   startGameEpic,
   onEvaluationCompletionEpic,
+  onRaiseRequestEpic,
+  onReplaceCardsEpic,
 )

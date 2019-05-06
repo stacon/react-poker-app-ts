@@ -38,7 +38,7 @@ export const gameControls = (
         <div>{amountForRaise.toFixed(2)}</div>
         <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, 0) : null } >Raise</div></li>
       {status === GameStatus._Discard ?
-        <li className="status2" onClick={() => onReplaceCards(0)}>
+        <li className="status2" onClick={() => onReplaceCards(0, selectedCardsForReplacement)}>
           {selectedCardsForReplacement && selectedCardsForReplacement > 0 ? `Replace ${selectedCardsForReplacement} Cards` : 'Keep Cards'}
         </li>
       : null}
@@ -65,8 +65,8 @@ const mapDispatchToProps = (dispatch: any) => {
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));
     },
-    onReplaceCards: (pid: number) => {
-      dispatch(replaceCards({pid}));
+    onReplaceCards: (pid: number, cardsForReplacement: number) => {
+      dispatch(replaceCards({pid, cardsForReplacement}));
     }
   }
 }

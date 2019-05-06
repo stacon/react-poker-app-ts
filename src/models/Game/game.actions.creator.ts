@@ -125,7 +125,7 @@ export const checkCall = (payload: {pid: number} ) => {
   }
 }
 
-export const replaceCards = (payload: {pid: number}) => {
+export const replaceCards = (payload: {pid: number, cardsForReplacement: number}) => {
   return {
     type: REPLACE_CARDS,
     payload
