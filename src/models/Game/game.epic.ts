@@ -68,6 +68,7 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
         hand: newDeck.splice(0, 5)
       }
       ));
+      newPlayers[0].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
     return cardsDealt({
       deck: newDeck,
       players: newPlayers,
@@ -97,6 +98,11 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
       },
       players[pid].hand
     );
+
+    if (pid === 0) {
+      hand.forEach((card, cardIndex) => hand[cardIndex].flipped = true )
+    }
+
     players[pid] = {
       ...players[pid],
       hand
@@ -248,6 +254,9 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
     const gamePot = getGamePot(state$.value);
     const players = getActivePlayers(state$.value);
     players[winnerId].balance = players[winnerId].balance + gamePot
+    players.forEach(
+      (player, playerIndex) => player.hand.forEach(
+        (card,cardIndex) => players[playerIndex].hand[cardIndex].flipped = true))
     return evaluationCompletionSuccessful({
       players
     })

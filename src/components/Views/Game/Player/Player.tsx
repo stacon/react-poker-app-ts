@@ -19,15 +19,13 @@ interface Props {
   hand: UICard[],
   name: string,
   balance: number,
-  isMainPlayer: boolean,
   isDealer: boolean,
 }
 
-const Player = ({hand, name, balance, isMainPlayer, isDealer }: Props): JSX.Element => (
+const Player = ({hand, name, balance, isDealer }: Props): JSX.Element => (
   <article>
     <Hand
       hand={hand}
-      closed={isMainPlayer}
     />
     <Info
       playerName={name}

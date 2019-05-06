@@ -13,15 +13,14 @@ import { UICard } from 'src/types';
 
 interface Props {
   hand: UICard[],
-  closed: boolean,
 }
 
-const Hand = ({ hand, closed }: Props): JSX.Element => (
+const Hand = ({ hand }: Props): JSX.Element => (
   <ul className="table tbl_clear m-b-0" style={ {overflow : 'visible'}}>
     {hand.map((item: UICard, index) => (
       <CardContainer
         key={`${item.suit}+${item.rank}`}
-        isFlipped={(closed) ? true : false}
+        isFlipped={(item.flipped) ? true : false}
         rank={item.rank}
         suit={item.suit}
         index={index}

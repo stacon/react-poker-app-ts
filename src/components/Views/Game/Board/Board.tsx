@@ -30,7 +30,6 @@ export const board = ({gameHasStarted, players, pot, dealerIndex, currentPlayerI
               pid={index}
               key={player.name}
               {...player}
-              isMainPlayer={index ? false : true}
               isDealer={index === dealerIndex ? true : false}
             />
           </div>
