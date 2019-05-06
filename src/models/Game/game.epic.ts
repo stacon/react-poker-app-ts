@@ -234,7 +234,7 @@ const onEvaluationPhaseEpic = (action$: ActionsObservable<Action>, state$: State
 const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getCurrentPlayerId(state$.value) !== 0),
-  delay(2000),
+  delay(1000),
   map((action: any) => {
     const { payload } = action;
     const { currentPlayerId } = payload;

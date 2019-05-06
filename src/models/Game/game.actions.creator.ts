@@ -67,7 +67,11 @@ export const raise = (payload: {amount: number, pid: number}) => {
   }
 }
 
-export const raiseSuccessful = (payload: {players: IPlayer[], pot: number, phase: {statusId: number ,playerIDsTookAction: number[]}}) => {
+export const raiseSuccessful = (payload: {
+  players: IPlayer[], 
+  pot: number, 
+  phase: {statusId: number ,playerIDsTookAction: number[]}
+}) => {
   return {
     type: RAISE_SUCCESSFUL,
     payload,
