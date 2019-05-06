@@ -96,7 +96,13 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
       hand
     };
 
+    const phase = getGamePhase(state$.value);
+    if(phase.playerIDsTookAction.indexOf(0) === -1) {
+      phase.playerIDsTookAction.push(0);
+    }    
+
     return replaceCardsSuccess({
+      phase,
       players,
       deck,
     });
@@ -230,7 +236,11 @@ const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObserv
   map((action: any) => {
     const { payload } = action;
     const { currentPlayerId } = payload;
-    return checkCall(currentPlayerId);
+    const phase = getGamePhase(state$.value);
+    if(phase.playerIDsTookAction.indexOf(currentPlayerId) === -1) {
+      phase.playerIDsTookAction.push(currentPlayerId);
+    }
+    return checkCall({pid: currentPlayerId});
   }),
 )
 
@@ -255,9 +265,6 @@ const afterPlayerChange = (action$: ActionsObservable<Action>, state$: StateObse
     return changeStatus({statusId: (nextStatusId <= 5) ? nextStatusId : GameStatus._Uninitialized});
   }),
 )
-
-// TODO: Status should be changed dynamically
-// const status: number = state.status ? state.status + 1 : 0;
 
 export default combineEpics(
   startGameEpic,

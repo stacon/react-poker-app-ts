@@ -102,10 +102,10 @@ export const changeRaiseAmount = (amount: number) => {
   }
 }
 
-export const checkCall = (pid: number) => {
+export const checkCall = (payload: {pid: number} ) => {
   return {
     type: CALL_CHECK,
-    payload: { pid }
+    payload
   }
 }
 
@@ -116,6 +116,7 @@ export const replaceCards = () => {
 }
 
 export const replaceCardsSuccess = (payload: {
+  phase: {statusId: number ,playerIDsTookAction: number[]},
   players: IPlayer[],
   deck: UICard[]
 }) => {

@@ -65,6 +65,7 @@ export default function (state: GameState = initialState, action: any) {
         phase: {
           ...state.phase,
           ...action.payload,
+          playerIDsTookAction: [],
         }
       }
     }

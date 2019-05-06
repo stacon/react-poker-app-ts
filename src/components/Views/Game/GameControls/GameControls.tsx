@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch: any) => {
       // setTimeout(() => dispatch(call(+amount)), 1000);
     },
     onCheck: (pid: number) => {
-      dispatch(checkCall(pid));
+      dispatch(checkCall({pid}));
       //TODO: OTHERS PLAYERS AUTOMATICALLY CHECK, NEEDS REFACTORING
     },
     onChangeRaiseAmount: (amount: number): void => {
