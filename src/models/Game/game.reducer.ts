@@ -9,7 +9,8 @@ import {
   SHIFT_PLAYER_TURN_SUCCESSFUL,
   CALL_CHECK_SUCCESSFUL,
   CHANGE_STATUS,
-  EVALUATION_COMPLETED_SUCCESSFULLY
+  EVALUATION_COMPLETED_SUCCESSFULLY,
+  START_NEXT_ROUND
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -89,6 +90,24 @@ export default function (state: GameState = initialState, action: any) {
       return {
         ...state,
         ...action.payload,
+      }
+    }
+
+    case START_NEXT_ROUND: {
+      const oldState = {...state};
+      oldState.players.forEach(player => player.hand = [])
+      return {
+        ...state,
+        deck: getNewDeck(),
+        phase: {
+          playerIDsTookAction: [],
+          playersIDsInGamePhase: [],
+          statusId: GameStatus._NewGame,
+        },
+        currentPlayerId: 0,
+        dealerIndex: 1,
+        amountForRaise: 1,
+        pot: 0
       }
     }
 

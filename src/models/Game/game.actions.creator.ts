@@ -12,6 +12,7 @@ export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const DEAL_CARDS = 'DEAL_CARDS';
+export const END_GAME = 'END_GAME';
 export const END_TURN = 'END_TURN';
 export const EVALUATION_COMPLETED = 'EVALUATION_COMPLETED';
 export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFULLY';
@@ -22,6 +23,7 @@ export const PLACE_ANTE = 'PLACE_ANTE';
 export const REPLACE_CARDS = 'REPLACE_CARDS';
 export const REPLACE_CARDS_SUCCESS = 'REPLACE_CARDS_SUCCESS';
 export const START_GAME = 'START_GAME';
+export const START_NEXT_ROUND = 'START_NEXT_ROUND';
 export const SHIFT_PLAYER_TURN = 'SHIFT_PLAYER_TURN';
 export const SHIFT_PLAYER_TURN_SUCCESSFUL = 'SHIFT_PLAYER_TURN_SUCCESSFUL';
 export const TURN_ENDED = 'TURN_ENDED';
@@ -36,6 +38,10 @@ export const startNewGame = (payload: { numberOfPlayers: number, name: string, b
   }
 }
 
+export const startNextRound = () => ({
+  type: START_NEXT_ROUND
+})
+
 export const onCardClick = (payload: {key: number}) => {
   return {
     type: CARD_CLICKED,
@@ -46,6 +52,12 @@ export const onCardClick = (payload: {key: number}) => {
 export const dealCards = () => {
   return {
     type: DEAL_CARDS,
+  }
+}
+
+export const endGame = () => {
+  return {
+    type: END_GAME,
   }
 }
 
