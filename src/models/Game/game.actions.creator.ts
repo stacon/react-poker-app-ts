@@ -12,7 +12,6 @@ export const CHANGE_RAISE_AMOUNT = 'CHANGE_RAISE_AMOUNT';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const DEAL_CARDS = 'DEAL_CARDS';
-export const END_GAME = 'END_GAME';
 export const END_TURN = 'END_TURN';
 export const EVALUATION_COMPLETED = 'EVALUATION_COMPLETED';
 export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFULLY';
@@ -55,12 +54,6 @@ export const dealCards = () => {
   }
 }
 
-export const endGame = () => {
-  return {
-    type: END_GAME,
-  }
-}
-
 export const cardsDealt = (payload: {players: IPlayer[], deck: UICard[]}) => {
   return {
     type: CARDS_DEALT,
@@ -82,8 +75,8 @@ export const raise = (payload: {amount: number, pid: number}) => {
 }
 
 export const raiseSuccessful = (payload: {
-  players: IPlayer[], 
-  pot: number, 
+  players: IPlayer[],
+  pot: number,
   phase: {statusId: number ,playerIDsTookAction: number[]}
 }) => {
   return {

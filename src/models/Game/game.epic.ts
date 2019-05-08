@@ -111,7 +111,7 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const phase = getGamePhase(state$.value);
     if(phase.playerIDsTookAction.indexOf(pid) === -1) {
       phase.playerIDsTookAction.push(pid);
-    }    
+    }
 
     return replaceCardsSuccess({
       phase,
@@ -162,7 +162,7 @@ const callRequestEpic = (action$: ActionsObservable<Action>, state$: StateObserv
     const phase = getGamePhase(state$.value);
     if(phase.playerIDsTookAction.indexOf(pid) === -1) {
       phase.playerIDsTookAction.push(pid);
-    }    
+    }
 
     players[pid].roundPot += amountToCall;
     players[pid].balance = newBalance;
@@ -179,7 +179,7 @@ const onSuccessfulCallCheckEpic = (action$: ActionsObservable<Action>) => action
   map(() => shiftPlayerTurn())
 )
 
-const onSuccessfulCardsReplacement = (action$: ActionsObservable<Action>) => action$.pipe(
+const onSuccessfulCardsReplacementEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(REPLACE_CARDS_SUCCESS),
   map(() => shiftPlayerTurn())
 )
@@ -263,7 +263,7 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
   }),
 )
 
-const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+const onBotPlayerTurnEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getCurrentPlayerId(state$.value) !== 0),
   delay(1000),
@@ -288,13 +288,13 @@ const onBotPlayerTurn = (action$: ActionsObservable<Action>, state$: StateObserv
   }),
 )
 
-const afterPlayerChangeWithOneRemainingPlayer = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+const afterPlayerChangeWithOneRemainingPlayerEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getActivePlayersIDs(state$.value).length === 1),
   map(() => changeStatus({statusId: GameStatus._EvaluationPhase})),
 )
 
-const afterPlayerChange = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+const afterPlayerChangeEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getActivePlayersIDs(state$.value).length > 1),
   filter(() => {
@@ -320,12 +320,12 @@ export default combineEpics(
   shiftPlayerTurnEpic,
   onCurrentPlayerIdChangeEpic,
   callRequestEpic,
-  onBotPlayerTurn,
+  onBotPlayerTurnEpic,
   onSuccessfulCallCheckEpic,
   onSuccessfulRaiseEpic,
-  afterPlayerChangeWithOneRemainingPlayer,
-  afterPlayerChange,
+  afterPlayerChangeWithOneRemainingPlayerEpic,
+  afterPlayerChangeEpic,
   onEvaluationPhaseEpic,
-  onSuccessfulCardsReplacement,
+  onSuccessfulCardsReplacementEpic,
   onEvaluationCompletionEpic,
 );
