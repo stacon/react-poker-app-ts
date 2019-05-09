@@ -7,6 +7,7 @@ const initialState = {
 
 export default function (state: IndexState = initialState, action: any) {
   switch (action.type) {
+
     case (NUMBER_OF_PLAYERS_SELECTED_CHANGED): {
       return {
         ...state,

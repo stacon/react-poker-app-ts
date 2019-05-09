@@ -8,7 +8,9 @@ import {
   RAISE_SUCCESSFUL,
   SHIFT_PLAYER_TURN_SUCCESSFUL,
   CALL_CHECK_SUCCESSFUL,
-  CHANGE_STATUS
+  CHANGE_STATUS,
+  EVALUATION_COMPLETED_SUCCESSFULLY,
+  START_NEXT_ROUND
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -21,7 +23,7 @@ const initialState: GameState = {
   deck: [],
   currentPlayerId: -1,
   dealerIndex: 0,
-  amountForRaise: 0,
+  amountForRaise: 1,
   pot: 0,
   phase: {
     statusId: GameStatus._Uninitialized,
@@ -65,6 +67,7 @@ export default function (state: GameState = initialState, action: any) {
         phase: {
           ...state.phase,
           ...action.payload,
+          playerIDsTookAction: [],
         }
       }
     }
@@ -90,6 +93,24 @@ export default function (state: GameState = initialState, action: any) {
       }
     }
 
+    case START_NEXT_ROUND: {
+      const oldState = {...state};
+      oldState.players.forEach(player => player.hand = [])
+      return {
+        ...state,
+        deck: getNewDeck(),
+        phase: {
+          playerIDsTookAction: [],
+          playersIDsInGamePhase: [],
+          statusId: GameStatus._NewGame,
+        },
+        currentPlayerId: 0,
+        dealerIndex: 1,
+        amountForRaise: 1,
+        pot: 0
+      }
+    }
+
     case SHIFT_PLAYER_TURN_SUCCESSFUL: {
       return {
         ...state,
@@ -100,8 +121,15 @@ export default function (state: GameState = initialState, action: any) {
     case REPLACE_CARDS_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
+    }
+
+    case EVALUATION_COMPLETED_SUCCESSFULLY: {
+      return {
+        ...state,
+        ...action.payload,
+      }
     }
 
     case GAME_STARTED: {
@@ -115,7 +143,7 @@ export default function (state: GameState = initialState, action: any) {
         },
         currentPlayerId: 0,
         dealerIndex: 1,
-        amountForRaise: 0,
+        amountForRaise: 1,
         pot: 0
       };
     }

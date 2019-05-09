@@ -32,9 +32,10 @@
 
 nav li {
   border-radius: 15px;
+  float: right;
   color: #fff;
   font-weight: 500;
-  margin-top: 8px;
+  margin: 8px;
   list-style-type: none;
   border: 2px #fff solid;
   padding: 8px;

@@ -13,6 +13,8 @@ export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CURRENT_PLAYER_CHANGED = 'CURRENT_PLAYER_CHANGED';
 export const DEAL_CARDS = 'DEAL_CARDS';
 export const END_TURN = 'END_TURN';
+export const EVALUATION_COMPLETED = 'EVALUATION_COMPLETED';
+export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFULLY';
 export const GAME_STARTED = 'GAME_STARTED';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
@@ -20,6 +22,7 @@ export const PLACE_ANTE = 'PLACE_ANTE';
 export const REPLACE_CARDS = 'REPLACE_CARDS';
 export const REPLACE_CARDS_SUCCESS = 'REPLACE_CARDS_SUCCESS';
 export const START_GAME = 'START_GAME';
+export const START_NEXT_ROUND = 'START_NEXT_ROUND';
 export const SHIFT_PLAYER_TURN = 'SHIFT_PLAYER_TURN';
 export const SHIFT_PLAYER_TURN_SUCCESSFUL = 'SHIFT_PLAYER_TURN_SUCCESSFUL';
 export const TURN_ENDED = 'TURN_ENDED';
@@ -33,6 +36,10 @@ export const startNewGame = (payload: { numberOfPlayers: number, name: string, b
     payload,
   }
 }
+
+export const startNextRound = () => ({
+  type: START_NEXT_ROUND
+})
 
 export const onCardClick = (payload: {key: number}) => {
   return {
@@ -67,7 +74,11 @@ export const raise = (payload: {amount: number, pid: number}) => {
   }
 }
 
-export const raiseSuccessful = (payload: {players: IPlayer[], pot: number, phase: {statusId: number ,playerIDsTookAction: number[]}}) => {
+export const raiseSuccessful = (payload: {
+  players: IPlayer[],
+  pot: number,
+  phase: {statusId: number ,playerIDsTookAction: number[]}
+}) => {
   return {
     type: RAISE_SUCCESSFUL,
     payload,
@@ -80,6 +91,16 @@ export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, p
     payload,
   }
 }
+
+export const onEvaluationCompletion = (payload: {playerWon: IPlayer, winningHand: string}) => ({
+  type: EVALUATION_COMPLETED,
+  payload
+})
+
+export const evaluationCompletionSuccessful = (payload: {players: IPlayer[] }) => ({
+  type: EVALUATION_COMPLETED_SUCCESSFULLY,
+  payload,
+})
 
 export const playerTurnShiftSuccessFul = (payload: {currentPlayerId: number }) => {
   return {
@@ -102,20 +123,22 @@ export const changeRaiseAmount = (amount: number) => {
   }
 }
 
-export const checkCall = (pid: number) => {
+export const checkCall = (payload: {pid: number} ) => {
   return {
     type: CALL_CHECK,
-    payload: { pid }
+    payload
   }
 }
 
-export const replaceCards = () => {
+export const replaceCards = (payload: {pid: number, cardsForReplacement: number}) => {
   return {
     type: REPLACE_CARDS,
+    payload
   }
 }
 
 export const replaceCardsSuccess = (payload: {
+  phase: {statusId: number ,playerIDsTookAction: number[]},
   players: IPlayer[],
   deck: UICard[]
 }) => {
