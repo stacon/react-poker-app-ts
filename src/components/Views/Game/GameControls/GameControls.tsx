@@ -2,27 +2,40 @@ import React from 'react';
 import './GameControls.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
-import { raise, changeRaiseAmount, checkCall, replaceCards } from 'src/models/Game/game.actions.creator';
+import { raise, changeRaiseAmount, checkCall, replaceCards, fold } from 'src/models/Game/game.actions.creator';
 import { GameStatus } from 'src/enums';
 import { getGameStatus, getMainPlayer, getGameAmountForRaise, getSelectedCardsForReplacementNumber } from 'src/models/Game/game.selectors';
 
 interface Props {
+  pid: string,
   balance: number,
   onChangeRaiseAmount: Function,
   amountForRaise: number,
   selectedCardsForReplacement?: number,
   onRaise: Function,
   onCheck: Function,
+  onFold: Function,
   onReplaceCards: Function,
   status: number
 }
 
 export const gameControls = (
-  { balance, onChangeRaiseAmount, selectedCardsForReplacement, amountForRaise, onRaise, onCheck, onReplaceCards, status }: Props
+  { 
+    balance,
+    onChangeRaiseAmount,
+    selectedCardsForReplacement,
+    amountForRaise,
+    onRaise,
+    onCheck,
+    onFold,
+    onReplaceCards,
+    status,
+    pid,
+  }: Props
 ) => (
     <div className="game-control-container">
-      <li className={'status' + status}>Fold</li>
-      <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck(0) : null}>Check</li>
+      <li className={'status' + status} onClick={() => onFold(pid)}>Fold</li>
+      <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck(pid) : null}>Check</li>
       <li className={'status' + status}>
       <input
         className="raise-range"
@@ -36,9 +49,9 @@ export const gameControls = (
       >
       </input>
         <div>{amountForRaise.toFixed(2)}</div>
-        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, 0) : null } >Raise</div></li>
+        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, pid) : null } >Raise</div></li>
       {status === GameStatus._Discard ?
-        <li className="status2" onClick={() => onReplaceCards(0, selectedCardsForReplacement)}>
+        <li className="status2" onClick={() => onReplaceCards(pid, selectedCardsForReplacement)}>
           {selectedCardsForReplacement && selectedCardsForReplacement > 0 ? `Replace ${selectedCardsForReplacement} Cards` : 'Keep Cards'}
         </li>
       : null}
@@ -47,6 +60,7 @@ export const gameControls = (
 
 const mapStateToProps = (state: AppState) => {
   return {
+    pid: !!getMainPlayer(state).pid ? !!getMainPlayer(state).pid : '0',
     balance: !!getMainPlayer(state).balance ? getMainPlayer(state).balance : 0,
     amountForRaise: getGameAmountForRaise(state),
     status: getGameStatus(state),
@@ -56,16 +70,19 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onRaise: (amount: number, pid: number) => {
+    onRaise: (amount: number, pid: string) => {
       dispatch(raise({amount, pid}));
     },
-    onCheck: (pid: number) => {
+    onFold: (pid: string) => {
+      dispatch(fold({pid}));
+    },
+    onCheck: (pid: string) => {
       dispatch(checkCall({pid}));
     },
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));
     },
-    onReplaceCards: (pid: number, cardsForReplacement: number) => {
+    onReplaceCards: (pid: string, cardsForReplacement: number) => {
       dispatch(replaceCards({pid, cardsForReplacement}));
     }
   }

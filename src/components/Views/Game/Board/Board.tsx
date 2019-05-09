@@ -10,37 +10,35 @@ import './Board.module.css';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
 import { IPlayer } from 'src/types';
-import { getGamePlayers, getGamePot, getGameDealerIndex, gameHasStarted, getCurrentPlayerId } from 'src/models/Game/game.selectors';
+import { getGamePlayers, getGamePot, getGameDealerPID, gameHasStarted } from 'src/models/Game/game.selectors';
 
 interface Props {
   gameHasStarted: boolean
   players: IPlayer[],
   pot: number,
-  dealerIndex: number,
-  currentPlayerId: number,
+  dealerPID: string,
 }
 
-export const board = ({gameHasStarted, players, pot, dealerIndex, currentPlayerId }: Props) => {
-  const playersGrid: JSX.Element | JSX.Element[] = (!players) ?
-    <div></div> : (
-      players.map((player, index) => {
-        return (
-          <div className={`player player_${index + 1}`}>
-            <Player
-              pid={index}
-              key={player.name}
-              {...player}
-              isDealer={index === dealerIndex ? true : false}
-            />
-          </div>
-        )
-      })
-    )
+export const board = ({ gameHasStarted, players, pot, dealerPID, }: Props) => {
+  const playersGrid: JSX.Element | JSX.Element[] = (
+    players.map((player) => {
+      return (
+        <div className={`player player_${player.pid}`}>
+          <Player
+            key={player.pid}
+            {...player}
+            isDealer={player.pid === dealerPID}
+          />
+        </div>
+      )
+    })
+  );
+
   return (
     <>
       <div className="playingCards faceImages">
         <div className="inner-wrapper flex">
-        {pot?
+          {pot ?
             <div className="pokerchip iso">
               <div className="pot">{pot} $</div>
             </div> : ''}
@@ -50,7 +48,7 @@ export const board = ({gameHasStarted, players, pot, dealerIndex, currentPlayerI
         </div>
       </div>
       <MessagesFrame />
-      {(gameHasStarted && currentPlayerId === 0 && players[0].hand) ? <GameControls /> : <></>}
+      {(gameHasStarted) ? <GameControls /> : <></>}
     </>
   )
 }
@@ -58,10 +56,9 @@ export const board = ({gameHasStarted, players, pot, dealerIndex, currentPlayerI
 const mapStateToProps = (state: AppState) => {
   return {
     gameHasStarted: gameHasStarted(state),
-    currentPlayerId: getCurrentPlayerId(state),
     players: getGamePlayers(state),
     pot: getGamePot(state),
-    dealerIndex: getGameDealerIndex(state),
+    dealerPID: getGameDealerPID(state),
   }
 };
 

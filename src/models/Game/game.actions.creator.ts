@@ -1,5 +1,6 @@
 import { IPlayer, UICard } from 'src/types';
 import { GameStatus } from 'src/enums';
+import GamePhase from 'src/types/GamePhase.type';
 
 // #region Actions
 export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
@@ -15,6 +16,8 @@ export const DEAL_CARDS = 'DEAL_CARDS';
 export const END_TURN = 'END_TURN';
 export const EVALUATION_COMPLETED = 'EVALUATION_COMPLETED';
 export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFULLY';
+export const PLAYER_FOLDED = 'PLAYER_FOLDED';
+export const PLAYER_FOLDING_COMPLETED = 'PLAYER_FOLDING_COMPLETED';
 export const GAME_STARTED = 'GAME_STARTED';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
@@ -67,7 +70,7 @@ export const placeAnte = () => {
   }
 }
 
-export const raise = (payload: {amount: number, pid: number}) => {
+export const raise = (payload: {amount: number, pid: string}) => {
   return {
     type: RAISE,
     payload,
@@ -77,7 +80,7 @@ export const raise = (payload: {amount: number, pid: number}) => {
 export const raiseSuccessful = (payload: {
   players: IPlayer[],
   pot: number,
-  phase: {statusId: number ,playerIDsTookAction: number[]}
+  phase: GamePhase
 }) => {
   return {
     type: RAISE_SUCCESSFUL,
@@ -85,7 +88,7 @@ export const raiseSuccessful = (payload: {
   }
 }
 
-export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, phase: {statusId: number ,playerIDsTookAction: number[]} }) => {
+export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, phase: GamePhase }) => {
   return {
     type: CALL_CHECK_SUCCESSFUL,
     payload,
@@ -123,14 +126,32 @@ export const changeRaiseAmount = (amount: number) => {
   }
 }
 
-export const checkCall = (payload: {pid: number} ) => {
+export const checkCall = (payload: {pid: string} ) => {
   return {
     type: CALL_CHECK,
     payload
   }
 }
 
-export const replaceCards = (payload: {pid: number, cardsForReplacement: number}) => {
+export const fold = (payload: {pid: string} ) => {
+  return {
+    type: PLAYER_FOLDED,
+    payload
+  }
+}
+
+export const playerFoldingSucceeded = (payload: {
+  phase: GamePhase,
+  players: IPlayer[],
+  activePlayersIDs: string[]
+}) => {
+  return {
+    type: PLAYER_FOLDING_COMPLETED,
+    payload,
+  }
+}
+
+export const replaceCards = (payload: {pid: string, cardsForReplacement: number}) => {
   return {
     type: REPLACE_CARDS,
     payload
@@ -138,7 +159,7 @@ export const replaceCards = (payload: {pid: number, cardsForReplacement: number}
 }
 
 export const replaceCardsSuccess = (payload: {
-  phase: {statusId: number ,playerIDsTookAction: number[]},
+  phase: GamePhase,
   players: IPlayer[],
   deck: UICard[]
 }) => {
