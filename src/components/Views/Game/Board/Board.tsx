@@ -10,20 +10,21 @@ import './Board.module.css';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
 import { IPlayer } from 'src/types';
-import { getGamePlayers, getGamePot, getGameDealerPID, gameHasStarted } from 'src/models/Game/game.selectors';
+import { getGamePlayers, getGamePot, getGameDealerPID, gameHasStarted, isMainPlayerTurn } from 'src/models/Game/game.selectors';
 
 interface Props {
   gameHasStarted: boolean
   players: IPlayer[],
   pot: number,
   dealerPID: string,
+  isMainPlayerTurn: boolean,
 }
 
-export const board = ({ gameHasStarted, players, pot, dealerPID, }: Props) => {
+export const board = ({ gameHasStarted, players, pot, dealerPID, isMainPlayerTurn}: Props) => {
   const playersGrid: JSX.Element | JSX.Element[] = (
     players.map((player, index) => {
       return (
-        <div className={`player player_${(index + 1).toString()}`}>
+        <div key={player.pid} className={`player player_${(index + 1).toString()}`}>
           <Player
             key={player.pid}
             {...player}
@@ -48,7 +49,7 @@ export const board = ({ gameHasStarted, players, pot, dealerPID, }: Props) => {
         </div>
       </div>
       <MessagesFrame />
-      {(gameHasStarted) ? <GameControls /> : <></>}
+      {gameHasStarted && isMainPlayerTurn ? <GameControls /> : <></>}
     </>
   )
 }
@@ -59,6 +60,7 @@ const mapStateToProps = (state: AppState) => {
     players: getGamePlayers(state),
     pot: getGamePot(state),
     dealerPID: getGameDealerPID(state),
+    isMainPlayerTurn: isMainPlayerTurn(state),
   }
 };
 
