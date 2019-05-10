@@ -154,8 +154,6 @@ export default function (state: GameState = initialState, action: any): GameStat
           ...state.phase,
           statusId: GameStatus._NewGame,
         },
-        currentPlayerPID: 0,
-        dealerIndex: 1,
         amountForRaise: 1,
         pot: 0
       };
