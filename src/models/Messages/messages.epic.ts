@@ -20,10 +20,12 @@ import { AppState } from '../App/app.store';
 import { getMessagesList } from './messages.selectors';
 import { IPlayer } from 'src/types';
 import { getPlayerById, getActivePlayers } from '../Game/game.selectors';
+import Message from 'src/types/Message.type';
+import { count } from 'rxjs/operators';
 
 const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(CARDS_DEALT),
-  map(() => addMessage('Hands Dealt! Good Luck')),
+  map(() => addMessage({text: 'Hands Dealt! Good Luck'})),
 );
 
 const onRaiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
@@ -32,7 +34,7 @@ const onRaiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObs
     const { payload } = action;
     const { amount, pid } = payload;
     const player: IPlayer = getPlayerById(state$.value, pid);
-    return addMessage(`${player.name} raised by ${amount.toFixed(2)} $.`)
+    return addMessage({text: `${player.name} raised by ${amount.toFixed(2)} $.`})
   }),
 )
 
@@ -42,7 +44,7 @@ const callRequestEpic = (action$: ActionsObservable<Action>, state$: StateObserv
     const { payload } = action;
     const { pid } = payload;
     const player = getPlayerById(state$.value, pid);
-    return addMessage(`${player.name} called/checked.`)
+    return addMessage({text: `${player.name} called/checked.`})
   })
 )
 
@@ -53,11 +55,11 @@ const onReplaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObs
     const { pid, cardsForReplacement } = payload;
     const players: IPlayer[] = getActivePlayers(state$.value);
 
-    return addMessage(
+    return addMessage({text: 
       cardsForReplacement < 1 ?
         `${players[pid].name} didn't replace any cards.` :
         `${players[pid].name} replaced ${cardsForReplacement} cards.`
-    );
+    });
   }),
 );
 
@@ -66,9 +68,9 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
   map((action: any) => {
     const { payload } = action;
     const { playerWon, winningHand } = payload;
-    return addMessage(
+    return addMessage({text: 
       `Winner is ${playerWon.name} with ${winningHand}`,
-    )
+    })
   }),
 )
 
@@ -79,15 +81,17 @@ const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
 
 const antesPlacedEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(ANTE_PLACED_SUCCESSFULLY),
-  map(() => addMessage('Players Placed their Antes!')),
+  count(),
+  map((i) => addMessage({text: 'Players Placed their Antes!'})),
 );
 
 const addMessageEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(ADD_MESSAGE),
   map((action: any) => {
     const { payload } = action;
-    const { message } = payload;
-    const list: string[] = [...getMessagesList(state$.value), message];
+    const { text } : { text: string } = payload;
+    const messagesList = getMessagesList(state$.value)
+    const list: Message[] = [...messagesList, {id: messagesList.length +1, text}];
     return messageAddedSuccessfully({ list })
   }),
 );

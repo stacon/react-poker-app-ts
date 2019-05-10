@@ -33,6 +33,7 @@ export const getGameDealerPID = (state: AppState): string => getGameState(state)
 export const getGameAmountForRaise = (state: AppState): number => getGameState(state).amountForRaise;
 export const getSelectedCardsForReplacementNumber = (state: AppState): number => getMainPlayer(state).hand.filter((card: UICard) => card.selected).length;
 export const getPlayerIndexByPid = (state: AppState, pid: string): number => getGamePlayers(state).findIndex(player => player.pid === pid);
+export const isMainPlayerTurn = (state: AppState): boolean => getMainPlayer(state).pid === getCurrentPlayerPID(state);
 
 // Advanced Selectors
 export const getPreviousPlayerIndex = (state: AppState): number => {

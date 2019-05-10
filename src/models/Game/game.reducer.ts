@@ -90,6 +90,7 @@ export default function (state: GameState = initialState, action: any): GameStat
     case RAISE_SUCCESSFUL: {
       return {
         ...state,
+        amountForRaise: 1,
         ...action.payload,
       }
     }
