@@ -20,7 +20,7 @@ interface Props {
 }
 
 export const gameControls = (
-  { 
+  {
     balance,
     onChangeRaiseAmount,
     selectedCardsForReplacement,
@@ -34,33 +34,53 @@ export const gameControls = (
   }: Props
 ) => (
     <div className="game-control-container">
-      <li className={'status' + status} onClick={() => onFold(pid)}>Fold</li>
-      <li className={'status' + status} onClick={() => status % 2 === 0 ? onCheck(pid) : null}>Check</li>
-      <li className={'status' + status}>
-      <input
-        className="raise-range"
-        id='raise'
-        type="range"
-        min={1}
-        max={status%2 === 0? balance: 10}
-        step="1"
-        value={amountForRaise}
-        onChange={(event) => onChangeRaiseAmount(+event.target.value)}
-      >
-      </input>
-        <div>{amountForRaise.toFixed(2)}</div>
-        <div className="raise" onClick={() => status % 2 === 0 ? onRaise(amountForRaise, pid) : null } >Raise</div></li>
-      {status === GameStatus._Discard ?
-        <li className="status2" onClick={() => onReplaceCards(pid, selectedCardsForReplacement)}>
-          {selectedCardsForReplacement && selectedCardsForReplacement > 0 ? `Replace ${selectedCardsForReplacement} Cards` : 'Keep Cards'}
-        </li>
-      : null}
+      {status === GameStatus._FirstBetPhase || status === GameStatus._SecondBetPhase ? (
+        <>
+          <li className={'status'} onClick={() => onFold(pid)}>Fold</li>
+          <li className={'status'} onClick={() => onCheck(pid)}>Check</li>
+          <li className={'status'}>
+            <input
+              className="raise-range"
+              id='raise'
+              type="range"
+              min={1}
+              max={balance}
+              step="1"
+              value={amountForRaise}
+              onChange={(event) => onChangeRaiseAmount(+event.target.value)}
+            >
+            </input>
+
+
+            <div>{amountForRaise.toFixed(2)}</div>
+            <div
+              className="raise"
+              onClick={onRaise(amountForRaise, pid)}
+            >Raise</div>
+          </li>
+        </>
+      ) : null}
+
+      {
+        status === GameStatus._Discard ?
+          <li
+            className="status2"
+            onClick={() => onReplaceCards(pid, selectedCardsForReplacement)}
+          >
+            {
+              selectedCardsForReplacement && selectedCardsForReplacement > 0 ?
+                `Replace ${selectedCardsForReplacement} Cards` :
+                'Keep Cards'
+            }
+          </li>
+          : null
+      }
     </div>
   )
 
 const mapStateToProps = (state: AppState) => {
   return {
-    pid: !!getMainPlayer(state).pid ? !!getMainPlayer(state).pid : '0',
+    pid: !!getMainPlayer(state).pid ? getMainPlayer(state).pid : '0',
     balance: !!getMainPlayer(state).balance ? getMainPlayer(state).balance : 0,
     amountForRaise: getGameAmountForRaise(state),
     status: getGameStatus(state),
@@ -71,19 +91,19 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     onRaise: (amount: number, pid: string) => {
-      dispatch(raise({amount, pid}));
+      dispatch(raise({ amount, pid }));
     },
     onFold: (pid: string) => {
-      dispatch(fold({pid}));
+      dispatch(fold({ pid }));
     },
     onCheck: (pid: string) => {
-      dispatch(checkCall({pid}));
+      dispatch(checkCall({ pid }));
     },
     onChangeRaiseAmount: (amount: number): void => {
       dispatch(changeRaiseAmount(amount));
     },
     onReplaceCards: (pid: string, cardsForReplacement: number) => {
-      dispatch(replaceCards({pid, cardsForReplacement}));
+      dispatch(replaceCards({ pid, cardsForReplacement }));
     }
   }
 }
