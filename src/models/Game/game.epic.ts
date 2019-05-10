@@ -41,7 +41,22 @@ import { IPlayer, UICard } from 'src/types';
 import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
-import { getGamePlayers, getGamePot, getGameStatus, getGameDeck, getGameState, getNextPlayerIndex, getHighestRoundPot, getGamePhase, getActivePlayersPIDs, getActivePlayers, getPlayerIndexByPid, getMainPlayer, getPlayerIndexByName, getCurrentPlayerIndex } from './game.selectors';
+import {
+  getGamePlayers,
+  getGamePot,
+  getGameStatus,
+  getGameDeck,
+  getGameState,
+  getNextPlayerIndex,
+  getHighestRoundPot,
+  getGamePhase,
+  getActivePlayersPIDs,
+  getActivePlayers,
+  getPlayerIndexByPid,
+  getMainPlayer,
+  getPlayerIndexByName,
+  getCurrentPlayerPID
+} from './game.selectors';
 import { getWinnerResult } from 'src/libs/Hand/handEvaluation.helper';
 import WinnerResult from 'src/types/WinnerResult.type';
 
@@ -73,8 +88,8 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
       }
       ));
 
-      const i: number = getPlayerIndexByPid(state$.value, getMainPlayer(state$.value).pid);
-      newPlayers[i].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
+    const i: number = getPlayerIndexByPid(state$.value, getMainPlayer(state$.value).pid);
+    newPlayers[i].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
     return cardsDealt({
       currentPlayerPID: getMainPlayer(state$.value).pid,
       deck: newDeck,
@@ -108,7 +123,7 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
     );
 
     if (pid === getMainPlayer(state$.value).pid) {
-      hand.forEach((card, cardIndex) => hand[cardIndex].flipped = true )
+      hand.forEach((card, cardIndex) => hand[cardIndex].flipped = true)
     }
 
     players[i] = {
@@ -117,7 +132,7 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
     };
 
     const phase = getGamePhase(state$.value);
-    if(phase.playerPIDsTookAction.indexOf(pid) === -1) {
+    if (phase.playerPIDsTookAction.indexOf(pid) === -1) {
       phase.playerPIDsTookAction.push(pid);
     }
 
@@ -157,7 +172,7 @@ const onPlayerFoldEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const activePlayersPIDs: string[] = getActivePlayersPIDs(state$.value);
     activePlayersPIDs.splice(i);
 
-    if(phase.playerPIDsTookAction.indexOf(pid) === -1) {
+    if (phase.playerPIDsTookAction.indexOf(pid) === -1) {
       phase.playerPIDsTookAction.push(pid);
     }
 
@@ -201,7 +216,7 @@ const callRequestEpic = (action$: ActionsObservable<Action>, state$: StateObserv
     const newBalance: number = getActivePlayers(state$.value)[i].balance - amountToCall;
     const pot = getGamePot(state$.value) + amountToCall;
     const phase = getGamePhase(state$.value);
-    if(phase.playerPIDsTookAction.indexOf(pid) === -1) {
+    if (phase.playerPIDsTookAction.indexOf(pid) === -1) {
       phase.playerPIDsTookAction.push(pid);
     }
 
@@ -235,7 +250,7 @@ const raiseRequestEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const newBalance: number = players[i].balance - amount;
     const pot = getGamePot(state$.value) + amount;
     const phase = getGamePhase(state$.value);
-    if(phase.playerPIDsTookAction.indexOf(pid) === -1) {
+    if (phase.playerPIDsTookAction.indexOf(pid) === -1) {
       phase.playerPIDsTookAction.push(pid);
     }
 
@@ -260,7 +275,7 @@ const shiftPlayerTurnEpic = (action$: ActionsObservable<Action>, state$: StateOb
   filter(() => getActivePlayersPIDs(state$.value).length > 1),
   map(() => {
     return playerTurnShiftSuccessFul({
-      currentPlayerPID:  getGamePlayers(state$.value)[getNextPlayerIndex(state$.value)].pid,
+      currentPlayerPID: getGamePlayers(state$.value)[getNextPlayerIndex(state$.value)].pid,
     })
   })
 )
@@ -268,9 +283,10 @@ const shiftPlayerTurnEpic = (action$: ActionsObservable<Action>, state$: StateOb
 const onCurrentPlayerIdChangeEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => state$.pipe(
   map(() => (getPlayerIndexByPid(state$.value, getGameState(state$.value).currentPlayerPID))),
   distinctUntilChanged(),
-  filter(id => id !== -1),
-  map((currentPlayerId) => {
-    return currentPlayerChanged({ currentPlayerId }); // TODO: Follow it up
+  filter((id: string | number) => id !== -1),
+  map((currentPlayerPID: string | number) => currentPlayerPID.toString()),
+  map((currentPlayerPID: string) => {
+    return currentPlayerChanged({ currentPlayerPID }); // TODO: Follow it up
   }),
 )
 
@@ -290,7 +306,7 @@ const onEvaluationPhaseEpic = (action$: ActionsObservable<Action>, state$: State
 
 const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(EVALUATION_COMPLETED),
-  map((action:any) => {
+  map((action: any) => {
     const { payload } = action;
     const { playerWon } = payload;
     const winnerId = getPlayerIndexByName(state$.value, playerWon.name);
@@ -299,7 +315,7 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
     players[winnerId].balance = players[winnerId].balance + gamePot
     players.forEach(
       (player, playerIndex) => player.hand.forEach(
-        (card,cardIndex) => players[playerIndex].hand[cardIndex].flipped = true))
+        (card, cardIndex) => players[playerIndex].hand[cardIndex].flipped = true))
     return evaluationCompletionSuccessful({
       players
     })
@@ -308,33 +324,31 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
 
 const onBotPlayerTurnEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
-  filter(() => getCurrentPlayerIndex(state$.value) !== 0),
+  filter(() => getCurrentPlayerPID(state$.value) !== getMainPlayer(state$.value).pid),
   delay(1000),
   map((action: any) => {
     const { payload } = action;
-    const { currentPlayerId } = payload;
+    const { currentPlayerPID } = payload;
     const phase = getGamePhase(state$.value);
-    const players = getGamePlayers(state$.value);
 
-    if(phase.playerPIDsTookAction.indexOf(currentPlayerId) === -1) {
-      phase.playerPIDsTookAction.push(currentPlayerId);
+    if (phase.playerPIDsTookAction.indexOf(currentPlayerPID) === -1) {
+      phase.playerPIDsTookAction.push(currentPlayerPID);
     }
 
-    if(phase.statusId === GameStatus._Discard) {
-      const cardsForReplacement: number = players[currentPlayerId].hand.filter(cards => cards.selected).length;
+    if (phase.statusId === GameStatus._Discard) {
       return replaceCards({
-        pid: currentPlayerId,
-        cardsForReplacement,
+        pid: currentPlayerPID,
+        cardsForReplacement: 0,
       });
     }
-    return checkCall({pid: currentPlayerId});
+    return checkCall({ pid: currentPlayerPID });
   }),
 )
 
 const afterPlayerChangeWithOneRemainingPlayerEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(CURRENT_PLAYER_CHANGED),
   filter(() => getActivePlayersPIDs(state$.value).length === 1),
-  map(() => changeStatus({statusId: GameStatus._EvaluationPhase})),
+  map(() => changeStatus({ statusId: GameStatus._EvaluationPhase })),
 )
 
 const afterPlayerChangeEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
@@ -349,7 +363,7 @@ const afterPlayerChangeEpic = (action$: ActionsObservable<Action>, state$: State
   map(() => {
     const currentStatus: number = getGameStatus(state$.value);
     const nextStatusId: number = currentStatus + 1;
-    return changeStatus({statusId: (nextStatusId <= 5) ? nextStatusId : GameStatus._Uninitialized});
+    return changeStatus({ statusId: (nextStatusId <= 5) ? nextStatusId : GameStatus._Uninitialized });
   }),
 )
 
