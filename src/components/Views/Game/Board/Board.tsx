@@ -21,9 +21,9 @@ interface Props {
 
 export const board = ({ gameHasStarted, players, pot, dealerPID, }: Props) => {
   const playersGrid: JSX.Element | JSX.Element[] = (
-    players.map((player) => {
+    players.map((player, index) => {
       return (
-        <div className={`player player_${player.pid}`}>
+        <div className={`player player_${(index + 1).toString()}`}>
           <Player
             key={player.pid}
             {...player}
