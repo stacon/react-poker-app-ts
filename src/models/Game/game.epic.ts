@@ -76,6 +76,7 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
       const i: number = getPlayerIndexByPid(state$.value, getMainPlayer(state$.value).pid);
       newPlayers[i].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
     return cardsDealt({
+      currentPlayerPID: getMainPlayer(state$.value).pid,
       deck: newDeck,
       players: newPlayers,
     });
@@ -153,8 +154,8 @@ const onPlayerFoldEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const phase = getGamePhase(state$.value);
     const players = getActivePlayers(state$.value);
     players[i].hand = [];
-    const activePlayersIDs: string[] = getActivePlayersPIDs(state$.value);
-    activePlayersIDs.splice(i);
+    const activePlayersPIDs: string[] = getActivePlayersPIDs(state$.value);
+    activePlayersPIDs.splice(i);
 
     if(phase.playerPIDsTookAction.indexOf(pid) === -1) {
       phase.playerPIDsTookAction.push(pid);
@@ -164,7 +165,7 @@ const onPlayerFoldEpic = (action$: ActionsObservable<Action>, state$: StateObser
     return playerFoldingSucceeded({
       phase,
       players,
-      activePlayersIDs,
+      activePlayersPIDs,
     })
   }),
 )
@@ -256,9 +257,10 @@ const onSuccessfulRaiseEpic = (action$: ActionsObservable<Action>) => action$.pi
 const shiftPlayerTurnEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(SHIFT_PLAYER_TURN),
   filter(() => getGamePlayers(state$.value).length > 0),
+  filter(() => getActivePlayersPIDs(state$.value).length > 1),
   map(() => {
     return playerTurnShiftSuccessFul({
-      currentPlayerId: getNextPlayerIndex(state$.value),
+      currentPlayerPID:  getGamePlayers(state$.value)[getNextPlayerIndex(state$.value)].pid,
     })
   })
 )

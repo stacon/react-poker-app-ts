@@ -42,7 +42,7 @@ export default function (state: GameState = initialState, action: any): GameStat
         ...action.payload,
         phase: {
           ...state.phase,
-          playersIDsInGamePhase: _.times(action.payload.players.length, Number),
+          playersPIDsInGamePhase: [...state.players.map(player => player.pid)],
           statusId: GameStatus._FirstBetPhase
         }
       }
@@ -68,7 +68,7 @@ export default function (state: GameState = initialState, action: any): GameStat
         phase: {
           ...state.phase,
           ...action.payload,
-          playerIDsTookAction: [],
+          playerPIDsTookAction: [],
         }
       }
     }
@@ -118,7 +118,7 @@ export default function (state: GameState = initialState, action: any): GameStat
         players: [...action.payload.players],
         phase: {
           ...action.payload.phase,
-          playersIDsInGamePhase: [...action.payload.activePlayersIDs]
+          playersPIDsInGamePhase: [...action.payload.activePlayersPIDs]
         }
       }
     }
@@ -153,7 +153,7 @@ export default function (state: GameState = initialState, action: any): GameStat
           ...state.phase,
           statusId: GameStatus._NewGame,
         },
-        currentPlayerId: 0,
+        currentPlayerPID: 0,
         dealerIndex: 1,
         amountForRaise: 1,
         pot: 0

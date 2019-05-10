@@ -57,7 +57,7 @@ export const dealCards = () => {
   }
 }
 
-export const cardsDealt = (payload: {players: IPlayer[], deck: UICard[]}) => {
+export const cardsDealt = (payload: {players: IPlayer[], deck: UICard[], currentPlayerPID: string}) => {
   return {
     type: CARDS_DEALT,
     payload,
@@ -105,14 +105,14 @@ export const evaluationCompletionSuccessful = (payload: {players: IPlayer[] }) =
   payload,
 })
 
-export const playerTurnShiftSuccessFul = (payload: {currentPlayerId: number }) => {
+export const playerTurnShiftSuccessFul = (payload: {currentPlayerPID: string }) => {
   return {
     type: SHIFT_PLAYER_TURN_SUCCESSFUL,
     payload,
   }
 }
 
-export const currentPlayerChanged = (payload: {currentPlayerId: number }) => {
+export const currentPlayerChanged = (payload: {currentPlayerPID: string }) => {
   return {
     type: CURRENT_PLAYER_CHANGED,
     payload,
@@ -143,7 +143,7 @@ export const fold = (payload: {pid: string} ) => {
 export const playerFoldingSucceeded = (payload: {
   phase: GamePhase,
   players: IPlayer[],
-  activePlayersIDs: string[]
+  activePlayersPIDs: string[]
 }) => {
   return {
     type: PLAYER_FOLDING_COMPLETED,

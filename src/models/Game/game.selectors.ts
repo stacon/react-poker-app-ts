@@ -45,7 +45,7 @@ export const getNextPlayerIndex = (state: AppState): number => {
   const { currentPlayerPID } = getGameState(state);
   const numberOfActivePlayers: number = getActivePlayersPIDs(state).length;
   const playerIndex: number = getActivePlayersPIDs(state).findIndex(pid => pid === currentPlayerPID);
-  return (playerIndex + 1 > numberOfActivePlayers) ? 0 : playerIndex + 1;
+  return (playerIndex + 1 >= numberOfActivePlayers) ? 0 : playerIndex + 1;
 };
 
 export const getHighestRoundPot = (state: AppState) => (
