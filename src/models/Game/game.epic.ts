@@ -286,7 +286,7 @@ const onCurrentPlayerIdChangeEpic = (action$: ActionsObservable<Action>, state$:
   filter((id: string | number) => id !== -1),
   map((currentPlayerPID: string | number) => currentPlayerPID.toString()),
   map((currentPlayerPID: string) => {
-    return currentPlayerChanged({ currentPlayerPID }); // TODO: Follow it up
+    return currentPlayerChanged({ currentPlayerPID });
   }),
 )
 

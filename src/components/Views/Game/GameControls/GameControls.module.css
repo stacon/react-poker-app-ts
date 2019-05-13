@@ -1,7 +1,6 @@
 .game-control-container {
   position: absolute;
   z-index: 100;
-  border-bottom: solid 3px #fff;
   padding: 15px;
   left: 25vw;
   top: 28vh;

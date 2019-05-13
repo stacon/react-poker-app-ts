@@ -55,7 +55,7 @@ export const gameControls = (
             <div>{amountForRaise.toFixed(2)}</div>
             <div
               className="raise"
-              onClick={onRaise(amountForRaise, pid)}
+              onClick={() => onRaise(amountForRaise, pid)}
             >Raise</div>
           </li>
         </>
