@@ -15,7 +15,6 @@ import { UICard } from 'src/types';
 // Types
 
 interface Props {
-  pid: number,
   hand: UICard[],
   name: string,
   balance: number,

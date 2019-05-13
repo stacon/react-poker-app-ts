@@ -125,7 +125,6 @@ const getWinningHandFromPlayers = (players: IPlayer[]): EvaluationResult => {
 const getWinnerResult = (players: IPlayer[]): WinnerResult => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
-  console.log(evaluationResults)
 
   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
     let winningHand: EvaluationResult = <EvaluationResult>{};

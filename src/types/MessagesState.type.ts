@@ -1,5 +1,7 @@
+import Message from './Message.type';
+
 interface MessagesState {
-  list: string[]
+  list: Message[]
 }
 
 export default MessagesState;

@@ -6,7 +6,7 @@ import { getUserBalance } from '../Messages/messages.selectors';
 import { filter } from 'rxjs/internal/operators/filter';
 import { map } from 'rxjs/internal/operators/map';
 import { userBalanceChangedSuccessfully } from './user.action.creator';
-import { getGamePlayers, getHighestRoundPot, getPlayerIdByName, getGamePot } from '../Game/game.selectors';
+import { getGamePlayers, getHighestRoundPot, getPlayerIndexByName, getGamePot } from '../Game/game.selectors';
 
 const changeUserBalanceOnRaiseEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
     ofType(RAISE),
@@ -39,7 +39,7 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
     filter((action: any) => {
         const { payload } = action;
         const { playerWon } = payload;
-        return getPlayerIdByName(state$.value, playerWon.name) === 0;
+        return getPlayerIndexByName(state$.value, playerWon.name) === 0;
     }),
     map(() => {
         const balance = getUserBalance(state$.value) + getGamePot(state$.value)

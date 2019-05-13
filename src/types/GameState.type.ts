@@ -3,13 +3,13 @@ import { UICard, IPlayer } from '.';
 interface GameState {
   players: IPlayer[],
   deck: UICard[],
-  dealerIndex: number,
-  currentPlayerId: number,
+  dealerPID: string,
+  currentPlayerPID: string,
   pot: number,
   phase: {
     statusId: number,
-    playersIDsInGamePhase: number[],
-    playerIDsTookAction: number[]
+    playersPIDsInGamePhase: string[],
+    playerPIDsTookAction: string[]
   }
   amountForRaise: number,
 }

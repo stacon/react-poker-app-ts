@@ -1,3 +1,5 @@
+import Message from 'src/types/Message.type';
+
 // #region Actions
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const MESSAGE_ADDED_SUCCESSFULLY = 'MESSAGE_ADDED_SUCCESSFULLY';
@@ -7,10 +9,10 @@ export const RESET_MESSAGES = 'RESET_MESSAGES';
 // #endregion Actions
 
 // #region Action Creators
-export const addMessage = (message: string) => {
+export const addMessage = (payload: {text: string}) => {
   return {
     type: ADD_MESSAGE,
-    payload: {message}
+    payload,
   }
 }
 
@@ -19,7 +21,7 @@ export const resetMessages = () => ({
   payload: null,
 })
 
-export const messageAddedSuccessfully = (payload: {list: string[]}) => {
+export const messageAddedSuccessfully = (payload: {list: Message[]}) => {
   return {
     type: MESSAGE_ADDED_SUCCESSFULLY,
     payload,

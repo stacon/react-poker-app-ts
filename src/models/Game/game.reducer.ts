@@ -10,7 +10,8 @@ import {
   CALL_CHECK_SUCCESSFUL,
   CHANGE_STATUS,
   EVALUATION_COMPLETED_SUCCESSFULLY,
-  START_NEXT_ROUND
+  START_NEXT_ROUND,
+  PLAYER_FOLDING_COMPLETED
 } from './game.actions.creator';
 
 import _ from 'lodash';
@@ -21,18 +22,18 @@ import { GameStatus } from 'src/enums';
 const initialState: GameState = {
   players: [],
   deck: [],
-  currentPlayerId: -1,
-  dealerIndex: 0,
+  currentPlayerPID: '',
+  dealerPID: '0',
   amountForRaise: 1,
   pot: 0,
   phase: {
     statusId: GameStatus._Uninitialized,
-    playerIDsTookAction: [],
-    playersIDsInGamePhase: []
+    playerPIDsTookAction: [],
+    playersPIDsInGamePhase: []
   }
 }
 
-export default function (state: GameState = initialState, action: any) {
+export default function (state: GameState = initialState, action: any): GameState {
 
   switch (action.type) {
     case CARDS_DEALT: {
@@ -41,7 +42,7 @@ export default function (state: GameState = initialState, action: any) {
         ...action.payload,
         phase: {
           ...state.phase,
-          playersIDsInGamePhase: _.times(action.payload.players.length, Number),
+          playersPIDsInGamePhase: [...state.players.map(player => player.pid)],
           statusId: GameStatus._FirstBetPhase
         }
       }
@@ -67,7 +68,7 @@ export default function (state: GameState = initialState, action: any) {
         phase: {
           ...state.phase,
           ...action.payload,
-          playerIDsTookAction: [],
+          playerPIDsTookAction: [],
         }
       }
     }
@@ -89,6 +90,7 @@ export default function (state: GameState = initialState, action: any) {
     case RAISE_SUCCESSFUL: {
       return {
         ...state,
+        amountForRaise: 1,
         ...action.payload,
       }
     }
@@ -100,14 +102,25 @@ export default function (state: GameState = initialState, action: any) {
         ...state,
         deck: getNewDeck(),
         phase: {
-          playerIDsTookAction: [],
-          playersIDsInGamePhase: [],
+          playerPIDsTookAction: [],
+          playersPIDsInGamePhase: [],
           statusId: GameStatus._NewGame,
         },
-        currentPlayerId: 0,
-        dealerIndex: 1,
+        currentPlayerPID: '0',
+        dealerPID: '0',
         amountForRaise: 1,
         pot: 0
+      }
+    }
+
+    case PLAYER_FOLDING_COMPLETED: {
+      return {
+        ...state,
+        players: [...action.payload.players],
+        phase: {
+          ...action.payload.phase,
+          playersPIDsInGamePhase: [...action.payload.activePlayersPIDs]
+        }
       }
     }
 
@@ -141,8 +154,6 @@ export default function (state: GameState = initialState, action: any) {
           ...state.phase,
           statusId: GameStatus._NewGame,
         },
-        currentPlayerId: 0,
-        dealerIndex: 1,
         amountForRaise: 1,
         pot: 0
       };
