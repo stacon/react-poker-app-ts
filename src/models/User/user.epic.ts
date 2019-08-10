@@ -10,7 +10,7 @@ import { getGamePlayers, getHighestRoundPot, getPlayerIndexByName, getGamePot } 
 
 const changeUserBalanceOnRaiseEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
     ofType(RAISE),
-    filter((action: any) => action.payload.pid === 0),
+    filter((action: any) => action.payload.pid === "0"),
     map((action: any) => {
         const { payload } = action;
         const { amount } = payload;
@@ -22,7 +22,7 @@ const changeUserBalanceOnRaiseEpic = (action$: ActionsObservable<Action>, state$
 
 const changeUserBalanceOnCheckCallEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
     ofType(CALL_CHECK),
-    filter((action: any) => action.payload.pid === 0),
+    filter((action: any) => action.payload.pid === "0"),
     map((action: any) => {
         const { payload } = action;
         const { pid } = payload;
