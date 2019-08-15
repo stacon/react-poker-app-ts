@@ -13,8 +13,7 @@ const isFlush = (sortedHand: UICard[]) => everyCardIsSameSuit(sortedHand);
  * @param {Array<UICard>} hand
  * @returns {EvaluationResult}
  */
-const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult | null => {
-  if (hand.length !== 5) { console.error(`Number of cards expected is 5. Got ${hand.length}`); return null;}
+const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult => {
   const evalResult: EvaluationResult = new EvaluationResult();
   evalResult.highCardValue = getHighCard(hand).value
 
