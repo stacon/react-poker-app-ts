@@ -88,6 +88,8 @@ const getWinnerResult = (players: IPlayer[]): WinnerResult => {
 
   const evaluationResults: EvaluationResult[] = getEvaluationResultsFromPlayers(players);
 
+  // evaluationResults.reduce((accResult, curResult,i) => () ,{winningPlayer: null, winningHandName: null})
+
   const reducer = (prevValue: EvaluationResult, currValue: EvaluationResult): EvaluationResult => {
     let winningHand: EvaluationResult = new EvaluationResult();
     let winner: boolean = false;
