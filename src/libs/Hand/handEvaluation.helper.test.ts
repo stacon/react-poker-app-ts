@@ -12,8 +12,8 @@ import {
   getPairGroupValue,
   getPairsGroupValues,
 } from './handEvaluation.helper';
-import { UICard } from 'src/types';
-import { Suit } from 'src/enums';
+import { UICard } from '../../../src/types';
+import { Suit } from '../../../src/enums';
 
 
 it('should evaluate the cardset to be truthy cause all cards are hearts suit and it\'s straight', ()=> {
@@ -42,11 +42,11 @@ it('should evaluate the cardset to be falsy cause one cards is of spades suit an
 
 it('should evaluate the cardset to be truthy as it evaluates as royal', ()=> {
   const fiveCardsAsARoyal = [
-    new UICard(1, Suit.hearts),
-    new UICard(4, Suit.hearts),
-    new UICard(3, Suit.spades),
-    new UICard(2, Suit.hearts),
-    new UICard(5, Suit.hearts),
+    new UICard(10, Suit.hearts),
+    new UICard(11, Suit.hearts),
+    new UICard(12, Suit.spades),
+    new UICard(13, Suit.hearts),
+    new UICard(14, Suit.hearts),
   ];
   expect(isRoyal(fiveCardsAsARoyal)).toBeTruthy();
 })
@@ -56,7 +56,7 @@ it('should evaluate the cardset to be falsy as it doesn\'t evaluate as royal', (
     new UICard(1, Suit.hearts),
     new UICard(2, Suit.hearts),
     new UICard(3, Suit.spades),
-    new UICard(7, Suit.hearts),
+    new UICard(4, Suit.hearts),
     new UICard(5, Suit.hearts),
   ];
   expect(isRoyal(fiveCardsNotARoyal)).toBeFalsy();

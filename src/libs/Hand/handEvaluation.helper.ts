@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import getEvaluationResultFromHand from './getEvaluationResultFromHand';
-import { UICard, IPlayer, EvaluationResult } from 'src/types';
+import { UICard, IPlayer, EvaluationResult } from '../../../src/types';
 import getWinningHandNameFromPower from './getWinningHandNameFromValue';
-import WinnerResult from 'src/types/WinnerResult.type';
+import WinnerResult from '../../../src/types/WinnerResult.type';
 
 /**
  * Factory function for number of sets expected in 5 card array.
@@ -45,12 +45,8 @@ const everyCardIsSameSuit = (hand: UICard[]): boolean => Object.keys(_.groupBy(h
 
 const isRoyal = (hand: UICard[]): boolean => {
   const sortedHandByValue = _.sortBy(hand, 'rank');
-  if (sortedHandByValue[0].value !== 14) return false;
-  return sortedHandByValue.reduce((isRoyal: boolean, currentCard: UICard, i: number) => {
-    if (i === 0) return isRoyal && true;
-    if (sortedHandByValue[i - 1].rank + 1 === currentCard.rank) return isRoyal && true;
-    return isRoyal && false;
-  }, true);
+  if (sortedHandByValue[4].value !== 14) return false;
+  return sortedHandByValue.reduce((acc, cur) => acc + cur.value, 0) === 60;
 }
 
 const hasFourOfAKind = (hand: UICard[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 4, 1)(hand);

@@ -1,6 +1,6 @@
 
-import { RankName } from 'src/libs/references';
-import { Suit } from 'src/enums';
+import { RankName } from '../../src/libs/references';
+import { Suit } from '../../src/enums';
 
 class UICard {
   public value: number;
