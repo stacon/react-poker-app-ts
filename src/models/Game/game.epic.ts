@@ -96,8 +96,6 @@ const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservab
       players: newPlayers,
     });
   }),
-  // delay(200), // TODO: Better approach?
-  // tap(() => store.dispatch(placeAnte())),
 )
 
 const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(

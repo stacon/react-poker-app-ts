@@ -1,11 +1,11 @@
 import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './handEvaluation.helper';
-import { UICard, EvaluationResult } from 'src/types';
+import { UICard, EvaluationResult } from '../../../src/types';
 
 const isRoyalFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
 const isStraightFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
-const isStraight = (hand: UICard[]) => hasStraight(hand);
-const isFullHouse = (sortedHand: UICard[]) => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
-const isFlush = (sortedHand: UICard[]) => everyCardIsSameSuit(sortedHand);
+const isStraight = (hand: UICard[]): boolean => hasStraight(hand);
+const isFullHouse = (sortedHand: UICard[]): boolean => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
+const isFlush = (sortedHand: UICard[]): boolean => everyCardIsSameSuit(sortedHand);
 
 
 /**
@@ -13,7 +13,7 @@ const isFlush = (sortedHand: UICard[]) => everyCardIsSameSuit(sortedHand);
  * @param {Array<UICard>} hand
  * @returns {EvaluationResult}
  */
-const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult => {
+export default (hand: UICard[]): EvaluationResult => {
   const evalResult: EvaluationResult = new EvaluationResult();
   evalResult.highCardValue = getHighCard(hand).value
 
@@ -59,6 +59,3 @@ const getEvaluationResultFromHand = (hand: UICard[]): EvaluationResult => {
 
   return evalResult
 }
-
-export default getEvaluationResultFromHand;
-

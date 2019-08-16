@@ -1,3 +1,3 @@
-import { winningHandNames } from 'src/resources';
+import { winningHandNames } from '../../../src/resources';
 
 export default (power: number) => winningHandNames[power];
