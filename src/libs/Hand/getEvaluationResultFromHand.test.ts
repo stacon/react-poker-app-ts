@@ -3,7 +3,7 @@ import getEvaluationResultFromHand from './getEvaluationResultFromHand';
 import { UICard, EvaluationResult } from '../../../src/types';
 import { Suit } from '../../../src/enums';
 
-it('should return a Royal Flush evalusationResult object', ()=>{
+it('should return a Royal Flush evaluationResult object', ()=>{
   const flushRoyal: UICard[] = [
     new UICard(10, Suit.hearts),
     new UICard(11, Suit.hearts),

@@ -46,7 +46,7 @@ const everyCardIsSameSuit = (hand: UICard[]): boolean => Object.keys(_.groupBy(h
 const isRoyal = (hand: UICard[]): boolean => {
   const sortedHandByValue = _.sortBy(hand, 'rank');
   if (sortedHandByValue[4].value !== 14) return false;
-  return sortedHandByValue.reduce((acc, cur) => acc + cur.value, 0) === 60;
+  return sortedHandByValue.reduce((acc, cur) => acc + cur.value, 0) === 60 && hasStraight(hand);
 }
 
 const hasFourOfAKind = (hand: UICard[]): boolean => _.partial(hasNumberOfCardsOfAKind, _, 4, 1)(hand);
