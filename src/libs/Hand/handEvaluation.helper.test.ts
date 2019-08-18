@@ -62,6 +62,39 @@ it('should evaluate the cardset to be falsy as it doesn\'t evaluate as royal', (
   expect(isRoyal(fiveCardsNotARoyal)).toBeFalsy();
 })
 
+it('should evaluate the cardset to be falsy as it doesn\'t evaluate as royal', ()=> {
+  const fiveCardsNotARoyal = [
+    new UICard(1, Suit.hearts),
+    new UICard(2, Suit.hearts),
+    new UICard(3, Suit.spades),
+    new UICard(4, Suit.hearts),
+    new UICard(5, Suit.hearts),
+  ];
+  expect(isRoyal(fiveCardsNotARoyal)).toBeFalsy();
+})
+
+it('should evaluate the cardset to be falsy as it doesn\'t evaluate as royal', ()=> {
+  const fiveCardsNotARoyal = [
+    new UICard(10, Suit.hearts),
+    new UICard(10, Suit.hearts),
+    new UICard(13, Suit.spades),
+    new UICard(13, Suit.hearts),
+    new UICard(14, Suit.hearts),
+  ];
+  expect(isRoyal(fiveCardsNotARoyal)).toBeFalsy();
+});
+
+it('should evaluate the cardset to be falsy as it doesn\'t evaluate as royal', ()=> {
+  const fiveCardsNotARoyal = [
+    new UICard(10, Suit.hearts),
+    new UICard(10, Suit.hearts),
+    new UICard(12, Suit.spades),
+    new UICard(14, Suit.hearts),
+    new UICard(14, Suit.hearts),
+  ];
+  expect(isRoyal(fiveCardsNotARoyal)).toBeFalsy();
+});
+
 it('should evaluate the cardset to be truthy as it has one set of four of a kind', ()=> {
   const fourOfAKind = [
     new UICard(2, Suit.hearts),
