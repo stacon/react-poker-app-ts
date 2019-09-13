@@ -7,6 +7,7 @@ import {
 import rootReducer from 'src/models/root.reducer';
 import rootEpic from 'src/models/root.epic';
 import { UserState, IndexState, GameState, MessagesState } from 'src/types/';
+import socketMiddleWare from '../App/socketIO.middleware';
 
 
 export interface AppState {
@@ -20,7 +21,7 @@ const enhancers = [];
 
 const { __REDUX_DEVTOOLS_EXTENSION__: devToolsExtension } = (global as any);
 const epicMiddleware = createEpicMiddleware();
-const middleware = [epicMiddleware];
+const middlewares = [socketMiddleWare, epicMiddleware];
 
 if (devToolsExtension && typeof devToolsExtension === 'function') {
   enhancers.push(devToolsExtension());
@@ -30,7 +31,7 @@ const store = createStore(
   rootReducer,
   {},
   compose(
-    applyMiddleware(...middleware),
+    applyMiddleware(...middlewares),
     ...enhancers,
   ),
 );
