@@ -68,7 +68,6 @@ it('should return a Flush evaluationResult object', ()=>{
   expect(getEvaluationResultFromHand(flush)).toEqual(expectedEvaluationResult);
 })
 
-//TODO: Should this and the following be equal?
 it('should return a Straight evaluationResult object', ()=>{
   const straight: UICard[] = [
     new UICard(1, Suit.spades),
@@ -82,7 +81,6 @@ it('should return a Straight evaluationResult object', ()=>{
   expect(getEvaluationResultFromHand(straight)).toEqual(expectedEvaluationResult);
 })
 
-//TODO: Should this and the previous be equal?
 it('should return a Straight evaluationResult object', ()=>{
   const straight: UICard[] = [
     new UICard(10, Suit.spades),
