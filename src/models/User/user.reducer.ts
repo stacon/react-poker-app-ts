@@ -8,15 +8,6 @@ const initialState = {
 
 export default function (state: UserState = initialState, action: any) {
   switch (action.type) {
-    // TODO: Needs Refactoring
-    // case RAISE: {
-    //   const raiseAmount: number = action.payload.amount ? action.payload.amount : 0;
-    //   const newBalance: number = state.balance - raiseAmount;
-    //   return {
-    //     ...state,
-    //     balance: newBalance
-    //   }
-    // }
     case BALANCE_CHANGED_SUCCESSFULLY: {
       return {
         ...state,
