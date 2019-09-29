@@ -1,4 +1,4 @@
-import Message from 'src/types/Message.type';
+import Message from 'src/libs/types/Message.type';
 
 // #region Actions
 export const ADD_MESSAGE = 'ADD_MESSAGE';

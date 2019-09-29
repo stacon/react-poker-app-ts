@@ -1,6 +1,6 @@
-import { IPlayer, UICard } from 'src/types';
+import { IPlayer, UICard } from 'src/libs/types';
 import { GameStatus } from 'src/enums';
-import GamePhase from 'src/types/GamePhase.type';
+import GamePhase from 'src/libs/types/GamePhase.type';
 
 // #region Actions
 export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
@@ -19,6 +19,7 @@ export const EVALUATION_COMPLETED_SUCCESSFULLY = 'EVALUATION_COMPLETED_SUCCESSFU
 export const PLAYER_FOLDED = 'PLAYER_FOLDED';
 export const PLAYER_FOLDING_COMPLETED = 'PLAYER_FOLDING_COMPLETED';
 export const GAME_STARTED = 'GAME_STARTED';
+export const GAME_STARTED_SUCCESSFULLY = 'GAME_STARTED_SUCCESSFULLY';
 export const RAISE = 'RAISE';
 export const RAISE_SUCCESSFUL = 'RAISE_SUCCESSFUL';
 export const PLACE_ANTE = 'PLACE_ANTE';
@@ -169,12 +170,10 @@ export const replaceCardsSuccess = (payload: {
   }
 }
 
-export const startGameSuccess = (payload: {players: IPlayer[]}) => {
-  return {
-    type: GAME_STARTED,
-    payload,
-  }
-}
+export const onGameStartedSuccess = (payload: any) => ({
+  type: GAME_STARTED_SUCCESSFULLY,
+  payload,
+})
 
 export const antePlacedSuccessfully = (payload: {players: IPlayer[], pot: number}) => {
   return {

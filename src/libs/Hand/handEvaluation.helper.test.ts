@@ -12,7 +12,7 @@ import {
   getPairGroupValue,
   getPairsGroupValues,
 } from './handEvaluation.helper';
-import { UICard } from '../../../src/types';
+import { UICard } from '../types';
 import { Suit } from '../../../src/enums';
 
 

@@ -1,5 +1,5 @@
 import { NUMBER_OF_PLAYERS_SELECTED_CHANGED } from './app.action.creator'
-import IndexState from 'src/types/IndexState.type';
+import IndexState from 'src/libs/types/IndexState.type';
 
 const initialState = {
   numberOfPlayersSelected: 2,

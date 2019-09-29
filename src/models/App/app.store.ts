@@ -6,7 +6,7 @@ import {
 
 import rootReducer from 'src/models/root.reducer';
 import rootEpic from 'src/models/root.epic';
-import { UserState, IndexState, GameState, MessagesState } from 'src/types/';
+import { UserState, IndexState, GameState, MessagesState } from 'src/libs/types';
 import socketMiddleWare from '../App/socketIO.middleware';
 
 
@@ -21,7 +21,10 @@ const enhancers = [];
 
 const { __REDUX_DEVTOOLS_EXTENSION__: devToolsExtension } = (global as any);
 const epicMiddleware = createEpicMiddleware();
-const middlewares = [socketMiddleWare, epicMiddleware];
+const middlewares = [
+  epicMiddleware,
+  socketMiddleWare,
+];
 
 if (devToolsExtension && typeof devToolsExtension === 'function') {
   enhancers.push(devToolsExtension());

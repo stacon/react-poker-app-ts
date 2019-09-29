@@ -1,5 +1,5 @@
-import { UICard } from '../../src/types';
-import { Suit } from '../../src/enums';
+import { UICard } from '.';
+import { Suit } from '../../enums';
 
 it('should create this Ace of Spades', ()=>{
     const aceOfSpades: UICard = new UICard(1, Suit.spades);

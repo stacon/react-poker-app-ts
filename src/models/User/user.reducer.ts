@@ -1,4 +1,4 @@
-import UserState from 'src/types/UserState.type';
+import UserState from 'src/libs/types/UserState.type';
 import { BALANCE_CHANGED_SUCCESSFULLY } from './user.action.creator';
 
 const initialState = {

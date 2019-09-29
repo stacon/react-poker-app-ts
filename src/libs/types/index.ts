@@ -6,8 +6,9 @@ import UICard from './UICard.type';
 import IPlayer from './IPlayer.type';
 import EvaluationResult from './EvaluationResult.type';
 import UserInformation from './UserInformation.type';
+import SystemAction from './SystemAction.type';
 
-export { 
+export {
     GameState,
     IndexState,
     MessagesState,
@@ -15,5 +16,6 @@ export {
     UICard,
     IPlayer,
     EvaluationResult,
-    UserInformation
+    UserInformation,
+    SystemAction,
 }

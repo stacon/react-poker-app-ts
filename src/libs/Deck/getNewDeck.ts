@@ -1,5 +1,5 @@
 import shuffle from 'shuffle-array';
-import { UICard } from '../../../src/types';
+import { UICard } from '../types';
 import { Suit } from '../../../src/enums';
 
 const generateSuitDeck = (suit: Suit): UICard[] => {

@@ -9,7 +9,7 @@ import CardContainer from '../Card/Card';
 import './Hand.module.css';
 
 // types
-import { UICard } from 'src/types';
+import { UICard } from 'src/libs/types';
 
 interface Props {
   hand: UICard[],

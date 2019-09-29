@@ -1,5 +1,5 @@
 import { AppState } from "../App/app.store";
-import Message from 'src/types/Message.type';
+import Message from 'src/libs/types/Message.type';
 
 // By ref
 export const getMessagesList = (state: AppState): Message[] => [...state.messages.list];

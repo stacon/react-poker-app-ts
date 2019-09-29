@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import getEvaluationResultFromHand from './getEvaluationResultFromHand';
-import { UICard, IPlayer, EvaluationResult } from '../../../src/types';
+import { UICard, IPlayer, EvaluationResult } from '../types';
 import getWinningHandNameFromPower from './getWinningHandNameFromValue';
-import WinnerResult from '../../../src/types/WinnerResult.type';
+import WinnerResult from '../types/WinnerResult.type';
 
 /**
  * Factory function for number of sets expected in 5 card array.

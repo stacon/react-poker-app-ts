@@ -3,7 +3,6 @@ import {
   CHANGE_RAISE_AMOUNT,
   REPLACE_CARDS_SUCCESS,
   CARDS_DEALT,
-  GAME_STARTED,
   ANTE_PLACED_SUCCESSFULLY,
   RAISE_SUCCESSFUL,
   SHIFT_PLAYER_TURN_SUCCESSFUL,
@@ -11,11 +10,12 @@ import {
   CHANGE_STATUS,
   EVALUATION_COMPLETED_SUCCESSFULLY,
   START_NEXT_ROUND,
-  PLAYER_FOLDING_COMPLETED
+  PLAYER_FOLDING_COMPLETED,
+  GAME_STARTED_SUCCESSFULLY
 } from './game.actions.creator';
 
 import _ from 'lodash';
-import GameState from 'src/types/GameState.type';
+import GameState from 'src/libs/types/GameState.type';
 import getNewDeck from 'src/libs/Deck/getNewDeck';
 import { GameStatus } from 'src/enums';
 
@@ -145,17 +145,11 @@ export default function (state: GameState = initialState, action: any): GameStat
       }
     }
 
-    case GAME_STARTED: {
+    case GAME_STARTED_SUCCESSFULLY: {
       return {
         ...state,
         ...action.payload,
-        deck: getNewDeck(),
-        phase: {
-          ...state.phase,
-          statusId: GameStatus._NewGame,
-        },
         amountForRaise: 1,
-        pot: 0
       };
     }
     default: {

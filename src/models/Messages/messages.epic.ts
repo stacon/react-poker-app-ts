@@ -1,13 +1,13 @@
 import { map } from 'rxjs/internal/operators/map';
 import { ofType, combineEpics, ActionsObservable, StateObservable } from "redux-observable";
 import {
-  CARDS_DEALT,
   ANTE_PLACED_SUCCESSFULLY,
   GAME_STARTED,
   EVALUATION_COMPLETED,
   RAISE,
   REPLACE_CARDS,
   CALL_CHECK,
+  GAME_STARTED_SUCCESSFULLY,
 } from '../Game/game.actions.creator';
 import {
   ADD_MESSAGE,
@@ -18,13 +18,13 @@ import {
 import { Action } from 'redux';
 import { AppState } from '../App/app.store';
 import { getMessagesList } from './messages.selectors';
-import { IPlayer } from 'src/types';
+import { IPlayer } from 'src/libs/types';
 import { getPlayerById, getActivePlayers } from '../Game/game.selectors';
-import Message from 'src/types/Message.type';
+import Message from 'src/libs/types/Message.type';
 import { count } from 'rxjs/operators';
 
 const cardsDealtEpic = (action$: ActionsObservable<Action>) => action$.pipe(
-  ofType(CARDS_DEALT),
+  ofType(GAME_STARTED_SUCCESSFULLY),
   map(() => addMessage({text: 'Hands Dealt! Good Luck'})),
 );
 
@@ -55,7 +55,7 @@ const onReplaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObs
     const { pid, cardsForReplacement } = payload;
     const players: IPlayer[] = getActivePlayers(state$.value);
 
-    return addMessage({text: 
+    return addMessage({text:
       cardsForReplacement < 1 ?
         `${players[pid].name} didn't replace any cards.` :
         `${players[pid].name} replaced ${cardsForReplacement} cards.`
@@ -68,7 +68,7 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
   map((action: any) => {
     const { payload } = action;
     const { playerWon, winningHand } = payload;
-    return addMessage({text: 
+    return addMessage({text:
       `Winner is ${playerWon.name} with ${winningHand}`,
     })
   }),

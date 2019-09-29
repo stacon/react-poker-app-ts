@@ -1,4 +1,4 @@
-import { UICard } from '../../../src/types';
+import { UICard } from '../types';
 import getNewDeck from './getNewDeck';
 
 it('should create a shuffled 52 card deck', () => {

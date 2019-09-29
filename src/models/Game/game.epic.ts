@@ -1,4 +1,4 @@
-import { map, tap, filter, distinctUntilChanged, delay } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged, delay, tap } from 'rxjs/operators';
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable';
 import _ from 'lodash';
 import { history } from "../../components/Routes";
@@ -28,16 +28,17 @@ import {
   playerTurnShiftSuccessFul,
   raiseSuccessful,
   replaceCardsSuccess,
-  startGameSuccess,
   shiftPlayerTurn,
   changeStatus,
   onEvaluationCompletion,
   evaluationCompletionSuccessful,
   replaceCards,
   playerFoldingSucceeded,
+  GAME_STARTED,
+  onGameStartedSuccess,
 } from './game.actions.creator';
 
-import { IPlayer, UICard } from 'src/types';
+import { IPlayer, UICard } from 'src/libs/types';
 import { AppState } from '../App/app.store';
 import { GameStatus } from 'src/enums';
 import { Action } from 'redux';
@@ -58,22 +59,38 @@ import {
   getCurrentPlayerPID
 } from './game.selectors';
 import { getWinnerResult } from 'src/libs/Hand/handEvaluation.helper';
-import WinnerResult from 'src/types/WinnerResult.type';
+import WinnerResult from 'src/libs/types/WinnerResult.type';
+import { emitToServer } from '../System/system.actions.creator';
+
+// const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
+//   ofType(START_GAME),
+//   map((action: any) => {
+//     const { payload } = action;
+//     const players: IPlayer[] = _.times(payload.numberOfPlayers)
+//       .map(i => new IPlayer(
+//         i.toString(),
+//         i === 0 ? payload.name : `Player_${i + 1}`,
+//         i === 0 ? payload.balance : 1000,
+//       ))
+//     return startGameSuccess({ players });
+//   }),
+//   tap(() => {
+//     history.push('/game');
+//   })
+// )
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
   map((action: any) => {
-    const { payload } = action;
-    const players: IPlayer[] = _.times(payload.numberOfPlayers)
-      .map(i => new IPlayer(
-        i.toString(),
-        i === 0 ? payload.name : `Player_${i + 1}`,
-        i === 0 ? payload.balance : 1000,
-      ))
-    return startGameSuccess({ players });
-  }),
-  tap(() => {
-    history.push('/game');
+    return emitToServer(action);
+  })
+)
+
+const onGameStartedEpic = (action$: ActionsObservable<Action>) => action$.pipe(
+  ofType(GAME_STARTED),
+  tap(() => history.push('/game')),
+  map((action: any) => {
+    return onGameStartedSuccess(action.payload);
   })
 )
 
@@ -376,6 +393,7 @@ export default combineEpics(
   onCurrentPlayerIdChangeEpic,
   callRequestEpic,
   onBotPlayerTurnEpic,
+  onGameStartedEpic,
   onPlayerFoldEpic,
   onSuccessfulCallCheckEpic,
   onSuccessfulPlayerFoldEpic,

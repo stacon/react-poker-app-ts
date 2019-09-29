@@ -1,5 +1,5 @@
 import { AppState } from "../App/app.store";
-import { UserInformation } from 'src/types';
+import { UserInformation } from 'src/libs/types';
 
 // By ref
 export const getUserInfo = (state: AppState): UserInformation => ({...state.user});

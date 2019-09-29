@@ -1,6 +1,6 @@
 
 import getEvaluationResultFromHand from './getEvaluationResultFromHand';
-import { UICard, EvaluationResult } from '../../../src/types';
+import { UICard, EvaluationResult } from '../types';
 import { Suit } from '../../../src/enums';
 
 it('should return a Royal Flush evaluationResult object', ()=>{

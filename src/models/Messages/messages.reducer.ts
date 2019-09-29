@@ -1,5 +1,5 @@
 import { MESSAGE_ADDED_SUCCESSFULLY, RESET_MESSAGES } from './messages.action.creator';
-import MessagesState from 'src/types/MessagesState.type';
+import MessagesState from 'src/libs/types/MessagesState.type';
 
 const initialState: MessagesState = {
   list: [],
@@ -21,7 +21,7 @@ export default function (state: MessagesState = initialState, action: any) {
         list: [],
       }
     }
-    
+
     default: {
       return state;
     }

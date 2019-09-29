@@ -3,7 +3,7 @@ import './MessagesFrame.module.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { getMessagesList } from 'src/models/Messages/messages.selectors';
-import Message from 'src/types/Message.type';
+import Message from 'src/libs/types/Message.type';
 
 interface Props {
   messagesArray: Message[]

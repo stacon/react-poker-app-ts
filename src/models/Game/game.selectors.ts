@@ -1,7 +1,7 @@
 import { AppState } from "../App/app.store";
-import { GameState, IPlayer, UICard } from 'src/types';
+import { GameState, IPlayer, UICard } from 'src/libs/types';
 import { GameStatus } from 'src/enums';
-import GamePhase from 'src/types/GamePhase.type';
+import GamePhase from 'src/libs/types/GamePhase.type';
 
 export const getGameState = (state: AppState): GameState => state.game;
 

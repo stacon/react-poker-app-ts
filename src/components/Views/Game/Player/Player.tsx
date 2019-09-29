@@ -10,7 +10,7 @@ import './Player.module.css';
 
 // Interfaces
 import DealerBadge from '../DealerBadge/DealerBadge';
-import { UICard } from 'src/types';
+import { UICard } from 'src/libs/types';
 
 // Types
 

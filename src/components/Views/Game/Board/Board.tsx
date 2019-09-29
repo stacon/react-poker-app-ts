@@ -9,7 +9,7 @@ import Player from '../Player/Player';
 import './Board.module.css';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
-import { IPlayer } from 'src/types';
+import { IPlayer } from 'src/libs/types';
 import { getGamePlayers, getGamePot, getGameDealerPID, gameHasStarted, isMainPlayerTurn } from 'src/models/Game/game.selectors';
 
 interface Props {
