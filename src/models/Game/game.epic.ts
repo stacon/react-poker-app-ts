@@ -81,17 +81,13 @@ import { emitToServer } from '../System/system.actions.creator';
 
 const startGameEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(START_GAME),
-  map((action: any) => {
-    return emitToServer(action);
-  })
+  map((action: any) => emitToServer(action))
 )
 
 const onGameStartedEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   ofType(GAME_STARTED),
   tap(() => history.push('/game')),
-  map((action: any) => {
-    return onGameStartedSuccess(action.payload);
-  })
+  map((action: any) => onGameStartedSuccess(action.payload))
 )
 
 const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(

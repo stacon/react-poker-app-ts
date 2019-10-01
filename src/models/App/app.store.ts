@@ -7,7 +7,7 @@ import {
 import rootReducer from 'src/models/root.reducer';
 import rootEpic from 'src/models/root.epic';
 import { UserState, IndexState, GameState, MessagesState } from 'src/libs/types';
-import socketMiddleWare from '../App/socketIO.middleware';
+import socketMiddleWare from './middlewares/socketIO.middleware';
 
 
 export interface AppState {
