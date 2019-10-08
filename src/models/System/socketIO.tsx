@@ -7,4 +7,6 @@ io.on('connect', () => console.log('Connected'));
 io.on('server-event', (action: Action) => store.dispatch(action));
 io.on('disconnect', () => console.log('Disconnected from server'));
 
-export default io;
+const emitToServer = (action: Action) => io.emit('client-event', action);
+
+export default emitToServer;
