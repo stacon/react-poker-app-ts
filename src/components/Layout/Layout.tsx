@@ -3,13 +3,15 @@ import './Layout.module.css';
 
 import Routes from 'src/components/Routes';
 import Navbar from '../UI/Navigation/Navbar/Navbar';
+import DialosManager from '../UI/DialogManager/DialogManager';
 
 const layout = () => (
   <>
-  <Navbar/>
-  <div className="container">
+    <DialosManager />
+    <Navbar />
+    <div className="container">
       <Routes />
-  </div>
+    </div>
   </>
 );
 

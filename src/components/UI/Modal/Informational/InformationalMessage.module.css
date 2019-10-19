@@ -1,0 +1,14 @@
+.header-image {
+  text-align: center;
+  padding: 10px 0 10px 0;
+}
+
+.modal-body {
+  text-align: center;
+  padding: 10px 0 10px 0;
+  font-weight: 600;
+}
+
+.modal-body-msg {
+  margin-bottom: 10px;
+}

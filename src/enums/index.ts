@@ -1,4 +1,5 @@
 import Suit from './Suit.enum';
 import GameStatus from './GameStatus.enum';
+import InformationalMessageType from './InformationalType.enum';
 
-export { Suit, GameStatus };
+export { Suit, GameStatus, InformationalMessageType };
