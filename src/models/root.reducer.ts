@@ -3,12 +3,14 @@ import appReducer from './App/app.reducer';
 import gameReducer from './Game/game.reducer';
 import userReducer from './User/user.reducer';
 import messagesReducer from './Messages/messages.reducer';
+import systemReducer from './System/system.reducer';
 
 const rootReducer = combineReducers({
-  user : userReducer,
-  app : appReducer,
-  game : gameReducer,
-  messages : messagesReducer,
+  user: userReducer,
+  app: appReducer,
+  game: gameReducer,
+  messages: messagesReducer,
+  system: systemReducer,
 });
 
 export default rootReducer;

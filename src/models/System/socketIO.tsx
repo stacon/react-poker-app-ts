@@ -1,8 +1,8 @@
 import socketIOclient from 'socket.io-client';
 import store from 'src/models/App/app.store';
 import { Action } from 'redux';
-import { addModal } from '../App/app.action.creator';
 import { InformationalMessageType } from 'src/enums';
+import { addModal } from './system.actions.creator';
 
 const io = socketIOclient('http://localhost:55444');
 io.on('connect', () => store.dispatch(addModal({

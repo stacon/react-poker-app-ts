@@ -6,7 +6,7 @@ import {
 
 import rootReducer from 'src/models/root.reducer';
 import rootEpic from 'src/models/root.epic';
-import { UserState, IndexState, GameState, MessagesState } from 'src/libs/types';
+import { UserState, IndexState, GameState, MessagesState, SystemState } from 'src/libs/types';
 import socketMiddleWare from './middlewares/socketIO.middleware';
 
 
@@ -14,7 +14,8 @@ export interface AppState {
   user: UserState,
   app: IndexState,
   game: GameState,
-  messages: MessagesState
+  messages: MessagesState,
+  system: SystemState,
 }
 
 const enhancers = [];

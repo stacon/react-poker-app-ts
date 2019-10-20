@@ -1,28 +1,28 @@
 import React from 'react';
 
 import Modal from '../Modal/Modal';
-import { Modal as ModalType, ModalButton, } from 'src/libs/types';
+import { Dialog, ModalButton, } from 'src/libs/types';
 import InformationalMessage from '../Modal/Informational/InformationalMessage';
 import { connect } from 'react-redux';
-import { closeCurrentModal } from 'src/models/App/app.action.creator';
 import { AppState } from 'src/models/App/app.store';
-import { getModals } from 'src/models/App/app.selectors';
+import { getDialogs } from 'src/models/System/system.selectors';
+import { closeCurrentModal } from 'src/models/System/system.actions.creator';
 
 type Props = {
-  modals: ModalType[],
+  dialogs: Dialog[],
   onModalClosed: Function,
 }
 
-const dialogManager = ({ modals, onModalClosed }: Props): JSX.Element | null => (
-  (!!modals && modals.length) ?
+const dialogManager = ({ dialogs, onModalClosed }: Props): JSX.Element | null => (
+  (!!dialogs && dialogs.length) ?
     <Modal modalClosed={() => onModalClosed()}>
       <>
         <InformationalMessage
-          messages={modals[0].messages}
-          informationMessageType={modals[0].type}
+          messages={dialogs[0].messages}
+          informationMessageType={dialogs[0].type}
         />
         {
-          modals[0].buttons.map(({ callBack, text }: ModalButton) => (
+          dialogs[0].buttons.map(({ callBack, text }: ModalButton) => (
             <button onClick={() => callBack()}>{text}</button>
           ))
         }
@@ -32,7 +32,7 @@ const dialogManager = ({ modals, onModalClosed }: Props): JSX.Element | null => 
 )
 
 const mapStateToProps = (state: AppState) => ({
-  modals: getModals(state),
+  dialogs: getDialogs(state),
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({

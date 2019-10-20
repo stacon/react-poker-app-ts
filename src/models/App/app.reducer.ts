@@ -1,24 +1,17 @@
-import { NUMBER_OF_PLAYERS_SELECTED_CHANGED, MODALS_UPDATED_SUCCESSFULLY } from './app.action.creator'
+import { NUMBER_OF_PLAYERS_SELECTED_CHANGED } from './app.action.creator'
 import IndexState from 'src/libs/types/IndexState.type';
 
-const initialState = {
+const initialState: IndexState = {
   numberOfPlayersSelected: 2,
-  modals: []
 }
 
-export default function (state: IndexState = initialState, action: any) {
-  switch (action.type) {
+export default function (state: IndexState = initialState, {type, payload}: any) {
+  switch (type) {
 
     case (NUMBER_OF_PLAYERS_SELECTED_CHANGED): {
       return {
         ...state,
-        numberOfPlayersSelected: action.payload.numberOfPlayers,
-      }
-    }
-    case (MODALS_UPDATED_SUCCESSFULLY): {
-      return {
-        ...state,
-        ...action.payload
+        numberOfPlayersSelected: payload.numberOfPlayers,
       }
     }
     default: {
