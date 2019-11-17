@@ -1,6 +1,6 @@
 import { IPlayer, UICard } from 'src/libs/types';
 import { GameStatus } from 'src/enums';
-import GamePhase from 'src/libs/types/GamePhase.type';
+import RoundState from 'src/libs/types/RoundState.type';
 
 // #region Actions
 export const ANTE_PLACED_SUCCESSFULLY = 'ANTE_PLACED_SUCCESSFULLY';
@@ -81,7 +81,7 @@ export const raise = (payload: {amount: number, pid: string}) => {
 export const raiseSuccessful = (payload: {
   players: IPlayer[],
   pot: number,
-  phase: GamePhase
+  phase: RoundState
 }) => {
   return {
     type: RAISE_SUCCESSFUL,
@@ -89,7 +89,7 @@ export const raiseSuccessful = (payload: {
   }
 }
 
-export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, phase: GamePhase }) => {
+export const callCheckSuccessful = (payload: {players: IPlayer[], pot: number, phase: RoundState }) => {
   return {
     type: CALL_CHECK_SUCCESSFUL,
     payload,
@@ -142,7 +142,7 @@ export const fold = (payload: {pid: string} ) => {
 }
 
 export const playerFoldingSucceeded = (payload: {
-  phase: GamePhase,
+  phase: RoundState,
   players: IPlayer[],
   activePlayersPIDs: string[]
 }) => {
@@ -160,7 +160,7 @@ export const replaceCards = (payload: {pid: string, cardsForReplacement: number}
 }
 
 export const replaceCardsSuccess = (payload: {
-  phase: GamePhase,
+  phase: RoundState,
   players: IPlayer[],
   deck: UICard[]
 }) => {

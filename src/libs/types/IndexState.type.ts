@@ -1,4 +1,4 @@
-interface IndexState {
+interface IndexState { // TODO: Maybe rename this property as EntryPageState
   numberOfPlayersSelected: number,
 }
 

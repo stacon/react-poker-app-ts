@@ -1,21 +1,22 @@
 import { everyCardIsSameSuit, isRoyal, hasStraight, hasThreeOfAKind, hasOnePair, getHighCard, hasFourOfAKind, hasTwoPairs, getFourOfAKindGroupValue, getThreeOfAKindGroupValue, getPairGroupValue, getPairsGroupValues, PairValues } from './handEvaluation.helper';
-import { UICard, EvaluationResult } from '../types';
+import { Card, EvaluationResult } from '../types';
+import { getCardValueByRankNumber } from '../Deck/card.helper';
 
-const isRoyalFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
-const isStraightFlush = (hand: UICard[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
-const isStraight = (hand: UICard[]): boolean => hasStraight(hand);
-const isFullHouse = (sortedHand: UICard[]): boolean => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
-const isFlush = (sortedHand: UICard[]): boolean => everyCardIsSameSuit(sortedHand);
+const isRoyalFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && isRoyal(hand);
+const isStraightFlush = (hand: Card[]): boolean => everyCardIsSameSuit(hand) && hasStraight(hand);
+const isStraight = (hand: Card[]): boolean => hasStraight(hand);
+const isFullHouse = (sortedHand: Card[]): boolean => hasThreeOfAKind(sortedHand) && hasOnePair(sortedHand);
+const isFlush = (sortedHand: Card[]): boolean => everyCardIsSameSuit(sortedHand);
 
 
 /**
  * From an array of 5 card you can get an evaluation result
- * @param {Array<UICard>} hand
+ * @param {Array<Card>} hand
  * @returns {EvaluationResult}
  */
-export default (hand: UICard[]): EvaluationResult => {
+export default (hand: Card[]): EvaluationResult => {
   const evalResult: EvaluationResult = new EvaluationResult();
-  evalResult.highCardValue = getHighCard(hand).value
+  evalResult.highCardValue = getCardValueByRankNumber(getHighCard(hand).rank);
 
   if (isRoyalFlush(hand)) {
     evalResult.power = 10

@@ -1,22 +1,31 @@
 import shuffle from 'shuffle-array';
-import { UICard } from '../types';
+import _ from 'lodash';
+import { Card } from '../types';
 import { Suit } from '../../../src/enums';
 
-const generateSuitDeck = (suit: Suit): UICard[] => {
-  let suitDeck: UICard[] = [];
-  let i = 1
-  while (i < 14) {
-    suitDeck = [...suitDeck, new UICard(i, suit)];
-    i++
-  }
-  return suitDeck;
-}
+/**
+ * Generates a 13 card array for one suit (eg. Ace to King of Spades)
+ * @param {Suit} suit
+ * @returns {Card[]} 13 card array of the same suit 
+ */
+// const generateSuitDeck = (suit: Suit): Card[] => {
+//   let suitDeck: Card[] = [];
+//   let rank = 1
+  
+//   while (rank < 14) {
+//     suitDeck = [...suitDeck, <Card> {suit, rank}];
+//     rank++
+//   }
+//   return suitDeck;
+// }
 
-const generateDeck = (shuffled: boolean = false): UICard[] => {
-  const generatedDeck = Object.keys(Suit).map(i => Suit[i]).reduce((deck: UICard[], suitName: Suit) => [...deck, ...generateSuitDeck(suitName)], []);
+const generateSuitDeck = (suit: Suit): Card[] => ( _.times(13).reduce((deck, rank) => [...deck, <Card>{suit, rank}], []));
+
+const generateDeck = (shuffled: boolean = false): Card[] => {
+  const generatedDeck = Object.keys(Suit).map(i => Suit[i]).reduce((deck: Card[], suitName: Suit) => [...deck, ...generateSuitDeck(suitName)], []);
   return (shuffled) ? shuffle(generatedDeck, { 'copy': true }) : generatedDeck;
 }
 
-const getNewDeck = (): UICard[] => generateDeck(true);
+const getNewDeck = (): Card[] => generateDeck(true);
 
 export default getNewDeck;

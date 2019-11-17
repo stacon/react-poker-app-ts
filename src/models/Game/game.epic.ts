@@ -8,7 +8,6 @@ import {
   CALL_CHECK_SUCCESSFUL,
   CARD_CLICKED,
   CURRENT_PLAYER_CHANGED,
-  DEAL_CARDS,
   EVALUATION_COMPLETED,
   PLACE_ANTE,
   PLAYER_FOLDED,
@@ -21,7 +20,6 @@ import {
   SHIFT_PLAYER_TURN,
   antePlacedSuccessfully,
   callCheckSuccessful,
-  cardsDealt,
   cardSelectedSuccessfully,
   checkCall,
   currentPlayerChanged,
@@ -90,26 +88,27 @@ const onGameStartedEpic = (action$: ActionsObservable<Action>) => action$.pipe(
   map((action: any) => onGameStartedSuccess(action.payload))
 )
 
-const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
-  ofType(DEAL_CARDS),
-  map(() => {
-    const newDeck: UICard[] = (getGameDeck(state$.value));
-    const newPlayers: IPlayer[] =
-      getGamePlayers(state$.value).map((player: IPlayer) => ({
-        ...player,
-        hand: newDeck.splice(0, 5)
-      }
-      ));
+// TODO: This moves to the backend
+// const dealCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
+//   ofType(DEAL_CARDS),
+//   map(() => {
+//     const newDeck: UICard[] = (getGameDeck(state$.value));
+//     const newPlayers: IPlayer[] =
+//       getGamePlayers(state$.value).map((player: IPlayer) => ({
+//         ...player,
+//         hand: newDeck.splice(0, 5)
+//       }
+//       ));
 
-    const i: number = getPlayerIndexByPid(state$.value, getMainPlayer(state$.value).pid);
-    newPlayers[i].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
-    return cardsDealt({
-      currentPlayerPID: getMainPlayer(state$.value).pid,
-      deck: newDeck,
-      players: newPlayers,
-    });
-  }),
-)
+//     const i: number = getPlayerIndexByPid(state$.value, getMainPlayer(state$.value).pid);
+//     newPlayers[i].hand.forEach((card, cardIndex) => newPlayers[0].hand[cardIndex].flipped = true)
+//     return cardsDealt({
+//       currentPlayerPID: getMainPlayer(state$.value).pid,
+//       deck: newDeck,
+//       players: newPlayers,
+//     });
+//   }),
+// )
 
 const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObservable<AppState>) => action$.pipe(
   ofType(REPLACE_CARDS),
@@ -323,10 +322,7 @@ const onEvaluationCompletionEpic = (action$: ActionsObservable<Action>, state$: 
     const winnerId = getPlayerIndexByName(state$.value, playerWon.name);
     const gamePot = getGamePot(state$.value);
     const players = getActivePlayers(state$.value);
-    players[winnerId].balance = players[winnerId].balance + gamePot
-    players.forEach(
-      (player, playerIndex) => player.hand.forEach(
-        (card, cardIndex) => players[playerIndex].hand[cardIndex].flipped = true))
+    players[winnerId].balance = players[winnerId].balance + gamePot;
     return evaluationCompletionSuccessful({
       players
     })
@@ -380,7 +376,6 @@ const afterPlayerChangeEpic = (action$: ActionsObservable<Action>, state$: State
 
 export default combineEpics(
   startGameEpic,
-  dealCardsEpic,
   replaceCardsEpic,
   placeAnteEpic,
   cardClickedEpic,

@@ -1,7 +1,7 @@
 import { AppState } from "../App/app.store";
 import { GameState, IPlayer, UICard } from 'src/libs/types';
 import { GameStatus } from 'src/enums';
-import GamePhase from 'src/libs/types/GamePhase.type';
+import RoundState from 'src/libs/types/RoundState.type';
 
 export const getGameState = (state: AppState): GameState => state.game;
 
@@ -22,7 +22,7 @@ export const getMainPlayer = (state: AppState): IPlayer => ({...getGameState(sta
 export const getGameDeck = (state: AppState): UICard[] => [...getGameState(state).deck];
 export const getPlayerById = (state: AppState, id: number): IPlayer => ({...getGamePlayers(state)[id]});
 export const getCurrentPlayer = (state: AppState): IPlayer => ({...getGamePlayers(state)[getCurrentPlayerIndex(state)]});
-export const getGamePhase = (state: AppState): GamePhase => ({...getGameState(state).phase});
+export const getGamePhase = (state: AppState): RoundState => ({...getGameState(state).phase});
 
 // By val
 export const getCurrentPlayerPID = (state: AppState): string => getGameState(state).currentPlayerPID;

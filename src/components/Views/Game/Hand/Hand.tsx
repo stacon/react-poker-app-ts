@@ -10,6 +10,7 @@ import './Hand.module.css';
 
 // types
 import { UICard } from 'src/libs/types';
+import _ from 'lodash';
 
 interface Props {
   hand: UICard[],
@@ -17,14 +18,14 @@ interface Props {
 
 const Hand = ({ hand }: Props): JSX.Element => (
   <ul className="table tbl_clear m-b-0" style={ {overflow : 'visible'}}>
-    {hand.map((item: UICard, index) => (
+    {hand.map((card: UICard, index) => (
       <CardContainer
-        key={`${item.suit}+${item.rank}`}
-        isFlipped={(item.flipped) ? true : false}
-        rank={item.rank}
-        suit={item.suit}
+        key={`${card.suit}+${card.rank}`}
+        isFlipped={_.isEmpty(card)}
+        rank={card.rank}
+        suit={card.suit}
         index={index}
-        isSelected={item.selected}
+        isSelected={!!card.selected}
       />
     ))}
   </ul>
