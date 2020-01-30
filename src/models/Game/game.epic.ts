@@ -119,11 +119,14 @@ const replaceCardsEpic = (action$: ActionsObservable<Action>, state$: StateObser
     const deck: UICard[] = getGameDeck(state$.value);
     const i: number = getPlayerIndexByPid(state$.value, pid);
     const hand: any[] = players[i].hand.reduce(
-      (newHand, card, index) => {
+      (newHand: UICard[], card: UICard, index: number): UICard[] => {
         if (card.selected) {
+          const poppedCard: UICard | undefined = deck.pop();
+          const cardsToPlace: UICard[] = poppedCard ? [poppedCard] : [];
+
           return [
             ...newHand.slice(0, index),
-            deck.pop(),
+            ...cardsToPlace,
             ...newHand.slice(index + 1)
           ];
         }

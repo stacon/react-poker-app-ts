@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navbar.module.css';
+import './Navbar.css';
 import { connect } from 'react-redux';
 import { dealCards, startNextRound } from 'src/models/Game/game.actions.creator';
 import { AppState } from '../../../../models/App/app.store';

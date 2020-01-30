@@ -5,7 +5,7 @@ import _ from 'lodash';
 import React from 'react';
 
 // css
-import './deck.module.css';
+import './deck.css';
 
 const Deck = (props: { size: number }): JSX.Element => (
   <ul className="deck">

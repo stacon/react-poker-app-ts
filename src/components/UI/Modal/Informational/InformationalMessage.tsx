@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InformationalMessageType } from 'src/enums';
 
-import './InformationalMessage.module.css';
+import './InformationalMessage.css';
 const icons = 'assets/img/icons/';
 
 type Props = {

@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import getEvaluationResultFromHand from './getEvaluationResultFromHand';
-import { Card, IPlayer, EvaluationResult } from '../types';
+import { Card, IPlayer, PairValues } from '../types';
 import getWinningHandNameFromPower from './getWinningHandNameFromValue';
 import WinnerResult from '../types/WinnerResult.type';
 import { getCardValueByRankNumber } from '../Deck/card.helper';
+import EvaluationResult from '../types/EvaluationResult.type';
 
 /**
  * Factory function for number of sets expected in 5 card array.
@@ -129,11 +130,6 @@ const getEvaluationResultsFromPlayers = (players: IPlayer[]): EvaluationResult[]
   return evaluationResults;
 }
 
-type PairValues = {
-  lowPairValue: number
-  highPairValue: number
-}
-
 export {
   everyCardIsSameSuit,
   isRoyal,
@@ -147,7 +143,6 @@ export {
   getThreeOfAKindGroupValue,
   getPairGroupValue,
   getPairsGroupValues,
-  PairValues,
   mapRankToNumber,
   getWinnerResult,
   getEvaluationResultsFromPlayers

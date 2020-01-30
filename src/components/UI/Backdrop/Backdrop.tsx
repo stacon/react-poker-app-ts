@@ -2,7 +2,7 @@
 import React from 'react';
 
 // css
-import './Backdrop.module.css';
+import './Backdrop.css';
 
 type Props = {
   show: boolean,

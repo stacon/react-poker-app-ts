@@ -1,13 +1,13 @@
 import * as React from 'react';
-import './Layout.module.css';
+import './Layout.css';
 
 import Routes from 'src/components/Routes';
 import Navbar from '../UI/Navigation/Navbar/Navbar';
-import DialosManager from '../UI/DialogManager/DialogManager';
+import DialogManager from '../UI/DialogManager/DialogManager';
 
 const layout = () => (
   <>
-    <DialosManager />
+    <DialogManager />
     <Navbar />
     <div className="container">
       <Routes />

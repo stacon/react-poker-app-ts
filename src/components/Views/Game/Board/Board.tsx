@@ -6,7 +6,7 @@ import { AppState } from 'src/models/App/app.store';
 // components
 import Player from '../Player/Player';
 
-import './Board.module.css';
+import './Board.css';
 import MessagesFrame from '../MessagesFrame/MessagesFrame';
 import GameControls from '../GameControls/GameControls';
 import { IPlayer } from 'src/libs/types';

@@ -1,31 +1,14 @@
-import GameState from './GameState.type';
-import RoundState from './RoundState.type';
-import IndexState from './IndexState.type';
-import MessagesState from './MessagesState.type';
-import SystemState from './SystemState.type';
-import UserState from './UserState.type';
-import Card from './Card.type';
-import UICard from './UICard.type';
-import IPlayer from './IPlayer.type';
-import EvaluationResult from './EvaluationResult.type';
-import UserInformation from './UserInformation.type';
-import SystemAction from './SystemAction.type';
-import Dialog from './Dialog.type';
-import ModalButton from './ModalButton.type';
-
-export {
-  GameState,
-  RoundState,
-  IndexState,
-  MessagesState,
-  SystemState,
-  UserState,
-  Card,
-  UICard,
-  IPlayer,
-  EvaluationResult,
-  UserInformation,
-  SystemAction,
-  Dialog,
-  ModalButton,
-}
+export type GameState = import("./GameState.type").default;
+export type RoundState = import("./RoundState.type").default;
+export type IndexState = import("./IndexState.type").default;
+export type MessagesState = import("./MessagesState.type").default;
+export type SystemState = import("./SystemState.type").default;
+export type UserState = import("./UserState.type").default;
+export type Card = import("./Card.type").default;
+export type UICard = import("./UICard.type").default;
+export type IPlayer = import("./IPlayer.type").default;
+export type UserInformation = import("./UserInformation.type").default;
+export type SystemAction = import("./SystemAction.type").default;
+export type Dialog = import("./Dialog.type").default;
+export type ModalButton = import("./ModalButton.type").default;
+export type PairValues = import("./PairValues.type").default;

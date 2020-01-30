@@ -6,7 +6,7 @@ import CardContainer from '../Card/Card';
 
 
 // css
-import './Hand.module.css';
+import './Hand.css';
 
 // types
 import { UICard } from 'src/libs/types';

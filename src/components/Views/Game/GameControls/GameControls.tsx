@@ -1,5 +1,5 @@
 import React from 'react';
-import './GameControls.module.css';
+import './GameControls.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { raise, changeRaiseAmount, checkCall, replaceCards, fold } from 'src/models/Game/game.actions.creator';
