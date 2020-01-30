@@ -6,7 +6,7 @@ import Hand from '../Hand/Hand';
 import Info from '../Info/Info';
 
 // css
-import './Player.module.css';
+import './Player.css';
 
 // Interfaces
 import DealerBadge from '../DealerBadge/DealerBadge';

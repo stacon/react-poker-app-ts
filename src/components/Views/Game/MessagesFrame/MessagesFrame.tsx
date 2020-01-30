@@ -1,5 +1,5 @@
 import React from 'react';
-import './MessagesFrame.module.css';
+import './MessagesFrame.css';
 import { AppState } from 'src/models/App/app.store';
 import { connect } from 'react-redux';
 import { getMessagesList } from 'src/models/Messages/messages.selectors';

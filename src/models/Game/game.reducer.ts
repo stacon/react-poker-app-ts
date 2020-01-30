@@ -14,7 +14,6 @@ import {
   GAME_STARTED_SUCCESSFULLY
 } from './game.actions.creator';
 
-import _ from 'lodash';
 import GameState from 'src/libs/types/GameState.type';
 import getNewDeck from 'src/libs/Deck/getNewDeck';
 import { GameStatus } from 'src/enums';

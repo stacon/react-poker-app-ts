@@ -19,7 +19,9 @@ import { Suit } from '../../../src/enums';
 //   return suitDeck;
 // }
 
-const generateSuitDeck = (suit: Suit): Card[] => ( _.times(13).reduce((deck, rank) => [...deck, <Card>{suit, rank}], []));
+const generateSuitDeck = (suit: Suit): Card[] => ( 
+    _.times(13).reduce((deck: Card[], rank: number) => [...deck, {suit, rank}], [])
+);
 
 const generateDeck = (shuffled: boolean = false): Card[] => {
   const generatedDeck = Object.keys(Suit).map(i => Suit[i]).reduce((deck: Card[], suitName: Suit) => [...deck, ...generateSuitDeck(suitName)], []);

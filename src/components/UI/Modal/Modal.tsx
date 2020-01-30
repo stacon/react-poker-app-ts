@@ -4,7 +4,7 @@ import React from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 
 // css
-import './Modal.module.css';
+import './Modal.css';
 
 type Props = {
   modalClosed: Function,

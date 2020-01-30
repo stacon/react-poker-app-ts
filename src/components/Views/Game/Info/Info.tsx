@@ -2,7 +2,7 @@
 import React from 'react';
 
 // css
-import './Info.module.css';
+import './Info.css';
 
 interface Props {
   playerName: string,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { onCardClick } from 'src/models/Game/game.actions.creator';
 
 //css
-import './Card.module.css';
+import './Card.css';
 import { getRankUIRepresentation } from './helpers';
 
 interface Props {
