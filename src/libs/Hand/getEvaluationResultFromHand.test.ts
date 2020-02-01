@@ -1,7 +1,8 @@
 
 import getEvaluationResultFromHand from './getEvaluationResultFromHand';
-import { Card, EvaluationResult } from '../types';
+import { Card } from '../types';
 import { Suit } from '../../../src/enums';
+import EvaluationResult from '../types/EvaluationResult.type';
 
 it('should return a Royal Flush evaluationResult object', ()=>{
   const flushRoyal: Card[] = [
